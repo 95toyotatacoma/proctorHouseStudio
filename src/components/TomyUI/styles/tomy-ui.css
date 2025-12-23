@@ -1,0 +1,185 @@
+/* Grid container that lives inside your .project-media-block */
+.tomy-ui-gallery {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--jumbo);
+}
+
+/* Responsive fallback bands */
+@media (max-width: 1100px) {
+  .tomy-ui-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 720px) {
+  .tomy-ui-gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tomy-ui-gallery__item {
+  margin: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.tomy-ui-gallery__caption {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+/* Make sure TomyFrame fills its grid cell cleanly */
+.tomy-frame--square {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+/* Tomy device stage */
+.tomy-frame {
+  background: #0b0c10; /* dark skeuo base */
+  border-radius: 28px;
+  box-shadow: var(--effect-outer-shadow);
+  overflow: hidden;
+
+  /* keeps child screens sane */
+  display: flex;
+}
+
+/* Square target (safe default for now) */
+.tomy-frame--square {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+/* Wrapper */
+.tomy-startup-screen {
+  width: 100%;
+  display: grid;
+  gap: var(--grid_gap_sm, 8px);
+}
+
+.tomy-startup-screen__label {
+  font-size: 12px;
+  opacity: 0.6;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Background of the screen (YOUR SPEC) */
+.tomy-startup-stage {
+  display: flex;
+  width: 488px;
+  height: 264px;
+  padding: 0 44px;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: var(--radius_md, 8px);
+  border: 1px solid var(--color_border_default, #394048);
+  background: var(--color_surface_primary, #1A1D23);
+
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.tomy-startup-stage__inner {
+  width: 100%;
+  display: grid;
+  gap: 22px;
+  justify-items: center;
+}
+
+/* Title (YOUR SPEC) */
+.tomy-startup-title {
+  margin: 0;
+
+  font-family: "Lexend Giga", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 44px;
+
+  /* Gradient text */
+  background: linear-gradient(
+    90deg,
+    var(--color_accent_secondary, #CD93FF) 0%,
+    var(--color_accent_primary, #17BEBB) 31.73%,
+    var(--color_white_shapes, #DADADA) 65.87%,
+    var(--color_bluetooth, #1A81FF) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Safer than opacity on the element (keeps gradient crisp) */
+  filter: opacity(0.75);
+}
+
+/* Remove the old container look */
+.tomy-loading {
+  width: 100%;
+}
+
+/* OUTER (track) */
+.tomy-loading__track {
+  width: 100%;
+  height: 14px;
+  border-radius: 999px;
+
+  border: 1px solid var(--color_border_default, #394048);
+  background: var(--color_surface_elevated, #2A2F37);
+
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* INNER (fill) */
+.tomy-loading__fill {
+  height: 100%;
+  border-radius: 999px;
+
+  border: 1px solid var(--color_border_default, #394048);
+  background: var(--color_accent_primary, #17BEBB);
+
+  box-sizing: border-box;
+
+  /* nice feel as it grows */
+  transition: width 400ms ease;
+}
+
+.tomy-startup-title--ripple {
+  background-size: 300% 100%;
+  animation: tomyGradientRipple 3s linear infinite;
+  will-change: background-position;
+}
+
+@keyframes tomyGradientRipple {
+  from { background-position: 0% 50%; }
+  to   { background-position: 100% 50%; }
+}
+
+/* Accessibility: respect reduced motion 
+@media (prefers-reduced-motion: reduce) {
+  .tomy-startup-title--ripple {
+    animation: none;
+  }
+  .tomy-loading__fill {
+    transition: none;
+  }
+}
+  */
+
+/* Center Tomy startup screen inside project-media-block */
+.project-media-block .tomy-startup-screen {
+  display: flex;
+  justify-content: center;
+  padding-block: calc(var(--jumbo) * 1.75);
+   overflow: visible;
+}
+
+/* Scale up the startup stage for editorial display */
+.project-media-block .tomy-startup-stage {
+  transform: scale(1.75);
+  transform-origin: center;
+}

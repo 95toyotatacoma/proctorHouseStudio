@@ -1,0 +1,59 @@
+@import "./styles/global_tokens.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ✅ put your semantic element styling here so it beats Tailwind preflight */
+@layer components {
+  .page-header {
+    font-family: var(--font-family-heading-xxl);
+    font-size: var(--font-size-heading-xxl);
+    font-weight: var(--font-weight-heading-xxl);
+    margin: 0 0 var(--md);
+    /* optional: match your page look */
+    color: var(--it-s-white);
+  }
+
+  .stack-giant {
+    display: flex;
+    flex-direction: column;
+    gap: var(--giant);
+  }
+}
+
+@layer base {
+  h1 {
+    font-family: var(--font-family-heading-xxl);
+    font-size: var(--font-size-heading-xxl);
+    font-weight: var(--font-weight-heading-xxl);
+    margin: 0 0 var(--md);
+  }
+
+  h2 {
+    font-family: var(--font-family-heading-xl);
+    font-size: var(--font-size-heading-xl);
+    font-weight: var(--font-weight-heading-xl);
+    margin: 0 0 var(--md);
+  }
+
+  h3 {
+    font-family: var(--font-family-heading-l);
+    font-size: var(--font-size-heading-l);
+    font-weight: var(--font-weight-heading-l);
+    margin: 0 0 var(--sm);
+  }
+
+  h4 {
+    font-family: var(--font-family-heading-m);
+    font-size: var(--font-size-heading-m);
+    font-weight: var(--font-weight-heading-m);
+    margin: 0 0 var(--sm);
+  }
+
+  h5 {
+    font-family: var(--font-family-heading-s);
+    font-size: var(--font-size-heading-s);
+    font-weight: var(--font-weight-heading-s);
+    margin: 0 0 var(--xs);
+  }
+}

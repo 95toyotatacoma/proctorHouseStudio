@@ -1,0 +1,2601 @@
+/* ==========================================================================
+   Proctor House Studio – Global Styles
+   Tokens + Base + Components
+   ========================================================================== */
+
+/* ==========================================================================
+   Tokens
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------------
+     Typography Tokens
+     ------------------------------------------------------------------------ */
+
+  /* Page Header */
+  --font-family-page-header: "Tilt Warp", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-page-header: 116px;
+  --font-weight-page-header: 900;
+
+  /* Display */
+  --font-family-display-xl: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-display-xl: 72px;
+  --font-weight-display-xl: 500;
+
+  --font-family-display-l: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-display-l: 48px;
+  --font-weight-display-l: 500;
+
+  --font-family-display-m: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-display-m: 36px;
+  --font-weight-display-m: 500;
+
+  /* Headings */
+  --font-family-heading-xxl: "Kodchasan", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-heading-xxl: 40px;
+  --font-weight-heading-xxl: 400;
+
+  --font-family-heading-xl: "Kodchasan", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-heading-xl: 32px;
+  --font-weight-heading-xl: 400;
+
+  --font-family-heading-xl-bold: "Kodchasan", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-heading-xl-bold: 32px;
+  --font-weight-heading-xl-bold: 700;
+
+  --font-family-heading-l: "Kodchasan", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-heading-l: 28px;
+  --font-weight-heading-l: 400;
+
+  --font-family-heading-m: "Kodchasan", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-heading-m: 22px;
+  --font-weight-heading-m: 700;
+
+  --font-family-heading-s: "Kodchasan", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-heading-s: 18px;
+  --font-weight-heading-s: 400;
+
+  /* Body */
+  --font-family-body-l: "Kodchasan", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-body-l: 20px;
+  --font-weight-body-l: 400;
+
+  --font-family-body-m: "Kodchasan", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-body-m: 18px;
+  --font-weight-body-m: 400;
+
+  --font-family-body-s: "Kodchasan", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-body-s: 16px;
+  --font-weight-body-s: 400;
+
+  /* Labels */
+  --font-family-label-m: "Kodchasan", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-label-m: 14px;
+  --font-weight-label-m: 500;
+
+  --font-family-label-s: "Kodchasan", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-label-s: 12px;
+  --font-weight-label-s: 500;
+
+  /* ------------------------------------------------------------------------
+     Effects
+     ------------------------------------------------------------------------ */
+
+  --effect-text-shadow: inset -12px -6px 3px 0px rgba(30, 30, 30, 0.33);
+  --effect-cards: 3px 4px 4px 0px rgba(0, 0, 0, 0.08);
+  --effect-outer-shadow: 8px 4px 6px 0px rgba(0, 0, 0, 0.1);
+
+  /* ------------------------------------------------------------------------
+     Spacing + Corners (Gaps and Corners Collection)
+     ------------------------------------------------------------------------ */
+
+  --xs: 2px;
+  --sm: 4px;
+  --md: 6px;
+  --lg: 8px;
+  --xl: 12px;
+  --xxl: 16px;
+  --xxxl: 24px;
+  --xxxxl: 32px;
+  --big: 42px;
+  --giant: 56px;
+  --jumbo: 60px;
+
+  /* ------------------------------------------------------------------------
+     Native Colors Collection
+     ------------------------------------------------------------------------ */
+
+  --stone-shell: #b5a99a;
+  --lava-flow: #e0452c;
+  --leaf-vein: #5fa148;
+  --ocean-cliff: #3d5a73;
+  --driftwood-beige: #d8c9b5;
+  --meadow-grass: #9bc87f;
+  --petal-violet: #7c5fa7;
+  --circuit-glow: #18c37d;
+  --copper-patina: #a46e44;
+  --it-s-white: #ebebeb;
+  --it-s-black: #1e1e1e;
+
+  /* ------------------------------------------------------------------------
+     Color Tools Collection
+     ------------------------------------------------------------------------ */
+
+  --very-back: #1e1e1e;
+  --primary-text: #ebebeb;
+
+  --section: #b5a99a;
+  --cards: #d8c9b5;
+  --border-cards: #3d5a73;
+
+  --primary-button: #e0452c;
+  --secondary-button-outline: #5fa148;
+
+  --accent: #18c37d;
+  --highlight: #7c5fa7;
+
+  --dividers: #a46e44;
+  --success: #9bc87f;
+  --hover: rgba(124, 95, 167, 0.2);
+
+  /* ------------------------------------------------------------------------
+     Page / Layout Tokens
+     ------------------------------------------------------------------------ */
+
+  /* Shared page gutter for hero + footer
+     ≈ 210px on large screens, smaller on narrow */
+  --page-gutter-inline: clamp(24px, 14vw, 210px);
+
+  --content-max: 1512px;
+  --page-gutter: clamp(24px, 6vw, 96px);
+
+  /* Home Page Layout Tokens */
+  --home-frame-max-width: 1280px;
+  --home-image-rail-width: 320px;
+  --home-hero-padding-block: var(--big);
+  --home-bottom-band-height: 140px;
+  --home-rail-thumb-height: 92px;
+  --home-rail-thumb-radius: var(--xxxl);
+  --home-rail-gap: var(--xl);
+  --home-frame-radius: var(--xxxl);
+  --home-frame-shadow: var(--effect-outer-shadow);
+
+  /* Home layout tokens */
+  --home-rail-bottom-gap: 112px;
+  --home-rail-width: 340px; /* gives room for 289px cards + side margins */
+
+  /* Navigation layout */
+  --nav-shell-padding: 0;
+  --nav-drawer-width: 360px;
+  --nav-drawer-radius-top: var(--jumbo);
+  --nav-drawer-radius-bottom: var(--md);
+  --nav-rail-width: 80px;
+
+  --nav-transition-duration: 550ms;
+  --nav-transition-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* Carousel rail */
+  --carousel-rail-width: clamp(260px, 18vw, 420px);
+  --carousel-scroll-duration: 160s;
+
+  --carousel-card-padding-inline: var(--xxl);
+  --carousel-card-padding-block: var(--xxl);
+  --carousel-card-radius: var(--big);
+  --carousel-card-placeholder: #d3d3d3;
+
+    /* breathing room around fixed rails */
+  --rail-gutter: 24px;
+
+  /* content padding inside the “middle channel” */
+  --page-pad: clamp(24px, 4vw, 64px);
+
+  /* computed safe areas */
+  --safe-left: calc(var(--nav-rail-width) + var(--rail-gutter));
+  --safe-right: calc(var(--carousel-rail-width) + var(--rail-gutter));
+}
+
+/* ==========================================================================
+   Reset / Base
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: clip;
+}
+
+
+
+body {
+  min-height: 100vh;
+  background-color: var(--very-back);
+  color: var(--primary-text);
+  font-family: var(--font-family-body-m);
+  font-size: var(--font-size-body-m);
+  font-weight: var(--font-weight-body-m);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* ==========================================================================
+   Layout Helpers
+   ========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: var(--xxxl);
+}
+
+.stack-sm > * + * {
+  margin-top: var(--sm);
+}
+
+.stack-md > * + * {
+  margin-top: var(--md);
+}
+
+.stack-lg > * + * {
+  margin-top: var(--xl);
+}
+
+.section {
+  background-color: var(--section);
+}
+
+.section--stone {
+  background-color: var(--stone-shell);
+  color: var(--it-s-black);
+}
+
+/* Simple grid helper */
+.grid-2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: var(--xxxxl);
+}
+
+@media (max-width: 768px) {
+  .container,
+  .section__inner {
+    padding-inline: var(--xl);
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+:where(h1, h2, h3, h4, h5, h6) {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* Page Header – Hero wordmark */
+.page-header {
+  font-family: var(--font-family-page-header);
+  font-size: clamp(52px, 7vw, var(--font-size-page-header));
+  font-weight: var(--font-weight-page-header);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--it-s-black);
+}
+
+/* Display / hero text rows */
+.display-xl {
+  font-family: var(--font-family-display-xl);
+  font-size: clamp(40px, 5vw, var(--font-size-display-xl));
+  font-weight: var(--font-weight-display-xl);
+  line-height: 1.1;
+}
+
+.display-l {
+  font-family: var(--font-family-display-l);
+  font-size: clamp(32px, 4vw, var(--font-size-display-l));
+  font-weight: var(--font-weight-display-l);
+  line-height: 1.2;
+}
+
+.display-m {
+  font-family: var(--font-family-display-m);
+  font-size: clamp(24px, 3vw, var(--font-size-display-m));
+  font-weight: var(--font-weight-display-m);
+}
+
+/* Map HTML headings to your tokens */
+h1,
+.h1 {
+  font-family: var(--font-family-heading-xxl, system-ui);
+  font-size: var(--font-size-heading-xxl);
+  font-weight: var(--font-weight-heading-xxl);
+  margin: 0 0 var(--md);
+}
+
+h2,
+.h2 {
+  font-family: var(--font-family-heading-xl);
+  font-size: var(--font-size-heading-xl);
+  font-weight: var(--font-weight-heading-xl);
+  margin: 0 0 var(--md);
+}
+
+h2.bold,
+.h2-bold {
+  font-family: var(--font-family-heading-xl-bold);
+  font-size: var(--font-size-heading-xl-bold);
+  font-weight: var(--font-weight-heading-xl-bold);
+}
+
+h3,
+.h3 {
+  font-family: var(--font-family-heading-l);
+  font-size: var(--font-size-heading-l);
+  font-weight: var(--font-weight-heading-l);
+  margin: 0 0 var(--sm);
+}
+
+h4,
+.h4 {
+  font-family: var(--font-family-heading-m);
+  font-size: var(--font-size-heading-m);
+  font-weight: var(--font-weight-heading-m);
+  margin: 0 0 var(--sm);
+}
+
+h5,
+.h5 {
+  font-family: var(--font-family-heading-s);
+  font-size: var(--font-size-heading-s);
+  font-weight: var(--font-weight-heading-s);
+  margin: 0 0 var(--xs);
+}
+
+p {
+  margin: 0 0 var(--md);
+}
+
+.body-l {
+  font-family: var(--font-family-body-l);
+  font-size: var(--font-size-body-l);
+  font-weight: var(--font-weight-body-l);
+}
+
+.body-m {
+  font-family: var(--font-family-body-m);
+  font-size: var(--font-size-body-m);
+  font-weight: var(--font-weight-body-m);
+}
+
+.body-s {
+  font-family: var(--font-family-body-s);
+  font-size: var(--font-size-body-s);
+  font-weight: var(--font-weight-body-s);
+}
+
+.label-m {
+  font-family: var(--font-family-label-m);
+  font-size: var(--font-size-label-m);
+  font-weight: var(--font-weight-label-m);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.label-s {
+  font-family: var(--font-family-label-s);
+  font-size: var(--font-size-label-s);
+  font-weight: var(--font-weight-label-s);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Optional text treatments */
+.text-accent {
+  color: var(--accent);
+}
+
+.text-highlight {
+  color: var(--highlight);
+}
+
+.text-muted {
+  opacity: 0.8;
+}
+
+
+/* ==========================================================================
+   Components – Cards
+   ========================================================================== */
+
+.card {
+  position: relative;
+  background-color: var(--cards);
+  color: var(--it-s-black);
+  border-radius: var(--xxl);
+  padding: var(--xxxl);
+  box-shadow: var(--effect-cards);
+  border: 1px solid var(--border-cards);
+}
+
+.card--dark {
+  background-color: var(--ocean-cliff);
+  color: var(--primary-text);
+}
+
+.card__header {
+  margin-bottom: var(--md);
+}
+
+.card__title {
+  font-family: var(--font-family-heading-m);
+  font-size: var(--font-size-heading-m);
+  font-weight: var(--font-weight-heading-m);
+}
+
+.card__body {
+  font-family: var(--font-family-body-m);
+  font-size: var(--font-size-body-m);
+}
+
+/* ==========================================================================
+   Components – Buttons
+   ========================================================================== */
+
+.button {
+  --button-padding-y: var(--sm);
+  --button-padding-x: var(--xl);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sm);
+
+  padding: var(--button-padding-y) var(--button-padding-x);
+  border-radius: 999px;
+  border: 1px solid transparent;
+
+  font-family: var(--font-family-label-m);
+  font-size: var(--font-size-label-m);
+  font-weight: var(--font-weight-label-m);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  text-decoration: none;
+  cursor: pointer;
+
+  transition:
+    background-color 150ms ease-out,
+    color 150ms ease-out,
+    border-color 150ms ease-out,
+    box-shadow 150ms ease-out,
+    transform 120ms ease-out;
+}
+
+.button--primary {
+  background-color: var(--primary-button);
+  color: var(--primary-text);
+  box-shadow: var(--effect-outer-shadow);
+}
+
+.button--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.button--secondary {
+  background-color: transparent;
+  color: var(--secondary-button-outline);
+  border-color: var(--secondary-button-outline);
+}
+
+.button--secondary:hover {
+  background-color: var(--hover);
+}
+
+.button--ghost {
+  background-color: transparent;
+  color: var(--primary-text);
+  border-color: transparent;
+}
+
+.button--ghost:hover {
+  background-color: var(--hover);
+}
+
+/* ==========================================================================
+   Components – Chips / Labels
+   ========================================================================== */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+
+  border-radius: 999px;
+  padding: var(--xs) var(--md);
+  border: 1px solid var(--dividers);
+
+  font-family: var(--font-family-label-s);
+  font-size: var(--font-size-label-s);
+  font-weight: var(--font-weight-label-s);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.chip--success {
+  border-color: var(--success);
+  color: var(--success);
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+.shadow-text-block {
+  box-shadow: var(--effect-text-shadow);
+}
+
+.shadow-outer {
+  box-shadow: var(--effect-outer-shadow);
+}
+
+.border-accent {
+  border: 1px solid var(--accent);
+}
+
+.round-xl {
+  border-radius: var(--xxl);
+}
+
+.round-xxxl {
+  border-radius: var(--xxxl);
+}
+
+.bg-stone {
+  background-color: var(--stone-shell);
+}
+
+.bg-lava {
+  background-color: var(--lava-flow);
+}
+
+.bg-ocean {
+  background-color: var(--ocean-cliff);
+}
+
+.bg-meadow {
+  background-color: var(--meadow-grass);
+}
+
+/* Spacing utilities */
+.mt-md {
+  margin-top: var(--md);
+}
+
+.mt-xl {
+  margin-top: var(--xl);
+}
+
+.mb-md {
+  margin-bottom: var(--md);
+}
+
+.mb-xl {
+  margin-bottom: var(--xl);
+}
+
+.py-giant {
+  padding-block: var(--giant);
+}
+
+.p-xxxl {
+  padding: var(--xxxl);
+}
+
+.stack-jumbo > * + * {
+  margin-top: var(--jumbo);
+}
+
+/* Screen-reader only text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Generic circular icon button */
+.icon-button {
+  width: 60px;
+  height: 60px;
+  background-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Close “X” icon */
+.icon-close {
+  position: relative;
+  width: 32px;
+  height: 32px;
+}
+
+.icon-close::before,
+.icon-close::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 2px;
+  height: 100%;
+  border-radius: 999px;
+  background-color: var(--it-s-black);
+}
+
+.icon-close::before {
+  transform: rotate(45deg);
+}
+
+.icon-close::after {
+  transform: rotate(-45deg);
+}
+
+/* ==========================================================================
+   Navigation
+   ========================================================================== */
+
+/* Page shell background (already close to your design) */
+.nav-shell {
+  position: relative;
+  min-height: 100vh;
+  padding: var(--nav-shell-padding);
+  background-color: var(--section);
+  color: var(--primary-text);
+  overflow: visible;
+}
+
+/* Container for everything on the page so nav + carousel can sit on top */
+.nav-shell__frame {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+/* Main nav card – big rounded white panel */
+.nav-main {
+  position: fixed;
+  top: var(--big);
+  left: var(--big);
+
+  width: clamp(300px, 40vw, 600px);
+  min-height: calc(100vh - (var(--big) * 2));
+
+  border-radius: var(--jumbo);
+  background-color: var(--it-s-white);
+  color: var(--it-s-black);
+  box-shadow: var(--effect-outer-shadow);
+
+  padding: var(--jumbo) var(--giant);
+  display: flex;
+  flex-direction: column;
+
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+
+  transition:
+    transform var(--nav-transition-duration) var(--nav-transition-ease),
+    opacity var(--nav-transition-duration) var(--nav-transition-ease);
+
+  z-index: 60;
+}
+
+/* Top row with close icon (for later) */
+.nav-main__header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Simple icon button shape – you can swap for an SVG later */
+.nav-main__icon-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Vertical nav links */
+.nav-main__list {
+  list-style: none;
+  padding: 0;
+  margin: var(--giant) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--giant);
+}
+
+/* Base link */
+.nav-main__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  /* Pill hit area (static width) */
+  padding: var(--sm) var(--lg);
+  border-radius: 999px;
+
+  text-decoration: none;
+  color: var(--it-s-black);
+  font-family: var(--font-family-heading-xxl);
+  font-size: clamp(32px, 3.5vw, var(--font-size-heading-xxl));
+  font-weight: var(--font-weight-heading-xxl);
+  letter-spacing: -0.03em;
+
+  transition:
+    color 160ms ease-out,
+    text-shadow 160ms ease-out,
+    transform 160ms ease-out;
+}
+
+/* Pseudo-element background (hover/active) */
+.nav-main__link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: transparent;
+  z-index: -1;
+
+  transition:
+    background-color 160ms ease-out,
+    inset-inline 160ms ease-out;
+}
+
+/* Arrow (hidden by default) */
+.nav-main__link::after {
+  content: "←";
+  margin-left: clamp(16px, 2vw, 24px);
+  font-size: 0.9em;
+  opacity: 0;
+  transform: translateX(6px);
+  transition:
+    opacity 160ms ease-out,
+    transform 160ms ease-out,
+    color 160ms ease-out;
+}
+
+/* Hover */
+.nav-main__link:hover::before {
+  background-color: color-mix(in srgb, var(--highlight) 20%, transparent);
+  inset-inline: -12px;
+}
+
+.nav-main__link:hover {
+  color: var(--it-s-black);
+  text-shadow: none;
+}
+
+.nav-main__link:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--it-s-black);
+}
+
+/* Active state */
+.nav-main__link--active {
+  color: var(--lava-flow);
+  font-weight: var(--font-weight-heading-xl-bold);
+  transform: translateY(1px);
+}
+
+.nav-main__link--active::before {
+  background-color: transparent;
+  inset-inline: -12px;
+}
+
+.nav-main__link--active::after {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--lava-flow);
+}
+
+/* Bottom image strip placeholder */
+.nav-main__footer {
+  margin-top: auto;
+}
+
+.nav-main__image-strip {
+  width: 100%;
+  height: 72px;
+  border-radius: 999px;
+  overflow: hidden;
+  background-color: var(--stone-shell);
+}
+
+/* Left nav rail */
+.nav-rail {
+  position: fixed;
+  top: var(--big);
+  left: var(--big);
+  height: calc(100vh - (var(--big) * 2));
+
+  width: var(--nav-rail-width);
+  background-color: var(--it-s-white);
+  border-radius: var(--jumbo);
+  box-shadow: var(--effect-outer-shadow);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  /* keep final computed padding exactly as before */
+  padding: var(--giant) var(--big);
+
+  transition:
+    transform var(--nav-transition-duration) var(--nav-transition-ease),
+    opacity var(--nav-transition-duration) var(--nav-transition-ease);
+
+  z-index: 60;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Make the whole rail feel clickable */
+.nav-rail {
+  cursor: pointer;
+}
+
+/* Once open, you can switch back if you want */
+.nav-rail.is-open {
+  cursor: default;
+}
+
+/* Keep normal pointer on actual buttons/links */
+.nav-rail button,
+.nav-rail a {
+  cursor: pointer;
+}
+
+/* Burger / toggle button */
+.nav-rail__icon {
+  width: 6rem;
+  height: 6rem;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.nav-rail__toggle-icon {
+  display: block;
+  object-fit: contain;
+  pointer-events: none;
+  position: relative;
+}
+
+.nav-rail__toggle-icon span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 999px;
+  background-color: var(--it-s-black);
+}
+
+.nav-rail__toggle-icon span:nth-child(1) {
+  top: 0;
+}
+
+.nav-rail__toggle-icon span:nth-child(2) {
+  top: 6px;
+}
+
+.nav-rail__toggle-icon span:nth-child(3) {
+  bottom: 0;
+}
+
+/* Bottom circle on the rail (avatar / stone image placeholder) */
+.nav-rail__avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 999px;
+  background-color: var(--stone-shell);
+  overflow: hidden;
+}
+
+.nav-rail__avatar img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* Nav panel animation states */
+.nav-main--closed {
+  transform: translateX(calc(-1 * var(--nav-panel-offset)));
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+.nav-rail--closed {
+  transform: translateX(calc(-1 * var(--nav-panel-offset)));
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Jiggle settle when opening */
+@keyframes nav-settle {
+  0%   { transform: translateX(0) scale(0.98); }
+  55%  { transform: translateX(0) scale(1.02); }
+  78%  { transform: translateX(0) scale(0.995); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+.nav-shell--open .nav-main {
+  animation: nav-settle 520ms cubic-bezier(.22,.61,.36,1) both;
+}
+
+/* “Smart animate” targets */
+.nav-rail__avatar,
+.nav-main__image-strip {
+  will-change: transform, opacity, filter;
+  transition:
+    transform 520ms cubic-bezier(.22,.61,.36,1),
+    opacity 360ms ease,
+    filter 360ms ease;
+}
+
+/* When nav is OPEN: avatar fades/shrinks instead of blinking */
+.nav-shell--open .nav-rail__avatar {
+  opacity: 0;
+  transform: scale(0.7);
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+/* When nav is CLOSED: avatar returns */
+.nav-shell--closed .nav-rail__avatar {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0);
+}
+
+/* Bottom image strip does inverse */
+.nav-shell--closed .nav-main__image-strip {
+  opacity: 0;
+  transform: scale(0.92);
+  filter: blur(6px);
+}
+
+/* Ensure nav-main strip image fills */
+.nav-main__image-strip img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+/* ==========================================================================
+   Right-side Carousel Rail + Cards
+   ========================================================================== */
+
+.carousel-rail {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+
+  width: var(--carousel-rail-width);
+  background-color: var(--it-s-white);
+  box-shadow: var(--effect-outer-shadow);
+
+  padding-block: 16px;
+  padding-inline: 16px;
+
+  box-sizing: border-box;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+
+  overflow: hidden;
+  z-index: 40;
+}
+
+/* Track that actually moves */
+.carousel-rail__track {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--xxl);
+  will-change: transform;
+
+  animation: carousel-scroll var(--carousel-scroll-duration) linear infinite;
+}
+
+/* One card – beige rounded rect that fills the rail width */
+.carousel-card {
+  box-sizing: border-box;
+  flex: 0 0 auto;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  aspect-ratio: 4 / 3;
+  padding: 24px 35px;
+
+  border-radius: var(--carousel-card-radius);
+  background-color: var(--cards);
+  box-shadow: var(--effect-cards);
+
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+/* Inner media frame */
+.carousel-card__media {
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--carousel-card-radius) - 10px);
+  overflow: hidden;
+}
+
+/* Make images behave like images (not placeholders) */
+.carousel-card__media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* Grey placeholder (your future image slot)
+.carousel-card__media-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background-color: var(--carousel-card-placeholder);
+} */
+
+/* Simple vertical loop – because we render the list twice */
+@keyframes carousel-scroll {
+  from { transform: translateY(0); }
+  to   { transform: translateY(calc(-1 * var(--carousel-loop-distance, 0px))); }
+}
+
+/* ==========================================================================
+   Home layout shell / hero / inline logo / divider
+   ========================================================================== */
+/* Page Title — matches Home “Proctor” */
+.page-title-proctor {
+  flex: 0 0 auto;
+  color: var(--it-s-black); /* or var(--it-s-black) depending on section bg */
+  font-family: "Tilt Warp", system-ui, sans-serif;
+  font-size: clamp(96.8px, 6.292vw, 154.88px);
+  font-weight: 400;
+  letter-spacing: -0.06em;
+  line-height: 0.7;
+  white-space: nowrap;
+  margin: 0 0 var(--md);
+}
+
+/* Tomy sticky title strip (same behavior as home-inline-logo) */
+.page-title-strip {
+  position: sticky;
+  top: 0;
+
+  min-height: 200px;
+  padding: 40px clamp(32px, 12vw, 210px) 32px;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: flex-end;
+
+  background-color: var(--dividers);
+  z-index: 15;
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease,
+    box-shadow 200ms ease;
+  box-shadow: none;
+
+  /* optional: match home behavior */
+  pointer-events: none;
+}
+
+/* When “compact” (or whenever you want it visible) */
+.page-title-strip.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Text style = Home “Proctor” */
+.page-title-strip__title {
+  color: var(--it-s-black);
+  font-family: "Tilt Warp", system-ui, sans-serif;
+  font-size: clamp(96.8px, 6.292vw, 154.88px);
+  font-weight: 400;
+  letter-spacing: -0.06em;
+  line-height: 0.7;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.project-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--jumbo);
+}
+
+/* Page background for home */
+.home-shell {
+  position: relative;
+  min-height: 80vh;
+  background-color: var(--section);
+  max-width: 100%;
+}
+
+/* Wraps hero + divider; constrained like your inner content frame */
+.home-shell__inner {
+  max-width: 1512px;
+  margin-inline: auto;
+}
+
+/* SECTION 1: hero + inline logo on beige */
+.home-hero-section {
+  position: relative;
+  max-width: 100%;
+  min-height: 92vh;   /* keep your stage */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  overflow-x: clip;
+  overflow-y: visible;
+
+  background-color: var(--section);
+  padding-bottom: 80px;
+}
+
+/* SECTION 1: hero already has a right-rail column in the layout,
+   so DO NOT also reserve carousel-safe padding here */
+.home-hero-section > .home-inner {
+  padding-right: 0; /* or just 24px if you want breathing room */
+}
+
+/* main content frame + right rail wrapper */
+.home-shell__frame {
+  display: flex;
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* HERO: center the whole hero+rail composition consistently */
+.home-hero-section .home-shell__frame {
+  width: 100%;
+  max-width: 1512px;
+  margin-inline: auto;
+}
+
+/* Left hero area – MUST fill the available middle channel */
+.home-hero {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    /* 👇 THIS is the correct, stable adjustment */
+  padding-top: clamp(60px, 8vh, 100px);
+  padding-bottom: clamp(40px, 6vh, 80px);
+}
+
+/* MAIN WRAPPER */
+.home-hero__inner {
+  color: var(--it-s-black);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+
+  /* key: ensure the inner column can truly center */
+  width: 100%;
+  min-width: 0;
+
+  transition: opacity 1200ms ease, transform 800ms ease;
+}
+
+/* when scrolled */
+.home-shell--compact .home-hero__inner {
+  opacity: 0;
+  transform: translateY(-24px) scale(0.9);
+  pointer-events: none;
+}
+
+/* reset children */
+.home-hero__inner > p {
+  margin: 0;
+  padding: 0;
+  color: var(--it-s-black);
+}
+
+.home-rail-wrapper {
+  flex: 0 0 var(--carousel-rail-width);
+  min-width: 0;
+}
+
+.home-hero__proctor-wrap,
+.home-hero__house-wrap,
+.home-hero__production,
+.home-hero__production-wrap {
+  align-self: center; /* was flex-start */
+}
+
+/* ==========================================================================
+   Intro logo (stacked) – Phase 2 hero
+   ========================================================================== */
+
+.intro-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  min-width: 0;
+}
+
+.intro-logo {
+  --intro-x: 24px;
+  --intro-y: 60px;          /* keep your normal base tuning */
+  --intro-y-global: 20px;   /* ✅ always move DOWN 20px at all sizes */
+  --intro-scale: 1;
+
+  --a-shift-x: -220px;
+  --a-shift-y: -14px;
+  --production-shift-x: 0px;
+
+  transform: translate3d(
+    var(--intro-x),
+    calc(var(--intro-y) + var(--intro-y-global)),
+    0
+  ) scale(var(--intro-scale));
+  transform-origin: center top;
+
+
+  color: var(--it-s-black);
+
+  width: fit-content;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.home-shell--compact .intro-logo {
+  opacity: 0;
+  transform:
+    translate3d(calc(var(--intro-x) + var(--content-bias-x, 0px)),
+                calc(var(--intro-y) - 20px),
+                0)
+    scale(calc(var(--intro-scale) * 0.9));
+  pointer-events: none;
+}
+
+/* 1 — “a” (move right + slightly up so it sits over the R) */
+.home-hero__a {
+  font-family: "Kodchasan", system-ui, sans-serif;
+  font-size: 3rem;
+  line-height: 1;
+  margin-left: 0; /* critical: prevents vw/clamp drift */
+  transform: translate(var(--a-shift-x), var(--a-shift-y));
+}
+
+/* 2 — “Proctor” */
+.home-hero__proctor {
+  font-family: "Tilt Warp", system-ui, sans-serif;
+  font-size: 11rem;
+  font-weight: 400;
+  line-height: 0.7;
+  letter-spacing: -0.06em;
+}
+
+/* 3 — “House Studio” */
+.home-hero__house-studio {
+  font-family: "Montserrat", "Kodchasan", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 4.2rem;
+  line-height: 1.1;
+  margin-top: clamp(12px, 1.5vh, 18px);
+  
+  letter-spacing: -0.02em;
+}
+
+/* 4 — “production” (push right to start under the “t” in Studio) */
+.home-hero__production {
+  font-family: "Kodchasan", system-ui, sans-serif;
+  font-size: 3rem;
+  line-height: 1.1;
+
+  margin-top: clamp(8px, 1vh, 12px);
+
+  /* keep your existing “start under Studio” intent */
+  margin-left: clamp(16rem, 14vw, 26rem);
+
+  /* ✅ allow breakpoint nudges without changing the clamp */
+  transform: translateX(var(--production-shift-x));
+
+  /* (optional) debugging */
+  /* outline: red solid 2px; */
+}
+
+
+/* wrapper nudges for nicer visual alignment */
+.home-hero__proctor-wrap {
+  transform: translateX(-1.8rem);
+}
+
+.home-hero__house-wrap {
+  transform: translateX(2.2rem);
+}
+
+.home-inner {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+
+  --nav-safe: calc(var(--nav-rail-width, 80px) + 24px);
+  --carousel-safe: calc(var(--carousel-rail-width, 360px) + 24px);
+
+  padding-left: var(--nav-safe);
+  padding-right: var(--carousel-safe);
+
+  background-color: var(--section);
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+.intro-wrapper .home-hero__a,
+.intro-logo .home-hero__a {
+  margin-left: 0 !important;
+  transform: translate(var(--a-shift-x), var(--a-shift-y)) !important;
+}
+
+/* ==========================================================================
+   Inline logo row – Phase 3 compact header
+   ========================================================================== */
+
+
+.home-inline-logo {
+  position: sticky;
+  top: 0;
+
+  min-height: 200px;
+  padding: 40px clamp(32px, 12vw, 210px) 32px;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: flex-end;
+  gap: var(--xxxl);
+
+  background-color: var(--section);
+  z-index: 15;
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease,
+    box-shadow 200ms ease;
+  box-shadow: none;
+}
+
+/* Fade IN when compact */
+.home-shell--compact .home-inline-logo {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 260ms;
+}
+
+/* Circular photo placeholder */
+.home-inline-logo__row {
+  display: flex;
+  align-items: center;
+  gap: var(--xxxl);
+  width: 100%;
+  pointer-events: auto;
+}
+
+.home-inline-logo__avatar {
+  flex: 0 0 auto;
+  width: clamp(87.12px, 7.26vw, 145.2px);
+  height: clamp(87.12px, 7.26vw, 145.2px);
+  border-radius: 50%;
+  background-color: #c4c4c4;
+  box-shadow: var(--effect-outer-shadow);
+  overflow: hidden;
+}
+
+.home-inline-logo__avatar img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.home-inline-logo__text {
+  display: flex;
+  align-items: baseline;
+}
+
+/* “Proctor” (Tilt Warp) */
+.home-inline-logo__proctor {
+  flex: 0 0 auto;
+  color: var(--it-s-black);
+  font-family: "Tilt Warp", system-ui, sans-serif;
+  font-size: clamp(96.8px, 6.292vw, 154.88px);
+  font-weight: 400;
+  letter-spacing: -0.06em;
+  line-height: 0.7;
+  white-space: nowrap;
+}
+
+/* “House Studio” */
+.home-inline-logo__house-studio {
+  margin-left: var(--xxxl);
+  color: var(--it-s-black);
+  font-family: "Montserrat", "Kodchasan", system-ui, sans-serif;
+  font-size: clamp(33.88px, 2.904vw, 62.92px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Base state: hidden + slightly offset, same as inline logo */
+.home-inline-logo,
+.home-projects-nav-wrapper {
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition:
+    opacity 200ms ease-out,
+    transform 200ms ease-out;
+}
+
+/* Projects nav layout */
+.home-projects-nav-wrapper {
+  margin-top: var(--xxxl);
+}
+
+/* When shell is compact: intro logo fades out, inline + projects fade in */
+.home-shell--compact .home-inline-logo,
+.home-shell--compact .home-projects-nav-wrapper {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   Divider section – scroll space for content
+   ========================================================================== */
+.home-content-frame {
+  width: 100%;
+  max-width: 1512px;
+  margin-inline: auto;
+}
+
+.home-content-section {
+  position: relative;
+  width: 100%;
+  margin-left: 0;
+  background: transparent;
+  z-index: 30;
+}
+
+.home-content-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  /* ✅ true full-bleed */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+
+  background: var(--dividers);
+  z-index: -1;
+}
+
+.home-content-inner {
+  width: 100%;
+  max-width: 1512px;
+  margin-inline: auto;
+  box-sizing: border-box;
+  padding-block: 80px 96px;
+
+  /* optional: keep a consistent inset without weird % */
+  padding-inline: clamp(24px, 4vw, 60px);
+}
+
+/* ==========================================================================
+   Home projects nav (Tomy 2000, The Book, etc.)
+   ========================================================================== */
+
+.home-projects-nav {
+  background-color: var(--section);
+  margin-top: var(--xxxxl);
+}
+
+.home-projects-nav__inner {
+  width: 100%;
+  /* REMOVE max-width/padding that conflicts */
+  max-width: none;
+  padding-inline: 0;
+
+  /* keep your vertical rhythm */
+  padding-block: var(--jumbo);
+
+  display: flex;
+  justify-content: center;
+}
+
+.home-projects-nav__list {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: calc(var(--jumbo));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.home-projects-nav__item {
+  flex: 0 1 180px;
+  display: flex;
+  justify-content: center;
+}
+
+/* This is the entire nav item */
+.home-projects-nav__link {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  /* was: gap: var(--xxl); */
+  gap: calc(var(--xxl) + 12px);
+
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Circular image wrapper with hover stroke */
+.home-projects-nav__image-wrap {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 10px solid transparent;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition:
+    border-color 160ms ease-out,
+    transform 160ms ease-out,
+    box-shadow 160ms ease-out;
+}
+
+/* Grey placeholder image */
+.home-projects-nav__image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--cards);
+  box-shadow: var(--effect-cards);
+  overflow: hidden;
+}
+
+/* LIGHT SWEEP EFFECT (on hover) */
+.home-projects-nav__image::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.45) 45%,
+    rgba(255, 255, 255, 0.85) 50%,
+    rgba(255, 255, 255, 0.45) 55%,
+    transparent 100%
+  );
+  transform: translateX(-150%) rotate(15deg);
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    transform 900ms ease-out,
+    opacity 300ms ease-out;
+}
+
+.home-projects-nav__item:hover .home-projects-nav__image::after,
+.home-projects-nav__item:focus-visible .home-projects-nav__image::after {
+  transform: translateX(150%) rotate(15deg);
+  opacity: 1;
+}
+
+.home-projects-nav__label {
+  font-family: var(--font-family-heading-xl-bold);
+   font-size: clamp(20px, 1.35vw, 40px);
+  letter-spacing: 0.01em;
+  font-weight: var(--font-weight-heading-xl-bold);
+  color: var(--it-s-black);
+}
+
+/* Hover / focus: highlight ring around the circle */
+.home-projects-nav__link:hover .home-projects-nav__image-wrap,
+.home-projects-nav__link:focus-visible .home-projects-nav__image-wrap {
+  border-color: var(--highlight);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+
+/* ==========================================================================
+   Studio text card (brown-section inner card)
+   ========================================================================== */
+
+.studio-text-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  max-width: 868px;
+  margin-inline: auto;
+  padding: var(--jumbo);
+  border-radius: var(--big, 42px);
+  border: 1px solid var(--border-cards, #3d5a73);
+  background: var(--cards, #d8c9b5);
+  border-bottom: var(--it-s-black, #000) 4px solid;
+
+  box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.08);
+}
+
+.studio-text-card__title {
+  margin: 0;
+  color: var(--it-s-black, #1e1e1e);
+  font-family: "Kodchasan", system-ui, sans-serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 42px;
+}
+
+.studio-text-card__body {
+  color: #000;
+  font-family: "Kodchasan", system-ui, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px;
+}
+
+/* ==========================================================================
+   Studio Section CTA (full-bleed bg, content aligned like footer CTA)
+   ========================================================================== */
+
+.studio-section-cta {
+  position: relative;
+  width: 100%;
+
+  /* same padding philosophy as site-footer__cta */
+  padding: 60px clamp(16px, 12vw, 0px);
+
+  /* keep content readable above the full-bleed bg */
+  color: #fff;
+  display: flex;
+  align-items: center;
+
+  /* IMPORTANT: remove any old full-bleed margin hacks */
+  margin: 0;
+  margin-top: var(--jumbo);
+  background: transparent;
+}
+
+/* Full-bleed background that ignores parent container width */
+.studio-section-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background: var(--it-s-black, #000);
+  z-index: -1;
+}
+
+/* Match footer CTA inner alignment (your footer uses margin-left: 7%) */
+.studio-section-cta__inner {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+
+}
+
+.studio-section-cta__title {
+  margin: 0;
+  font-family: "Kodchasan", system-ui, sans-serif;
+  font-size: clamp(32px, 3vw, 44px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.studio-section-cta__subtitle {
+  margin-top: 12px;
+  font-family: "Kodchasan", system-ui, sans-serif;
+  font-size: 18px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ==========================================================================
+   Studio card chain – alternating left / right
+   ========================================================================== */
+
+.studio-card-chain {
+  max-width: 1040px;
+  margin-inline: auto;
+  margin-top: -80px;
+  padding-inline: clamp(24px, 4vw, 56px);
+
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--jumbo);
+}
+
+.studio-card-row {
+  display: flex;
+  width: 100%;
+}
+
+.studio-card-row--left {
+  justify-content: flex-start;
+}
+
+.studio-card-row--right {
+  justify-content: flex-end;
+}
+
+/* CARD SHELL — base layout */
+.studio-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--big);
+
+  width: clamp(360px, 42vw, 460px);
+  min-height: 260px;
+
+  padding: var(--big);
+  border-radius: var(--jumbo);
+  border: 1px solid var(--border-cards, #3d5a73);
+  border-bottom: var(--it-s-black, #000) 4px solid;
+  background-color: var(--cards, #d8c9b5);
+
+  box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.08);
+
+  transition:
+    box-shadow 300ms ease,
+    transform 200ms ease;
+}
+
+/* CARD HOVER ELEVATION */
+.studio-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.studio-card--left {
+  flex-direction: row;
+}
+
+.studio-card--right {
+  flex-direction: row-reverse;
+}
+
+/* Text block */
+.studio-card__text {
+  flex: 1 1 auto;
+}
+
+/* Display XL – name */
+.studio-card__name {
+  margin: 0 0 var(--sm);
+  color: #000;
+  font-family: "LiHei Pro", system-ui, sans-serif;
+  font-size: 72px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 80px;
+  letter-spacing: -3.6px;
+}
+
+.studio-card__tagline {
+  margin: 0 0 var(--xs);
+  color: #000;
+  font-family: "Kodchasan", system-ui, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.studio-card__body {
+  margin: 0;
+  color: #000;
+  font-family: "Kodchasan", system-ui, sans-serif;
+  font-size: var(--font-size-body-l);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+/* Avatar container – lets us nudge the circle */
+.studio-card__avatar-wrap {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: -120px;
+}
+
+/* PROFILE AVATAR — base circle */
+.studio-card__avatar {
+  position: relative;
+  width: 156px;
+  height: 156px;
+  border-radius: 50%;
+  background: #c4c4c4;
+  box-shadow: var(--effect-outer-shadow);
+  overflow: hidden;
+}
+
+/* LIGHT SWEEP EFFECT (same behavior as project nav) */
+.studio-card__avatar::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 45%,
+    rgba(255, 255, 255, 0.85) 50%,
+    rgba(255, 255, 255, 0.4) 55%,
+    transparent 100%
+  );
+  transform: translateX(-150%) rotate(15deg);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 900ms ease-out,
+    opacity 350ms ease-out;
+}
+
+.studio-card:hover .studio-card__avatar::after,
+.studio-card:focus-visible .studio-card__avatar::after {
+  transform: translateX(150%) rotate(15deg);
+  opacity: 1;
+}
+
+/* Overlap the avatar slightly off the card edge */
+.studio-card--left .studio-card__avatar-wrap {
+  margin-left: calc(var(--big) * -0.5);
+}
+
+.studio-card--right .studio-card__avatar-wrap {
+  margin-right: calc(var(--big) * -0.5);
+}
+
+/* Responsive – tighten spacing on smaller widths */
+@media (max-width: 900px) {
+  .studio-card {
+    max-width: 100%;
+    padding: var(--md);
+    gap: var(--md);
+  }
+
+  .studio-card__name {
+    font-size: 48px;
+    line-height: 54px;
+    letter-spacing: -2px;
+  }
+
+  .studio-card__avatar {
+    width: 120px;
+    height: 120px;
+  }
+
+  .studio-card--left .studio-card__avatar-wrap,
+  .studio-card--right .studio-card__avatar-wrap {
+    margin-inline: 0;
+  }
+}
+
+/* ==========================================================================
+   CardTriImage
+   ========================================================================== */
+
+.card-tri-image {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* row wrapper */
+.card-tri-image__row {
+  display: inline-flex;
+  align-items: center;
+  gap: 40px;
+}
+
+/* individual item */
+.card-tri-image__item {
+  width: 238px;
+  height: 238px;
+  border-radius: var(--big);
+  background-color: #cfcfcf; /* grey placeholder */
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* subtle depth so it doesn't feel dead */
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* image handling (when images are enabled later) */
+.card-tri-image__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-tri-image__item:first-child img {
+  object-position: center 2%;
+}
+
+/* ==========================================================================
+   Photo blocks (reusable for all project pages)
+   ========================================================================== */
+
+.project-media-block {
+  width: 100%;
+  max-width: 1512px;
+  margin-inline: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--jumbo);
+}
+
+/* Make the block a GRID so column modifiers work */
+.photo-block {
+  width: 100%;
+  display: grid;
+  gap: var(--jumbo); /* row + column; adjust if you want */
+}
+
+.photo-block--1 { grid-template-columns: 1fr; }
+.photo-block--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.photo-block--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.photo-block__item {
+  margin: 0;
+  /* keep figure clean; don't clip here */
+}
+
+/* This is the only “card” wrapper you need */
+.photo-block__frame {
+  border-radius: 28px;
+  overflow: hidden;                 /* ✅ SVG corner fix */
+  background: #cfcfcf;
+  box-shadow: var(--effect-outer-shadow);
+
+  /* optional sizing rule */
+  /* aspect-ratio: 16 / 10; */
+}
+
+.photo-block__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==========================================================================
+   Site footer
+   ========================================================================== */
+
+.site-footer {
+  position: relative;
+  color: #fff;
+  z-index: 50;
+}
+
+.site-footer__inner {
+  max-width: none;
+  margin-inline: 0;
+  margin-left: 7%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8%;
+}
+
+/* CTA strip (black bar) */
+.site-footer__cta {
+  background-color: var(--it-s-black);
+  color: #fff;
+  padding: 60px clamp(32px, 12vw, 210px);
+}
+
+.site-footer__cta-inner {
+  max-width: none;
+  margin-inline: 0;
+  margin-left: 7%;
+}
+
+/* a single CTA block */
+.site-footer__cta-block {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: var(--lg, 8px);
+  padding-inline: 0;
+}
+
+.site-footer__cta-heading {
+  font-family: var(--font-family-heading-xxl, "Kodchasan", system-ui, sans-serif);
+  font-size: clamp(32px, 3.2vw, 44px);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+}
+
+.site-footer__cta-link {
+  font-family: var(--font-family-heading-m, "Kodchasan", system-ui, sans-serif);
+  font-size: clamp(16px, 1.6vw, 22px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--accent, #8bff9b);
+}
+
+.site-footer__cta-block:hover .site-footer__cta-heading,
+.site-footer__cta-block:focus-visible .site-footer__cta-heading {
+  text-decoration: underline;
+}
+
+/* Main orange footer block */
+.site-footer__main {
+  background-color: var(--lava-flow);
+  padding: 60px clamp(32px, 12vw, 210px);
+}
+
+/* left: logo + meta */
+.site-footer__brand {
+  flex: 0 0 420px;
+  min-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--lg, 8px);
+}
+
+.site-footer__brand-proctor {
+  font-family: "Tilt Warp", system-ui, sans-serif;
+  font-size: var(--font-size-page-header);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--it-s-black);
+  margin: 0;
+  line-height: 0.85;
+}
+
+.site-footer__brand-house {
+  font-family: "Montserrat", "Kodchasan", system-ui, sans-serif;
+  font-size: var(--font-size-display-l);
+  font-weight: 500;
+  color: var(--it-s-black);
+  letter-spacing: -0.04em;
+  margin: 0;
+  line-height: 1;
+  margin-top: -4px;
+  margin-left: var(--giant);
+}
+
+.site-footer__brand-meta {
+  margin-top: var(--lg, 8px);
+  display: flex;
+  align-items: center;
+  gap: var(--lg, 8px);
+  font-family: "Kodchasan", system-ui, sans-serif;
+  font-size: var(--font-size-body-s);
+  line-height: 1.4;
+  margin-left: 60px;
+}
+
+.site-footer__brand-social {
+  display: flex;
+  gap: 8px;
+}
+
+.site-footer__brand-location {
+  text-decoration: none;
+  color: #fff;
+  font-family: "Kodchasan", system-ui, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+}
+
+.site-footer__icon-button {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.site-footer__icon {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+
+/* right: nav columns */
+.site-footer__nav {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--big, 42px);
+  margin-left: var(--xxxl, 24px);
+}
+
+.site-footer__nav-column {
+  list-style: none;
+  margin: 0;
+  min-height: 310px;
+  padding: 40px 0;
+  color: #fff;
+  font-family: "Kodchasan", system-ui, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-footer__nav-link {
+  color: inherit;
+  text-decoration: none;
+  font-size: var(--font-size-heading-m);
+}
+
+.site-footer__nav-link + .site-footer__nav-link {
+  margin-top: var(--big);
+}
+
+/* ==========================================================================
+MEDIA QUERIES FOR HOME PAGE   
+2550 → 1921 (premium downscale band)
+   - Establish a stable “premium” label size that smoothly scales down
+   ========================================================================== */
+
+@media (max-width: 2550px) and (min-width: 1921px) {
+  /* ✅ wide-screen: production ~20px left */
+  .intro-logo { --production-shift-x: -100px; }
+
+
+
+  .home-projects-nav__label {
+    font-size: clamp(26px, 1.35vw, 40px);
+    letter-spacing: 0.01em;
+  }
+
+  .home-projects-nav__list {
+    gap: calc(var(--jumbo) * 0.34);
+  }
+}
+
+
+/* ==========================================================================
+   1920 → 1621 (your “1080p” band, width-ranged, no overlap)
+   ========================================================================== */
+
+@media (max-width: 1920px) {
+  /* Raise intro logo (width band) — if you only want this at 1080 height,
+     move this into the height-only block further below */
+  .intro-logo {
+    --intro-x: 0px;
+    --intro-y: 0px;        /* ✅ was -20px (that moved it UP) */
+    --intro-scale: 0.92;
+
+    --a-shift-x: -44px;    /* ✅ 1512-ish fix: move “a” left */
+    --production-shift-x: 0px;
+  }
+ 
+  .home-shell--compact .home-inline-logo { transition-delay: 260ms; }
+
+  .nav-rail { padding: 24px 12px; }
+
+  .nav-rail__toggle-icon { width: 8rem; height: 8rem; }
+  .nav-rail__toggle-icon span:nth-child(1) { top: 0; }
+  .nav-rail__toggle-icon span:nth-child(2) { top: 9px; }
+  .nav-rail__toggle-icon span:nth-child(3) { bottom: 0; }
+
+  .home-inner {
+    --content-bias-x: -75px;
+  }
+
+  /* ✅ apply the shift to BOTH: projects nav + studio text card */
+  .home-projects-nav-wrapper,
+  .home-content-section {
+    transform: translateX(var(--content-bias-x));
+  }
+
+  .home-projects-nav__inner {
+    width: 100%;
+    max-width: 1512px;          /* match .home-inner / .home-content-inner frame */
+    margin-inline: auto;
+
+    padding-block: var(--jumbo);
+    padding-inline: 0;          /* remove the clamp that’s pushing it off */
+    
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Projects-nav label: slightly smaller than 2550 band, never “backwards” */
+.home-projects-nav__label {
+    font-size: clamp(24px, 1.55vw, 34px);
+    letter-spacing: 0.01em;
+  }
+
+.home-projects-nav__list { gap: calc(var(--jumbo) * 0.26); }
+
+.studio-text-card { max-width: calc(100% - 220px); margin-inline: auto; }
+
+    .studio-section-cta__inner {
+    max-width: calc(100% - 120px);
+    margin-inline: auto;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 7%;
+  }
+
+  .studio-card-chain {
+    max-width: calc(100% - 220px);
+    margin-inline: auto;
+    padding-inline: 0;
+  }
+
+  .nav-main {
+    height: calc(100vh - (var(--big) * 2));
+    overflow: hidden;
+    padding: calc(var(--jumbo) * 0.75) calc(var(--giant) * 0.75);
+  }
+
+  .nav-main__list {
+    margin: calc(var(--giant) * 0.6) 0;
+    gap: calc(var(--giant) * 0.65);
+  }
+
+  .nav-main__link {
+    padding: var(--xs) var(--md);
+    font-size: clamp(26px, 2.6vw, 36px);
+  }
+
+  .nav-main__image-strip { height: 72px; }
+}
+
+
+/* ==========================================================================
+   1620 → 1441 (tighten + keep premium, no overlap)
+   ========================================================================== */
+
+@media (max-width: 1620px) and (min-width: 1441px) {
+  .intro-logo {
+    --intro-x: 20px;
+    --intro-y: 32px;
+    --intro-scale: 0.87;
+
+    --a-shift-x: -220px;
+    --production-shift-x: 0px;
+  }
+
+  .home-shell--compact .intro-logo {
+    transform: translate3d(
+        var(--intro-x),
+        calc(var(--intro-y) + var(--intro-y-global) - 56px),
+        0
+      )
+      scale(0.9);
+  }
+
+  .home-shell--compact .home-inline-logo {
+    transition-delay: 600ms;
+  }
+
+  .home-inner {
+    padding-left: clamp(24px, 4vw, 64px);
+    padding-right: clamp(24px, 4vw, 64px);
+  }
+
+  .nav-rail {
+    padding: 24px 12px;
+  }
+
+  .nav-rail__toggle-icon {
+    width: 32px;
+    height: 20px;
+  }
+
+  .nav-rail__toggle-icon span:nth-child(1) { top: 0; }
+  .nav-rail__toggle-icon span:nth-child(2) { top: 9px; }
+  .nav-rail__toggle-icon span:nth-child(3) { bottom: 0; }
+
+  .home-projects-nav__inner {
+    max-width: 1200px;
+    margin-inline: 0;
+    padding-inline: clamp(24px, 6vw, 96px);
+    padding-block: var(--jumbo);
+  }
+
+  /* Projects-nav label: smaller than 1920 band */
+  .home-projects-nav__label {
+    font-size: clamp(22px, 1.35vw, 28px);
+    letter-spacing: 0.01em;
+  }
+
+
+
+  /* If the LI or anchor has its own gap/padding causing “spread”, tighten it */
+  .home-projects-nav__item {
+    gap: 0;
+  }
+
+  .studio-text-card {
+    max-width: calc(74% - 60px);
+    margin-inline: auto;
+  }
+
+  .studio-section-cta__inner {
+    max-width: calc(100% - 120px);
+    margin-inline: auto;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 7%;
+  }
+
+  .studio-card-chain {
+    max-width: calc(80% - 110px);
+    margin-inline: auto;
+    padding-inline: 0;
+  }
+
+  .nav-main {
+    height: calc(100vh - (var(--big) * 2));
+    overflow: hidden;
+    padding: calc(var(--jumbo) * 0.75) calc(var(--giant) * 0.75);
+  }
+
+  .nav-main__list {
+    margin: calc(var(--giant) * 0.6) 0;
+    gap: calc(var(--giant) * 0.65);
+  }
+
+  .nav-main__link {
+    padding: var(--xs) var(--md);
+    font-size: clamp(26px, 2.6vw, 36px);
+  }
+
+  .nav-main__image-strip {
+    height: 72px;
+  }
+}
+
+
+/* ==========================================================================
+   1440 and down (your existing 1440 x 900 tuning)
+   ========================================================================== */
+
+@media (max-width: 1440px) {
+  /* --- Pic 01: intro logo up (don’t change X centering logic) --- */
+  .intro-logo {
+    --intro-x: -24px;
+    --intro-y: -36px;
+    --intro-scale: 0.82;
+
+    --a-shift-x: -44px;
+    --production-shift-x: 0px;
+  }
+
+  /* If compact state also needs lift, keep it consistent 
+  .home-shell--compact .intro-logo {
+    transform: translateX(var(--intro-x)) translateY(-36px) scale(0.9);
+  }*/
+
+    /* Stabilize the odd horizontal scroll until we find culprit */
+  .home-shell,
+  .home-hero-section {
+    overflow-x: clip;
+  }
+
+  /* nav-main == nav-rail height */
+  .nav-main {
+    height: calc(100vh - (var(--big) * 2));
+    overflow: hidden;
+    padding: calc(var(--jumbo) * 0.6) calc(var(--giant) * 0.6);
+  }
+
+  .nav-main__list {
+    margin: calc(var(--giant) * 0.5) 0;
+    gap: calc(var(--giant) * 0.55);
+  }
+
+  .nav-main__link {
+    padding: var(--xs) var(--md);
+    font-size: clamp(20px, 2vw, 30px);
+  }
+
+  .nav-main__image-strip { height: 64px; }
+}
+
+
+/* ==========================================================================
+   ≤ 840px — footer stack + home projects nav wrap/center
+   ========================================================================== */
+@media (max-width: 840px) {
+  /* Footer */
+  .site-footer__cta-inner {
+    flex-direction: column;
+  }
+
+  .site-footer__inner {
+    flex-direction: column;
+  }
+
+  .site-footer__brand {
+    flex-basis: auto;
+  }
+
+  .site-footer__nav {
+    gap: var(--xl, 24px);
+  }
+
+  .site-footer__nav-column {
+    min-height: auto;
+    padding-block: 16px;
+  }
+
+  /* Home Projects Nav */
+  .home-projects-nav__inner {
+    padding-inline: var(--xl);
+  }
+
+  .home-projects-nav__list {
+    justify-content: center;
+  }
+
+  .home-projects-nav__item {
+    flex: 0 1 40%;
+  }
+}
+
+
+/* ===== FORCE "a" LEFT (global, all screen sizes) ===== 
+.intro-wrapper .home-hero__a,
+.intro-logo .home-hero__a {
+  margin-left: 0 !important;
+  transform: translate(-60px, -14px) !important; 
+} */
+
+/* ==========================================================================
+   Tomy 2000 page shell adjustments
+   ========================================================================== */
+.project-header--enter {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: projectHeaderIn 520ms cubic-bezier(.22,.61,.36,1) 120ms forwards;
+  will-change: opacity, transform;
+}
+
+@keyframes projectHeaderIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tomy2000-page__main {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.tomy-shell .home-content-inner {
+  padding-top: 96px; /* gives that 40–60px breathing room under sticky strip */
+}
+
+.tomy2000-page__shell,
+.tomy2000-page__shell .home-inner,
+.tomy2000-page__shell .home-shell__frame,
+.tomy2000-page__shell .home-content-section,
+.tomy2000-page__shell .home-content-inner {
+  overflow: visible;
+}
