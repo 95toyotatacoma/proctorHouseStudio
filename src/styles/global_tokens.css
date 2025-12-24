@@ -209,8 +209,9 @@
 
   /* Studio chain spacing */
   --studio-chain-gap-y: var(--space_xxxxl); /* you said: --xxxxl (keep your naming) */
+}
 
-  @media (max-width: 719px) {
+@media (max-width: 719px) {
   :root {
     --inline-logo-scale: var(--mobile-inline-logo-scale);
     --projects-nav-scale: var(--mobile-projects-nav-scale);
@@ -221,7 +222,7 @@
     --page-offset-x: 0px;
   }
 }
-}
+
 
 
 /* ==========================================================================
@@ -1636,11 +1637,8 @@ p {
 
 .home-projects-nav__inner {
   width: 100%;
-  /* REMOVE max-width/padding that conflicts */
   max-width: none;
   padding-inline: 0;
-
-  /* keep your vertical rhythm */
   padding-block: var(--jumbo);
 
   display: flex;
@@ -1651,7 +1649,7 @@ p {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  gap: calc(var(--jumbo));
+  gap: var(--jumbo);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -1661,21 +1659,22 @@ p {
 .home-projects-nav__item {
   flex: 0 1 180px;
   display: flex;
-  justify-content: center;
 }
 
-/* This is the entire nav item */
+/* The clickable item */
 .home-projects-nav__link {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-
-  /* was: gap: var(--xxl); */
   gap: calc(var(--xxl) + 12px);
 
   text-decoration: none;
   color: inherit;
+
+  /* makes focus-visible styling behave nicely */
+  border-radius: 16px;
+  outline: none;
 }
 
 /* Circular image wrapper with hover stroke */
@@ -1696,7 +1695,7 @@ p {
     box-shadow 160ms ease-out;
 }
 
-/* Grey placeholder image */
+/* Image (uses inline background-image) */
 .home-projects-nav__image {
   position: relative;
   width: 100%;
@@ -1707,7 +1706,7 @@ p {
   overflow: hidden;
 }
 
-/* LIGHT SWEEP EFFECT (on hover) */
+/* LIGHT SWEEP EFFECT */
 .home-projects-nav__image::after {
   content: "";
   position: absolute;
@@ -1726,20 +1725,22 @@ p {
   transform: translateX(-150%) rotate(15deg);
   pointer-events: none;
   opacity: 0;
+
   transition:
     transform 900ms ease-out,
     opacity 300ms ease-out;
 }
 
-.home-projects-nav__item:hover .home-projects-nav__image::after,
-.home-projects-nav__item:focus-visible .home-projects-nav__image::after {
+/* ✅ IMPORTANT: trigger effects ONLY when the LINK is hovered/focused */
+.home-projects-nav__link:hover .home-projects-nav__image::after,
+.home-projects-nav__link:focus-visible .home-projects-nav__image::after {
   transform: translateX(150%) rotate(15deg);
   opacity: 1;
 }
 
 .home-projects-nav__label {
   font-family: var(--font-family-heading-xl-bold);
-   font-size: clamp(20px, 1.35vw, 40px);
+  font-size: clamp(20px, 1.35vw, 40px);
   letter-spacing: 0.01em;
   font-weight: var(--font-weight-heading-xl-bold);
   color: var(--it-s-black);
