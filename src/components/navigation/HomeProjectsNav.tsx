@@ -1,10 +1,10 @@
 // src/components/navigation/HomeProjectsNav.tsx
-import React from "react";
+import { Link } from "react-router-dom";
 
 type ProjectLink = {
   id: string;
   label: string;
-  href: string;
+  to: string;
   imageFile: string;
 };
 
@@ -12,35 +12,36 @@ const PROJECT_LINKS: ProjectLink[] = [
   {
     id: "tomy-2000",
     label: "Tomy 2000",
-    href: "/projects/tomy-2000",
+    to: "/projects/tomy-2000",
     imageFile: "front-side-redesign-idea.png",
   },
   {
     id: "the-book",
     label: "The Book",
-    href: "/the-book",
-    imageFile: "the-book.jpeg",
+    to: "/projects/the-book",
+    imageFile: "book-cover.png",
   },
   {
     id: "life-cards",
     label: "Life Cards",
-    href: "/life-cards",
-    imageFile: "life-cards.jpeg",
-  }, //,
-  // { id: "our-lore", label: "Our Lore", href: "/our-lore" },
+    to: "/projects/life-cards",
+    imageFile: "life-cards.png",
+  },
 ];
 
 const HomeProjectsNav: React.FC = () => {
   return (
     <nav
-      className="home-projects-nav"
+      className="home-projects-nav__link"
       aria-label="Core Proctor House Studio projects"
     >
       <div className="home-projects-nav__inner">
         <ul className="home-projects-nav__list">
           {PROJECT_LINKS.map((project) => (
             <li key={project.id} className="home-projects-nav__item">
-              <a href={project.href} className="home-projects-nav__link">
+              <Link to={project.to} className="home-projects-nav__link">
+                {/* image + label */}
+              
                 <span className="home-projects-nav__image-wrap">
                   <span
                     className="home-projects-nav__image"
@@ -56,7 +57,7 @@ const HomeProjectsNav: React.FC = () => {
                 <span className="home-projects-nav__label">
                   {project.label}
                 </span>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
