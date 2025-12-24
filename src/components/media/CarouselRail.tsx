@@ -13,7 +13,7 @@ type CarouselRailProps = {
 export default function CarouselRail({
   folderKey,
   alt = "Proctor House Studio carousel feature",
-  ariaLabel = "Featured studio work",
+  ariaLabel = "Life at the studio",
 }: CarouselRailProps) {
   const trackRef = useRef<HTMLDivElement | null>(null);
 
