@@ -12,7 +12,7 @@ const PROJECT_LINKS: ProjectLink[] = [
   {
     id: "tomy-2000",
     label: "Tomy 2000",
-    href: "projects/tomy-2000",
+    href: "/projects/tomy-2000",
     imageFile: "front-side-redesign-idea.png",
   },
   {
