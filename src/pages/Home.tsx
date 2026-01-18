@@ -91,11 +91,10 @@ export default function Home() {
 
           <section className="home-content-section">
             <div className="home-content-inner stack-jumbo">
-              <StudioTextCard title="Where funky storytelling meets craft.">
+              <StudioTextCard title="Crafting experiential worlds through story, design, and technology.">
                 <p>
                   Proctor House Studio is a cross-disciplinary creative studio
-                  developing original intellectual property at the intersection
-                  of storytelling, technology, and design. From retrofuturistic
+                  developing original intellectual property and experience-driven products at the intersection of storytelling, technology, and design. From retrofuturistic
                   robotics like Tomy 2000, to speculative science fiction epics
                   like Lavegavon, to handcrafted life card experiences, we bring
                   expressive, emotionally resonant products to life across
@@ -103,11 +102,9 @@ export default function Home() {
                 </p>
                 <br />
                 <p>
-                  We imagine worlds, design their artifacts, and deliver
-                  experiences that feel both personal and timeless. Our mission
-                  is to create artful, soulful products that{" "}
-                  <strong>expand consciousness</strong>—on the page, in the home,
-                  and in the imagination.
+                  Each project is conceived, art-directed, and built end-to-end, combining creative vision with systems thinking and production-level rigor. We imagine worlds, design their artifacts, and deliver
+                  experiences that feel both personal and timeless. Our mission is to create artful, soulful products and experiences that{" "}
+                  <strong>expand consciousness</strong>—on the page, in the home, and in the imagination.
                 </p>
               </StudioTextCard>
 
