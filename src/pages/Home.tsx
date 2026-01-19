@@ -1,16 +1,27 @@
 // src/pages/Home.tsx
 import { useEffect, useState } from "react";
+import { useLocation, useOutletContext } from "react-router-dom";
 import IntroLogo from "../components/brand/IntroLogo";
 import CarouselRail from "../components/media/CarouselRail";
 import StudioTextCard from "../components/studio/StudioTextCard";
 import StudioSectionCTA from "../components/studio/StudioSectionCTA";
 import StudioCardChain from "../components/studio/StudioCardChain";
 import HomeProjectsNav from "../components/navigation/HomeProjectsNav";
+import type { LayoutOutletContext } from "../components/layout/Layout";
 
 export default function Home() {
+  const { log, isNavOpen, railAnimClass } = useOutletContext<LayoutOutletContext>();
+  const { pathname } = useLocation();
   const [isCompact, setIsCompact] = useState<boolean>(false);
   const [showCarouselRail, setShowCarouselRail] = useState<boolean>(true);
 
+  useEffect(() => {
+    log("mount: pathname", pathname);
+  }, []);
+
+  useEffect(() => {
+    log("isNavOpen changed", { isNavOpen, railAnimClass });
+  }, [isNavOpen, railAnimClass]);
 
   useEffect(() => {
     const updateRailVisibility = () => {
@@ -26,7 +37,7 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const threshold = 220;
+      const threshold = 80;
       setIsCompact(window.scrollY > threshold);
     };
 

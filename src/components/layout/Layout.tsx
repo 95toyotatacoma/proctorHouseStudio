@@ -10,8 +10,21 @@ const NAV_DEMO_KEY = "phs_nav_demo_seen_v1";
 
 type RailAnim = "" | "nav-rail--entering" | "nav-rail--exiting";
 
+export type LayoutOutletContext = {
+  isNavOpen: boolean;
+  railAnimClass: RailAnim;
+  log: (msg: string, data?: any) => void;
+};
+
 export default function Layout() {
   const { pathname } = useLocation();
+  const t0 = useRef<number>(typeof performance !== "undefined" ? performance.now() : 0);
+  const log = (msg: string, data?: any) => {
+    const dt =
+      (typeof performance !== "undefined" ? performance.now() : 0) - t0.current;
+    // eslint-disable-next-line no-console
+    console.log(`[nav ${dt.toFixed(0)}ms] ${msg}`, data ?? "");
+  };
   // ✅ Scroll to top on route change (SPA behavior)
 useEffect(() => {
   if (typeof window === "undefined") return;
@@ -21,6 +34,7 @@ useEffect(() => {
 
   // If you want smooth:
   // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  log("route change", { pathname });
 }, [pathname]);
 
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -65,10 +79,12 @@ useEffect(() => {
     // nextNavOpen=false: panel closing, rail enters
     clearRailAnimTimer();
     setRailAnimClass(nextNavOpen ? "nav-rail--exiting" : "nav-rail--entering");
+    log("rail anim", { nextNavOpen });
 
     railAnimTimerRef.current = window.setTimeout(() => {
       setRailAnimClass("");
       railAnimTimerRef.current = null;
+      log("rail anim reset");
     }, 560); // slightly longer than your 520ms rail animation
   };
 
@@ -78,39 +94,52 @@ useEffect(() => {
 
     const hasSeenDemo = window.localStorage.getItem(NAV_DEMO_KEY) === "1";
 
+    log("demo: hasSeenDemo?", hasSeenDemo);
+
     if (hasSeenDemo) {
       setIsNavOpen(false);
+      log("demo already seen");
       return;
     }
 
     // First-time visitor: open nav (demo)
+    log("demo: opening nav");
     setIsNavOpen(true);
     triggerRailAnim(true);
+    log("demo open nav");
 
+    log("demo: scheduling auto-close 6000ms");
     autoCloseTimerRef.current = window.setTimeout(() => {
+      log("demo: auto-close firing");
       setIsNavOpen(false);
       triggerRailAnim(false);
       persistDemoSeen();
       autoCloseTimerRef.current = null;
+      log("demo auto-close");
     }, 6000);
 
     return () => {
       clearAutoCloseTimer();
       clearRailAnimTimer();
+      log("demo cleanup");
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const closeNav = () => {
+    log("closeNav()");
     setIsNavOpen(false);
     triggerRailAnim(false);
     cancelDemoTimerAndPersist();
+    log("close nav");
   };
 
   const toggleNav = () => {
+    log("toggleNav()");
     setIsNavOpen((prev) => {
       const next = !prev;
       triggerRailAnim(next);
+      log("toggle nav", { prev, next });
       return next;
     });
     cancelDemoTimerAndPersist();
@@ -130,7 +159,7 @@ useEffect(() => {
 
       <main className="section">
         <div className="section__inner">
-          <Outlet />
+          <Outlet context={{ isNavOpen, railAnimClass, log }} />
         </div>
       </main>
 

@@ -230,6 +230,8 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: clip;
+  scroll-snap-type: y proximity; /* or 'mandatory' if you want it stronger */
+  scroll-behavior: smooth;
 }
 
 
@@ -1652,6 +1654,8 @@ p {
 /* Projects nav layout */
 .home-projects-nav-wrapper {
   margin-top: var(--xxxl);
+  position: sticky;
+  top: 0;
 }
 
 /* When shell is compact: intro logo fades out, inline + projects fade in */
