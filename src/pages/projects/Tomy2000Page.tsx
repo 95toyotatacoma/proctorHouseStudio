@@ -5,7 +5,9 @@ import CarouselRail from "../../components/media/CarouselRail";
 import StudioTextCard from "../../components/studio/StudioTextCard";
 import CardTriImage from "../../components/media/CardTriImage";
 import PhotoBlock from "../../components/media/PhotoBlock";
-import StartupScreen from "../../components/TomyUI/screens/StartupScreen";
+import StandardLayoutSkeleton from "../../components/TomyUI/screens/StandardLayoutSkeleton";
+import { StartupSkeleton } 
+  from "../../components/TomyUI/screens/StartupSkeleton";
 
 export default function Tomy2000Page() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -91,9 +93,16 @@ export default function Tomy2000Page() {
                 </p>
               </StudioTextCard>
 
-              <section className="project-media-block">
-                <StartupScreen progress={18} />
-              </section>
+
+<section className="project-media-block">
+  <div className="tomy-embed">
+    <StartupSkeleton label="TOMY-startup-UI" />
+  </div>
+
+  <div className="tomy-embed">
+    <StandardLayoutSkeleton label="TOMY-panel-UI-day" />
+  </div>
+</section>
 
               <StudioTextCard title="Tomy’s Interface">
                 <p>We designed Tomy’s UI to reflect a deeply intuitive, playful, and functionally robust system that mirrors the personality and intelligence of the robot himself. Each panel and control was crafted to represent states of being—thinking, hearing, and speaking—not merely as utility feedback, but as expressions of presence and companionship.</p>

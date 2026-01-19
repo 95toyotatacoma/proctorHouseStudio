@@ -1,0 +1,1100 @@
+/* =========================
+   tomy-ui.css
+   Uses Aetheris Color System tokens (aetheris-colors.css)
+   ========================= */
+
+:root {
+  /* Locked authoring space */
+  --tomy-design-w: 488px;
+  --tomy-design-h: 264px;
+
+  --tomy-control-w: 135px;
+  --tomy-layout-gap: 13px;
+
+  /* Frame */
+  --tomy-frame-radius: 8px;
+
+  /* Use system tokens */
+  --tomy-frame-bg: var(--color_surface_primary);
+  --tomy-frame-border-color: var(--color_border_default);
+  --tomy-frame-border: 1px solid color-mix(in srgb, var(--tomy-frame-border-color) 55%, transparent);
+
+  /* Shadows should be device-like, keep but tokenize the color */
+  --tomy-shadow-color: color-mix(in srgb, var(--very_back) 70%, transparent);
+  --tomy-frame-shadow: 0 18px 40px color-mix(in srgb, var(--tomy-shadow-color) 55%, transparent);
+
+  /* Inner skeleton tiles (use elevated + hover overlay tokens instead of raw rgba) */
+  --tomy-inner-radius: 10px;
+  --tomy-inner-bg-strong: color-mix(in srgb, var(--color_surface_elevated) 70%, var(--color_hover));
+  --tomy-inner-bg-soft: color-mix(in srgb, var(--color_surface_elevated) 45%, transparent);
+
+  /* Spacing */
+  --tomy-gap: 12px;
+  --tomy-pad: 12px;
+
+  /* Startup layout */
+  --tomy-startup-inset-x: 44px;
+  --tomy-startup-inset-y: 94px;
+  --tomy-startup-stack-w: 400px;
+  --tomy-startup-gap: 24px;
+
+  /* Startup progress */
+  --tomy-progress-h: 12px;
+  --tomy-progress-radius: 999px;
+
+  /* Track/inset tokens */
+  --tomy-progress-track: color-mix(in srgb, var(--color_text_primary) 10%, transparent);
+  --tomy-progress-inset: 0 0 0 1px color-mix(in srgb, var(--color_text_primary) 8%, transparent) inset;
+
+  /* Progress fill tokens */
+  --tomy-progress-fill-a: color-mix(in srgb, var(--color_accent_primary) 85%, transparent);
+  --tomy-progress-fill-b: color-mix(in srgb, var(--color_accent_primary) 35%, transparent);
+  --tomy-progress-fill-outline: color-mix(in srgb, var(--color_accent_primary) 22%, transparent);
+
+  /* Typography */
+  --tomy-title-font: "Lexend Giga", system-ui, sans-serif;
+  --tomy-title-size: 36px;
+  --tomy-title-line: 44px;
+  --tomy-title-weight: 400;
+
+  /* Startup title gradient tokens */
+  --tomy-title-opacity: 0.75;
+  --tomy-title-grad-0: var(--color_accent_secondary);
+  --tomy-title-grad-1: var(--color_accent_primary);
+  --tomy-title-grad-2: var(--color_white_shapes);
+  --tomy-title-grad-3: var(--color_bluetooth);
+
+  --tomy-time-w: 135px;
+  --tomy-time-h: 52px;
+  --tomy-time-pad: 16px;
+  --tomy-time-gap: 10px;
+  --tomy-time-radius: 8px;
+
+  --tomy-skeu-size: 52px;
+  --tomy-skeu-radius: 9999px;
+
+  /* sizes derived from your Figma export */
+  --tomy-skeu-mid: 43.034px;
+  --tomy-skeu-inner: 39.448px;
+
+  --tomy-vol-w: 135px;
+  --tomy-vol-h: 94px;
+  --tomy-vol-radius: 8px;
+
+  --tomy-vol-pad: 10px;
+  --tomy-vol-gap: 10px;
+
+  --tomy-bars-gap: 2px;
+  --tomy-bar-w: 8px;
+  --tomy-bar-h: 20px;
+  --tomy-bar-radius: 9999px;
+
+  --tomy-toggle-w: 52px;
+  --tomy-toggle-h: 30px;
+  --tomy-toggle-radius: 9999px;
+  --tomy-toggle-pad: 5px;              /* knob inset from edge */
+  --tomy-toggle-well-inset: 3px;       /* inner well inset */
+
+  --tomy-toggle-knob: 22px;            /* circular knob diameter */
+  --tomy-toggle-icon-size: 16px;
+
+  --tomy-toggle-border: 1px solid var(--color_border_default);
+}
+
+/* ================================
+   PAGE EMBED WRAPPER (centered)
+   ================================ */
+
+.tomy-embed {
+  width: 100%;
+  display: grid;
+  justify-items: center;
+  padding-block: var(--big);
+}
+
+/* ================================
+   TOMY SCREEN WRAPPER
+   ================================ */
+
+.tomy-screen {
+  width: 100%;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+}
+
+.tomy-screen__label {
+  font-size: 12px;
+  opacity: 0.6;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  /* Tokenized label color */
+  color: var(--color_text_secondary);
+}
+
+/* ================================
+   SINGLE SOURCE OF TRUTH: FRAME
+   ================================ */
+
+.tomy-screen-frame {
+  width: var(--tomy-design-w);
+  height: var(--tomy-design-h);
+  box-sizing: border-box;
+
+  /* frame visuals (restore radius + device look) */
+  border-radius: var(--tomy-frame-radius);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+
+  /* IMPORTANT: do not center contents */
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+
+  /* clip to the rounded frame */
+  overflow: visible;
+}
+
+/* ================================
+   STANDARD LAYOUT (inside frame)
+   ================================ */
+/* The UI layout must fill the full canvas */
+.tomy-layout {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+
+  display: inline-flex; /* ok to keep */
+  align-items: flex-start;
+  gap: var(--tomy-layout-gap);
+
+  /* prevent shrinking/clipping */
+  min-width: 0;
+}
+
+/* RIGHT control panel is fixed 135x264 */
+.tomy-layout__right {
+  width: var(--tomy-control-w);
+  height: 100%;
+  box-sizing: border-box;
+
+  flex: 0 0 var(--tomy-control-w);
+  min-width: var(--tomy-control-w);
+}
+
+/* LEFT takes remaining width */
+.tomy-layout__left {
+  height: 100%;
+  box-sizing: border-box;
+
+  flex: 1 1 auto;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tomy-layout__main {
+  border-radius: var(--tomy-inner-radius);
+  background: var(--tomy-inner-bg-strong);
+  border: 1px solid color-mix(in srgb, var(--color_border_default) 35%, transparent);
+}
+
+.tomy-layout__sub {
+  border-radius: var(--tomy-inner-radius);
+  background: var(--tomy-inner-bg-soft);
+  border: 1px solid color-mix(in srgb, var(--color_border_default) 25%, transparent);
+}
+
+
+/* Optional helper if you keep the class */
+.tomy-rect {
+  background: inherit;
+}
+
+/* ================================
+   STARTUP SCREEN (inside frame)
+   2 vertical sections:
+   1) name
+   2) progress bar
+   ================================ */
+
+.tomy-startup {
+  width: 100%;
+  height: 100%;
+  
+  /* This is the full-bleed slab that hides the page bg */
+  background: var(--color_surface_primary);
+  padding: var(--tomy-startup-inset-y) var(--tomy-startup-inset-x);
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--tomy-startup-gap);
+
+    /* If you want rounded startup slab corners like your screenshot */
+  border-radius: var(--tomy-frame-radius);
+  border: 1px solid var(--color_border_default);
+  box-shadow: var(--tomy-frame-shadow);
+}
+
+/* 1) Name row — fixed stack width */
+.tomy-startup__name {
+  width: var(--tomy-startup-stack-w);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+
+  padding: 0;
+  user-select: none;
+}
+
+/* STARTUP TITLE — type_display_medium */
+.tomy-startup__word,
+.tomy-startup__year {
+  font-family: var(--tomy-title-font);
+  font-size: var(--tomy-title-size);
+  font-style: normal;
+  font-weight: var(--tomy-title-weight);
+  line-height: var(--tomy-title-line);
+  letter-spacing: 0;
+
+  opacity: var(--tomy-title-opacity);
+
+  background: linear-gradient(
+    90deg,
+    var(--tomy-title-grad-0) 0%,
+    var(--tomy-title-grad-1) 31.73%,
+    var(--tomy-title-grad-2) 65.87%,
+    var(--tomy-title-grad-3) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* subtle depth */
+  filter: drop-shadow(0 8px 18px color-mix(in srgb, var(--very_back) 65%, transparent));
+}
+
+/* 2) Progress row — same fixed width */
+.tomy-startup__progress {
+  width: var(--tomy-startup-stack-w);
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+
+/* Track */
+.tomy-progress {
+  width: 100%;
+  height: 8px;
+
+  border-radius: var(--tomy-progress-radius);
+  border: 1px solid var(--color_border_default);
+  background: var(--color_surface_elevated);
+
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Fill (real fill from left to right) */
+.tomy-progress__fill {
+  height: 100%;
+  width: var(--tomy-progress-value, 20%); /* default if you don't set it */
+
+  background: var(--color_accent_primary);
+  border-radius: var(--tomy-progress-radius);
+
+  /* make sure it hugs the left edge */
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* Startup title gradient animation */
+@keyframes tomyGradientFlow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.tomy-startup__word,
+.tomy-startup__year {
+  background-size: 200% 100%;
+  animation: tomyGradientFlow 2.4s linear infinite;
+}
+
+/* Existing loading sweep */
+@keyframes tomyLoadingSweep {
+  0%   { transform: translateX(-60%); opacity: 0.65; }
+  50%  { transform: translateX(210%); opacity: 1; }
+  100% { transform: translateX(520%); opacity: 0.65; }
+}
+
+/* ================================
+   STANDARD DAY UI (right controls)
+   ================================ */
+
+.tomy-time-panel {
+  width: 100%;
+  height: var(--tomy-time-h);
+  padding: var(--tomy-time-pad);
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: row;          /* time left, icon right */
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tomy-time-gap);
+
+  border-radius: var(--tomy-time-radius);
+  border: 1px solid var(--color_border_default);
+  background: var(--color_surface_primary);
+
+  /* Figma says elevation_0 (no shadow) */
+  box-shadow: none;
+}
+
+/* Time text */
+.tomy-time-panel__time {
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.33; /* close to 53.335px */
+
+  letter-spacing: -0.01em;
+  color: var(--color_text_primary);
+
+  /* improves numeric rendering */
+  font-variant-numeric: tabular-nums;
+}
+
+/* Placeholder icon (swap later) */
+.tomy-time-panel__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+
+  /* placeholder styling */
+  background: color-mix(in srgb, var(--color_accent_tertiary) 80%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color_border_default) 40%, transparent) inset;
+  opacity: 0.95;
+}
+
+/* ================================
+   SKEU BUTTON (component)
+   ================================ */
+
+/* Button is the clipping + positioning context */
+.tomy-skeu-btn {
+  width: var(--tomy-skeu-size);
+  height: var(--tomy-skeu-size);
+  border-radius: var(--tomy-skeu-radius);
+
+  position: relative;
+  display: grid;
+  place-items: center;
+
+  background: transparent;
+  border: 0;
+  padding: 0;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+/* All layers must be OVERLAY, not flow layout */
+.tomy-skeu-layers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Every layer is absolutely centered */
+.tomy-skeu-outer,
+.tomy-skeu-mid,
+.tomy-skeu-inner,
+.tomy-skeu-inner-reflect {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  border-radius: var(--tomy-skeu-radius);
+}
+
+/* OUTER (52) */
+.tomy-skeu-outer {
+  width: var(--tomy-skeu-size);
+  height: var(--tomy-skeu-size);
+
+  background: var(--color_surface_elevated);
+  border: 1px solid var(--color_border_default);
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* MID (43.034) — moat */
+.tomy-skeu-mid {
+  width: var(--tomy-skeu-mid);
+  height: var(--tomy-skeu-mid);
+
+  background: var(--color_surface_primary);
+  box-shadow: inset 0 0 2px 3px rgba(0, 0, 0, 0.30);
+}
+
+/* INNER (39.448) */
+.tomy-skeu-inner {
+  width: var(--tomy-skeu-inner);
+  height: var(--tomy-skeu-inner);
+
+  background: var(--color_surface_elevated);
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* reflection_edge overlay */
+.tomy-skeu-inner-reflect {
+  width: var(--tomy-skeu-inner);
+  height: var(--tomy-skeu-inner);
+
+  background: transparent;
+  box-shadow: inset 0 3px 2.5px -3px rgba(255, 255, 255, 0.25);
+}
+
+/* Icon wrapper centered and ABOVE layers */
+.tomy-skeu-iconWrap {
+  position: relative;
+  z-index: 2;
+
+  width: 16px;
+  height: 16px;
+
+  display: grid;
+  place-items: center;
+}
+
+/* SVG icon */
+.tomy-skeu-icon {
+  width: 100%;
+  height: 100%;
+  color: var(--color_contained_secondary);
+  opacity: 0.9;
+}
+
+/* Active / accent */
+.tomy-skeu-btn.is-active .tomy-skeu-icon {
+  color: var(--color_accent_primary);
+  opacity: 0.95;
+}
+
+/* Pressed state — INNER FACE */
+.tomy-skeu-btn:active .tomy-skeu-inner,
+.tomy-skeu-btn.is-pressed .tomy-skeu-inner {
+  box-shadow:
+    inset 0 0 2px 3px rgba(0, 0, 0, 0.30);
+}
+
+/* Icon lights up on press */
+.tomy-skeu-btn:active .tomy-skeu-icon,
+.tomy-skeu-btn.is-pressed .tomy-skeu-icon {
+  color: var(--color_accent_primary);
+  opacity: 0.95;
+}
+
+.tomy-controls {
+  height: 100%;
+}
+
+/* ================================
+   VOLUME PANEL
+   135 x 94, radius 8, border, surface primary
+   ================================ */
+
+.tomy-vol-panel {
+  width: 100%;
+  height: var(--tomy-vol-h);
+
+  border-radius: var(--tomy-vol-radius);
+  border: 1px solid var(--color_border_default);
+
+  /* subtle surface lift like mock */
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color_surface_primary) 92%, var(--color_surface_elevated)) 0%,
+    var(--color_surface_primary) 100%
+  );
+
+  box-sizing: border-box;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 1px;
+
+  /* inner stroke + gentle inset */
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--color_border_default) 35%, transparent) inset,
+    0 10px 18px color-mix(in srgb, var(--very_back) 35%, transparent);
+}
+
+/* Top row: icon + bars */
+.tomy-vol-display {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Placeholder “speaker” icon */
+.tomy-vol-display__icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+
+  opacity: 0.65;
+  background: color-mix(in srgb, var(--color_text_secondary) 35%, transparent);
+
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color_border_default) 35%, transparent) inset;
+}
+
+/* Bars container */
+.tomy-vol-bars {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--tomy-bars-gap);
+  min-width: 0;
+}
+
+/* Individual bar */
+.tomy-vol-bars__bar {
+  width: var(--tomy-bar-w);
+  height: var(--tomy-bar-h);
+  border-radius: var(--tomy-bar-radius);
+}
+
+/* On / Off states */
+.tomy-vol-bars__bar.is-on {
+  background: var(--color_accent_primary);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color_accent_primary) 45%, transparent);
+  opacity: 0.95;
+}
+
+.tomy-vol-bars__bar.is-off {
+  background: color-mix(in srgb, var(--very_back) 55%, transparent);
+  opacity: 0.7;
+}
+
+/* Bottom row: two skeu buttons */
+.tomy-vol-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding-top: 2px;
+}
+
+.tomy-vol-display__icon.is-muted {
+  opacity: 0.55;
+  background: color-mix(in srgb, var(--color_text_secondary) 20%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--color_border_default) 35%, transparent) inset,
+    0 0 10px color-mix(in srgb, var(--color_accent_secondary) 35%, transparent);
+}
+
+/* ================================
+   SMALL TOGGLE (52 x 30)
+   off | on | connected
+   ================================ */
+
+/* Outer capsule button */
+.tomy-toggle {
+  width: var(--tomy-toggle-w, 52px);
+  height: var(--tomy-toggle-h, 30px);
+  border-radius: var(--tomy-toggle-radius, 9999px);
+  border: var(--tomy-toggle-border, 1px solid var(--color_border_default));
+
+  background: var(--color_surface_elevated);
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  box-sizing: border-box;
+
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--color_border_default) 35%, transparent) inset,
+    4px 4px 6px color-mix(in srgb, var(--very_back) 25%, transparent);
+
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tomy-toggle:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color_accent_primary) 70%, transparent);
+  outline-offset: 2px;
+}
+
+.tomy-toggle.is-disabled,
+.tomy-toggle:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Inner “well” */
+.tomy-toggle::after {
+  content: "";
+  position: absolute;
+  inset: var(--tomy-toggle-well-inset, 3px);
+  border-radius: inherit;
+
+  background: var(--color_surface_primary);
+  box-shadow: inset 0 0 3.556px 5.333px rgba(0, 0, 0, 0.30);
+
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ---- Icon slot (left) ---- */
+.tomy-toggle__iconSlot {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+
+  width: var(--tomy-toggle-icon-size, 16px);
+  height: var(--tomy-toggle-icon-size, 16px);
+  display: grid;
+  place-items: center;
+
+  color: var(--color_text_secondary);
+  opacity: 0.85;
+
+  pointer-events: none; /* keeps the whole button reliably clickable */
+}
+
+/* Force svg to 16x16 and inherit color */
+.tomy-toggle__icon {
+  width: var(--tomy-toggle-icon-size, 16px);
+  height: var(--tomy-toggle-icon-size, 16px);
+  aspect-ratio: 1 / 1;
+  display: block;
+  color: inherit;
+}
+
+.tomy-toggle__icon path,
+.tomy-toggle__icon circle {
+  stroke: currentColor;
+  fill: currentColor;
+}
+
+/* State coloring */
+.tomy-toggle.is-off .tomy-toggle__iconSlot {
+  color: var(--color_text_secondary);
+  opacity: 0.75;
+}
+
+.tomy-toggle.is-on .tomy-toggle__iconSlot {
+  color: var(--color_text_secondary);
+  opacity: 0.9;
+}
+
+.tomy-toggle.is-connected.tomy-toggle--bluetooth .tomy-toggle__iconSlot {
+  color: var(--color_bluetooth);
+  opacity: 1;
+}
+
+.tomy-toggle.is-connected.tomy-toggle--wifi .tomy-toggle__iconSlot {
+  color: var(--color_text_primary);
+  opacity: 0.95;
+}
+
+/* ---- Knob (right or left) ---- */
+.tomy-toggle__knob {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+
+  /* 2px smaller so it doesn't kiss the top/bottom of the well */
+  width: calc(var(--tomy-toggle-knob, 22px) - 2px);
+  height: calc(var(--tomy-toggle-knob, 22px) - 2px);
+  border-radius: 9999px;
+
+  border: 1px solid var(--color_border_default);
+  background: var(--color_surface_elevated);
+
+  /* reflection_edge */
+  box-shadow: 0 3px 2.5px -3px rgba(255, 255, 255, 0.25) inset;
+
+  flex: none;
+  pointer-events: none; /* prevents “first click does nothing” */
+}
+
+/* OFF: knob left */
+.tomy-toggle.is-off .tomy-toggle__knob {
+  left: var(--tomy-toggle-pad, 5px);
+  right: auto;
+}
+
+/* ON/CONNECTED: knob right */
+.tomy-toggle.is-on .tomy-toggle__knob,
+.tomy-toggle.is-connected .tomy-toggle__knob {
+  right: var(--tomy-toggle-pad, 5px);
+  left: auto;
+}
+
+/* Inner face inside knob (creates the moat) */
+.tomy-toggle__knobInner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  /* pill size from mock */
+  width: var(--tomy-toggle-indicator-w, 10px);
+  height: var(--tomy-toggle-indicator-h, 4px);
+  border-radius: 9999px;
+
+  /* OFF state default */
+  background: var(--color_contained_secondary);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0); /* elevation_0 */
+  z-index: 2;
+}
+
+/* glow layer behind the pill (only visible when ON) */
+.tomy-toggle__pin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  width: var(--tomy-toggle-indicator-w, 10px);
+  height: var(--tomy-toggle-indicator-h, 4px);
+  border-radius: 9999px;
+
+  background: var(--color_accent_primary);
+  filter: blur(var(--tomy-toggle-glow-blur, 1.85px));
+
+  opacity: 0;          /* OFF */
+  z-index: 1;          /* behind knobInner */
+  pointer-events: none;
+}
+
+/* ON state: teal pill + glow */
+.tomy-toggle.is-on .tomy-toggle__knobInner {
+  background: var(--color_accent_primary);
+}
+
+.tomy-toggle.is-on .tomy-toggle__pin {
+  opacity: 1;
+}
+
+
+
+
+/* ================================
+   TOGGLE ROW DIVIDER (vertical bar)
+   ================================ */
+.tomy-toggle-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;          /* <-- important */
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: nowrap;            /* never wrap */
+}
+
+/* Keep each toggle from shrinking weirdly */
+.tomy-toggle-row .tomy-toggle {
+  flex: 0 0 auto;
+}
+
+/* Divider between toggles */
+.tomy-toggle-row__divider {
+  flex: 0 0 auto;
+  width: 4px;
+  height: 24px;
+  border-radius: var(--radius_full, 9999px);
+  background: var(--color_surface_90p, rgba(26, 29, 35, 0.90));
+}
+
+/* ================================
+   MAIN CONTROL PANEL (wrapper)
+   Figma: width 135px; flex-col; gap 12px
+   ================================ */
+.tomy-main-control {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 11px;
+}
+
+/* Make each child panel fill the 135px column */
+.tomy-main-control > * {
+  width: 100%;
+}
+
+
+/* Shared 2-up row with a centered divider */
+.tomy-control-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  justify-items: center;
+  gap: 12px; /* matches your Figma “12” spacing callouts */
+}
+
+/* Divider (same visual as your mock) */
+.tomy-control-row__divider {
+  width: 4px;
+  height: 24px;
+  border-radius: var(--radius_full, 9999px);
+  background: var(--color_surface_90p, rgba(26, 29, 35, 0.9));
+}
+
+/* Bottom row: settings + divider + power */
+.tomy-control-buttons {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tomy-control-buttons-gap, 12px);
+}
+
+.tomy-control-buttons > .tomy-skeu-btn {
+  justify-self: center;
+}
+
+/* ================================
+   MAIN DISPLAY (left card)
+   ================================ */
+:root {
+  /* main display sizing from your spec */
+  --tomy-main-display-h: 154px;
+  --tomy-main-display-pad-y: 16px;
+  --tomy-main-display-pad-x: var(--space_xl, 24px);
+  --tomy-main-display-gap: var(--grid_gap_xs, 4px);
+  --tomy-main-display-radius: var(--radius_md, 8px);
+  --tomy-main-display-border: 1px solid var(--color_border_default);
+
+  /* header */
+  --tomy-main-display-header-w: 306px; /* your spec */
+  --tomy-main-display-header-gap: 10px;
+
+  --tomy-label-font: Inter, system-ui, sans-serif;
+  --tomy-label-size: 12px;
+  --tomy-label-line: 16px;
+  --tomy-label-weight: 400;
+
+  --tomy-wifi-w: 16px;
+  --tomy-wifi-h: 11.924px;
+
+  --tomy-mic-size: 16px;
+  --tomy-mic-radius: 9999px;
+}
+
+.tomy-main-display {
+  width: 100%;
+  height: var(--tomy-main-display-h);
+  padding: var(--tomy-main-display-pad-y) var(--tomy-main-display-pad-x);
+  box-sizing: border-box;
+
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--tomy-main-display-gap);
+
+  border-radius: var(--tomy-main-display-radius);
+  border: var(--tomy-main-display-border);
+  background: var(--color_surface_primary);
+
+  /* elevation_0 */
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0);
+}
+
+.tomy-main-display__header {
+  width: var(--tomy-main-display-header-w);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+
+  color: var(--color_text_secondary);
+  font-family: var(--tomy-label-font);
+  font-size: var(--tomy-label-size);
+  font-weight: var(--tomy-label-weight);
+  line-height: var(--tomy-label-line);
+  text-transform: uppercase;
+}
+
+.tomy-main-display__headerLeft {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tomy-main-display-header-gap);
+  min-width: 0;
+}
+
+.tomy-main-display__wifi {
+  width: var(--tomy-wifi-w);
+  height: var(--tomy-wifi-h);
+  flex: 0 0 auto;
+  color: inherit;
+  opacity: 0.95;
+}
+
+.tomy-main-display__title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* mic indicator placeholder */
+.tomy-main-display__mic {
+  width: var(--tomy-mic-size);
+  height: var(--tomy-mic-size);
+  border-radius: var(--tomy-mic-radius);
+  flex: 0 0 auto;
+
+  /* placeholder off state */
+  background: color-mix(in srgb, var(--color_text_secondary) 25%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color_border_default) 35%, transparent) inset;
+  opacity: 0.8;
+}
+
+.tomy-main-display__mic.is-on {
+  background: var(--color_accent_secondary);
+  opacity: 0.95;
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--color_accent_secondary) 45%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--color_border_default) 35%, transparent) inset;
+}
+
+/* empty future containers (no styling yet, just reserved hooks) */
+.tomy-main-display__content {
+  width: 100%;
+  flex: 1 1 auto;
+}
+
+/* ================================
+   MAIN DISPLAY DIALOGUE (340w)
+   4 variants: titleSubtext | multiline | loading | subtextOnly
+   ================================ */
+
+:root {
+  --tomy-dialogue-w: 340px;
+  --tomy-dialogue-pad: var(--space_lg, 16px);
+  --tomy-dialogue-gap: 10px;
+  --tomy-dialogue-radius: var(--grid_gap_sm, 8px);
+  --tomy-dialogue-border: 1px solid var(--color_border_default);
+  --tomy-dialogue-bg: var(--color_surface_primary);
+
+  --tomy-dialogue-title-font: "Montserrat", system-ui, sans-serif;
+  --tomy-dialogue-title-size: 22px;
+  --tomy-dialogue-title-line: 30px;
+  --tomy-dialogue-title-weight: 500;
+
+  --tomy-dialogue-body-font: Inter, system-ui, sans-serif;
+  --tomy-dialogue-body-size: 16px;
+  --tomy-dialogue-body-line: 24px;
+  --tomy-dialogue-body-weight: 500;
+
+  --tomy-dialogue-conn-gap: 6px;
+  --tomy-dialogue-dot-w: 10px;
+  --tomy-dialogue-dot-h: 4px;
+  --tomy-dialogue-dot-radius: var(--radius_full, 9999px);
+}
+
+.tomy-dialogue {
+  display: flex;
+  width: var(--tomy-dialogue-w);
+  padding: var(--tomy-dialogue-pad);
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--tomy-dialogue-gap);
+
+  border-radius: var(--tomy-dialogue-radius);
+  border: var(--tomy-dialogue-border);
+  background: var(--tomy-dialogue-bg);
+
+  /* elevation_0 */
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0);
+
+  box-sizing: border-box;
+}
+
+.tomy-dialogue.is-disabled {
+  opacity: 0.6;
+}
+
+/* Title */
+.tomy-dialogue__title {
+  margin: 0;
+  color: var(--color_text_primary);
+
+  font-family: var(--tomy-dialogue-title-font);
+  font-size: var(--tomy-dialogue-title-size);
+  font-weight: var(--tomy-dialogue-title-weight);
+  line-height: var(--tomy-dialogue-title-line);
+}
+
+/* Subtext */
+.tomy-dialogue__subtext {
+  margin: 0;
+  color: var(--color_text_secondary);
+
+  font-family: var(--tomy-dialogue-body-font);
+  font-size: var(--tomy-dialogue-body-size);
+  font-weight: var(--tomy-dialogue-body-weight);
+  line-height: var(--tomy-dialogue-body-line);
+}
+
+/* Layout helpers */
+.tomy-dialogue__stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tomy-dialogue__row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tomy-dialogue-gap);
+}
+
+/* Connection indicator */
+.tomy-dialogue__conn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tomy-dialogue-conn-gap);
+  flex: 0 0 auto;
+}
+
+.tomy-dialogue__dot {
+  width: var(--tomy-dialogue-dot-w);
+  height: var(--tomy-dialogue-dot-h);
+  border-radius: var(--tomy-dialogue-dot-radius);
+}
+
+.tomy-dialogue__dot.is-on {
+  background: var(--color_accent_primary);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color_accent_primary) 45%, transparent);
+  opacity: 0.95;
+}
+
+.tomy-dialogue__dot.is-off {
+  background: color-mix(in srgb, var(--very_back) 55%, transparent);
+  opacity: 0.7;
+}

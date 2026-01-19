@@ -1,0 +1,128 @@
+/* =========================================================
+   AETHERIS COLOR SYSTEM (Shared)
+   Source: "Aetheris Color System.json"
+   Modes:
+   - Dark Mode (default)
+   - Light Mode via: html[data-theme="light"]
+
+   NOTE:
+   - Keep these as semantic tokens (color_surface_primary, etc.)
+   - Component CSS (Tomy, Aetheris) should reference these tokens
+   ========================================================= */
+
+/* -------------------------
+   DEFAULT = DARK MODE
+   ------------------------- */
+:root {
+  /* Backgrounds / Surfaces */
+  --very_back: rgb(15, 14, 23);
+  --color_surface_primary: rgb(26, 29, 35);
+  --color_surface_elevated: rgb(42, 47, 55);
+  --color_panel: rgb(19, 22, 32);
+
+  /* Text */
+  --color_text_primary: rgb(245, 246, 249);
+  --color_text_secondary: rgb(170, 176, 185);
+  --color_text_storytelling: rgb(221, 218, 180);
+  --color_text_destruct: rgb(255, 255, 255);
+
+  /* Accents */
+  --color_accent_primary: rgb(23, 190, 187);
+  --color_accent_secondary: rgb(205, 147, 255);
+  --color_accent_tertiary: rgb(216, 143, 0);
+
+  /* Status */
+  --color_status_success: rgb(30, 252, 30);
+  --color_status_attention: rgb(210, 255, 6);
+  --color_status_critical: rgb(255, 63, 29);
+
+  /* Borders / UI */
+  --color_border_default: rgb(57, 64, 72);
+  --color_hover: rgba(255, 255, 255, 0.22);
+  --color_disabled: rgb(121, 121, 121);
+
+  /* Utility */
+  --color_white_shapes: rgb(218, 218, 218);
+  --color_bluetooth: rgb(26, 129, 255);
+
+  /* Contained */
+  --color_contained_primary: rgb(0, 0, 0);
+  --color_contained_secondary: rgb(121, 121, 121);
+
+  /* Surface opacity variants (explicit tokens) */
+  --color_surface_75p: rgba(26, 29, 35, 0.75);
+  --color_surface_85p: rgba(26, 29, 35, 0.85);
+  --color_surface_90p: rgba(26, 29, 35, 0.90);
+}
+
+/* -------------------------
+   LIGHT MODE OVERRIDES
+   ------------------------- */
+html[data-theme="light"] {
+  /* Backgrounds / Surfaces */
+  --very_back: rgb(228, 228, 228);
+  --color_surface_primary: rgb(248, 248, 248);
+  --color_surface_elevated: rgb(227, 231, 237);
+  --color_panel: rgb(254, 255, 241);
+
+  /* Text */
+  --color_text_primary: rgb(11, 12, 16);
+  --color_text_secondary: rgb(94, 103, 112);
+  --color_text_storytelling: rgb(11, 12, 16);
+  --color_text_destruct: rgb(255, 255, 255);
+
+  /* Accents (same in your system) */
+  --color_accent_primary: rgb(23, 190, 187);
+  --color_accent_secondary: rgb(205, 147, 255);
+  --color_accent_tertiary: rgb(216, 143, 0);
+
+  /* Status */
+  --color_status_success: rgb(30, 252, 30);
+  --color_status_attention: rgb(210, 255, 6);
+  --color_status_critical: rgb(201, 45, 18);
+
+  /* Borders / UI */
+  --color_border_default: rgb(198, 206, 216);
+  --color_hover: rgba(0, 0, 0, 0.12);
+  --color_disabled: rgb(121, 121, 121);
+
+  /* Utility */
+  --color_white_shapes: rgb(11, 12, 16);
+  --color_bluetooth: rgb(201, 45, 18);
+
+  /* Contained */
+  --color_contained_primary: rgb(0, 0, 0);
+  --color_contained_secondary: rgb(121, 121, 121);
+
+  /* Surface opacity variants (explicit tokens) */
+  --color_surface_75p: rgba(248, 248, 248, 0.75);
+  --color_surface_85p: rgba(248, 248, 248, 0.85);
+  --color_surface_90p: rgba(248, 248, 248, 0.90);
+}
+
+/* -------------------------
+   OPTIONAL: auto-theme helper
+   (only if you want it)
+   ------------------------- */
+/*
+@media (prefers-color-scheme: light) {
+  html:not([data-theme]) {
+    --very_back: rgb(228, 228, 228);
+    --color_surface_primary: rgb(248, 248, 248);
+    --color_surface_elevated: rgb(227, 231, 237);
+    --color_panel: rgb(254, 255, 241);
+
+    --color_text_primary: rgb(11, 12, 16);
+    --color_text_secondary: rgb(94, 103, 112);
+    --color_border_default: rgb(198, 206, 216);
+    --color_hover: rgba(0, 0, 0, 0.12);
+
+    --color_white_shapes: rgb(11, 12, 16);
+    --color_bluetooth: rgb(201, 45, 18);
+
+    --color_surface_75p: rgba(248, 248, 248, 0.75);
+    --color_surface_85p: rgba(248, 248, 248, 0.85);
+    --color_surface_90p: rgba(248, 248, 248, 0.90);
+  }
+}
+*/

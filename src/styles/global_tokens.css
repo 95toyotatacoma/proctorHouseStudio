@@ -2096,7 +2096,8 @@ p {
 
   display: flex;
   flex-direction: column;
-  gap: var(--jumbo);
+  align-items: center;
+  gap: var(--big);
 }
 
 /* Make the block a GRID so column modifiers work */
