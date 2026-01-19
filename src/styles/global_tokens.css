@@ -211,17 +211,7 @@
   --studio-chain-gap-y: var(--space_xxxxl); /* you said: --xxxxl (keep your naming) */
 }
 
-@media (max-width: 719px) {
-  :root {
-    --inline-logo-scale: var(--mobile-inline-logo-scale);
-    --projects-nav-scale: var(--mobile-projects-nav-scale);
-    --projects-nav-gap: var(--mobile-projects-nav-gap);
-    --projects-nav-font-size: var(--mobile-projects-nav-font);
-    --carousel-rail-width: 0px;
-    --carousel-rail-gap: 0px;
-    --page-offset-x: 0px;
-  }
-}
+
 
 
 
@@ -881,7 +871,9 @@ p {
   overflow: hidden;
   background-color: var(--stone-shell);
 }
-
+/* -------------------------------------------------------------------------
+   Left Nav Rail
+   ------------------------------------------------------------------------ */
 /* Left nav rail */
 .nav-rail {
   position: fixed;
@@ -995,7 +987,9 @@ p {
   opacity: 0;
   pointer-events: none;
 }
-
+/* -------------------------------------------------------------------------
+   Nav panel animations
+   ------------------------------------------------------------------------ */
 /* Jiggle settle when opening */
 @keyframes nav-settle {
   0%   { transform: translateX(0) scale(0.98); }
@@ -1004,8 +998,39 @@ p {
   100% { transform: translateX(0) scale(1); }
 }
 
+@keyframes nav-exit-settle {
+  0%   { transform: translateX(0) scale(1); opacity: 1; }
+  35%  { transform: translateX(10px) scale(1.01); opacity: 1; } /* tiny “push” */
+  100% { transform: translateX(calc(-1 * var(--nav-panel-offset))) scale(0.98); opacity: 0; }
+}
+
+@keyframes rail-settle-in {
+  0%   { transform: translateX(calc(-1 * var(--nav-panel-offset))) scale(0.98); opacity: 0; }
+  60%  { transform: translateX(0) scale(1.02); opacity: 1; }
+  100% { transform: translateX(0) scale(1); opacity: 1; }
+}
+
+@keyframes rail-exit {
+  0%   { transform: translateX(0) scale(1); opacity: 1; }
+  100% { transform: translateX(calc(-1 * var(--nav-panel-offset))) scale(0.98); opacity: 0; }
+}
+
 .nav-shell--open .nav-main {
   animation: nav-settle 520ms cubic-bezier(.22,.61,.36,1) both;
+}
+
+/* When closing: bounce out */
+.nav-main.nav-main--closed {
+  animation: nav-exit-settle 520ms cubic-bezier(.22,.61,.36,1) both;
+  transition: none; /* prevent transition fighting the animation */
+}
+
+.nav-rail.nav-rail--entering {
+  animation: rail-settle-in 520ms cubic-bezier(.22,.61,.36,1) both;
+}
+
+.nav-rail.nav-rail--exiting {
+  animation: rail-exit 420ms cubic-bezier(.22,.61,.36,1) both;
 }
 
 /* “Smart animate” targets */
@@ -1083,6 +1108,59 @@ p {
   will-change: transform;
 
   animation: carousel-scroll var(--carousel-scroll-duration) linear infinite;
+}
+
+/* Track stacking context so overlay can sit above */
+.carousel-rail__track {
+  position: relative;
+  z-index: 1;
+}
+
+/* Pause/Play overlay button (desktop + all sizes that show the rail) */
+.carousel-rail__toggle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 50;
+
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: rgba(0, 0, 0, 0.55);
+  color: var(--it-s-white);
+  box-shadow: var(--effect-outer-shadow);
+
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  opacity: 0.72;
+  transition: opacity 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.carousel-rail:hover .carousel-rail__toggle,
+.carousel-rail__toggle:focus-visible {
+  opacity: 1;
+}
+
+.carousel-rail__toggle:hover {
+  background: rgba(0, 0, 0, 0.68);
+}
+
+.carousel-rail__toggle:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, 0.35);
+  outline-offset: 3px;
+}
+
+/* Pause the animation when rail is paused */
+.carousel-rail__track.is-paused {
+  animation-play-state: paused;
 }
 
 /* One card – beige rounded rect that fills the rail width */
@@ -2622,15 +2700,69 @@ MEDIA QUERIES FOR HOME PAGE
 
 @media (max-width: 719px) {
 
+  :root {
+    --inline-logo-scale: var(--mobile-inline-logo-scale);
+    --projects-nav-scale: var(--mobile-projects-nav-scale);
+    --projects-nav-gap: var(--mobile-projects-nav-gap);
+    --projects-nav-font-size: var(--mobile-projects-nav-font);
+    --carousel-rail-width: 0px;
+    --carousel-rail-gap: 0px;
+    --page-offset-x: 0px;
+  }
+
   .home-shell--no-hero .home-divider-group {
   margin-top: 0;
   padding-top: 0;
 }
 
-    .carousel-rail {
+.carousel-rail {
     display: none !important;
+    position: fixed;
   }
 
+  /* Pause/Play overlay button */
+.carousel-rail__toggle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 60;
+  padding: 0;
+  width: 104px;
+  height: 104px;
+  border-radius: 999px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: rgba(0, 0, 0, 0.55);
+  color: var(--it-s-white); /* classic It's White */
+  box-shadow: var(--effect-outer-shadow);
+
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 10;
+}
+
+.carousel-rail__toggle:hover {
+  background: rgba(0, 0, 0, 0.68);
+}
+
+.carousel-rail__toggle:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, 0.35);
+  outline-offset: 3px;
+}
+
+
+.carousel-rail:hover .carousel-rail__toggle,
+.carousel-rail__toggle:focus-visible {
+  opacity: 1;
+}
+
+
+.carousel-rail.is-paused .carousel-rail__track { animation-play-state: paused; }
     .page,
   .page-inner,
   .home-layout {
@@ -2639,6 +2771,15 @@ MEDIA QUERIES FOR HOME PAGE
     padding-left: var(--space_m);
     padding-right: var(--space_m);
   }
+
+.carousel-rail__track {
+  position: relative;
+  z-index: 1;
+}
+
+.carousel-rail__toggle svg {
+  transform: scale(1.15);
+}
 
    .projects-nav {
     align-self: center;

@@ -36,9 +36,9 @@ export default function Tomy2000Page() {
   return (
     <main className={shellClass}>
       {/* navigation rail */}
-      <nav className="tomy2000-page__navigation" aria-label="Primary navigation">
+      {/* <nav className="tomy2000-page__navigation" aria-label="Primary navigation">
         <NavRail isOpen={isNavOpen} onToggle={() => setIsNavOpen((v) => !v)} />
-      </nav>
+      </nav> */}
 
       {/* ───────── SECTION 1: HERO ONLY (beige bg + right rail) ───────── */}
       <section className="home-hero-section">
@@ -113,7 +113,7 @@ export default function Tomy2000Page() {
               </StudioTextCard>
 
                 <StudioTextCard title="">
-                <p>We introduced features such as real-time power diagnostics, personality preferences, motion calibration guides, and data privacy settings, all visually unified by a dark skeuomorphic palette with tactile cues. It ensures that interacting with Tomy feels less like managing a machine and more like collaborating with a capable, tactile assistant.</p>
+                <p>We are introducing features such as real-time power diagnostics, personality preferences, motion calibration guides, and data privacy settings, all visually unified by a dark skeuomorphic palette with tactile cues. It ensures that interacting with Tomy feels less like managing a machine and more like collaborating with a capable, tactile little friend.</p>
               </StudioTextCard>
 
 

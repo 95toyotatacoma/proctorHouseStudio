@@ -1,28 +1,35 @@
 // src/components/navigation/NavRail.tsx
 type NavRailProps = {
-  isOpen?: boolean;
+  isNavOpen?: boolean;
   onToggle?: () => void;
+  classNameExtra?: string;
 };
 
-export default function NavRail({ isOpen = false, onToggle }: NavRailProps) {
-  const railClassName = `nav-rail ${isOpen ? "is-open" : "nav-rail--closed"}`;
+export default function NavRail({
+  isNavOpen = false,
+  onToggle,
+  classNameExtra = "",
+}: NavRailProps) {
+  // When the main nav is OPEN, the rail should be hidden/offscreen
+  const railClassName = `nav-rail ${
+    isNavOpen ? "nav-rail--closed" : ""
+  } ${classNameExtra}`.trim();
 
   return (
     <aside
       className={railClassName}
       onClick={() => {
-        console.log("NavRail clicked:", { isOpen, hasOnToggle: !!onToggle });
-        if (!isOpen) onToggle?.();
+        // If the main nav is CLOSED, clicking the rail should OPEN it
+        if (!isNavOpen) onToggle?.();
       }}
-      aria-expanded={isOpen}
+      aria-expanded={isNavOpen}
     >
       <button
         type="button"
         className="icon-button nav-rail__toggle"
-        aria-label="Open navigation"
+        aria-label={isNavOpen ? "Close navigation" : "Open navigation"}
         onClick={(e) => {
           e.stopPropagation();
-          console.log("Burger clicked:", { isOpen, hasOnToggle: !!onToggle });
           onToggle?.();
         }}
       >

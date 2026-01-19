@@ -103,8 +103,8 @@ export default function Home() {
                 <br />
                 <p>
                   Each project is conceived, art-directed, and built end-to-end, combining creative vision with systems thinking and production-level rigor. We imagine worlds, design their artifacts, and deliver
-                  experiences that feel both personal and timeless. Our mission is to create artful, soulful products and experiences that{" "}
-                  <strong>expand consciousness</strong>—on the page, in the home, and in the imagination.
+                  experiences that feel both personal and timeless. <strong> Our mission is to create artful, soulful products and experiences that{" "}
+                  expand consciousness</strong>—on the page, in the home, and in the imagination.
                 </p>
               </StudioTextCard>
 
