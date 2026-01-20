@@ -7,6 +7,10 @@ import SiteFooter from "./SiteFooter";
 import { DEFAULT_FOOTER_CTA, FOOTER_CTA_BY_ROUTE } from "../../content/footerCtas";
 
 const NAV_DEMO_KEY = "phs_nav_demo_seen_v1";
+const isMobile = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia &&
+  window.matchMedia("(max-width: 719px)").matches;
 
 type RailAnim = "" | "nav-rail--entering" | "nav-rail--exiting";
 
@@ -79,55 +83,59 @@ useEffect(() => {
     clearAutoCloseTimer();
   };
 
-  const triggerRailAnim = (nextNavOpen: boolean) => {
-    // nextNavOpen=true: panel opening, rail exits
-    // nextNavOpen=false: panel closing, rail enters
-    clearRailAnimTimer();
-    setRailAnimClass(nextNavOpen ? "nav-rail--exiting" : "nav-rail--entering");
-    log("rail anim", { nextNavOpen });
+const triggerRailAnim = (nextNavOpen: boolean) => {
+  if (isMobile()) return; // ✅ no rail enter/exit animation on mobile
 
-    railAnimTimerRef.current = window.setTimeout(() => {
-      setRailAnimClass("");
-      railAnimTimerRef.current = null;
-      log("rail anim reset");
-    }, 560); // slightly longer than your 520ms rail animation
-  };
+  clearRailAnimTimer();
+  setRailAnimClass(nextNavOpen ? "nav-rail--exiting" : "nav-rail--entering");
+  log("rail anim", { nextNavOpen });
+
+  railAnimTimerRef.current = window.setTimeout(() => {
+    setRailAnimClass("");
+    railAnimTimerRef.current = null;
+    log("rail anim reset");
+  }, 560);
+};
 
   // ✅ Run demo timer ONLY for first-time visitors (no “open then close” for returning)
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+ useEffect(() => {
+  if (typeof window === "undefined") return;
 
-    const hasSeenDemo = window.localStorage.getItem(NAV_DEMO_KEY) === "1";
+  if (isMobile()) {
+    // ✅ mobile: skip demo auto-open/close behavior
+    persistDemoSeen(); // optional: treat mobile as "seen" so it never runs later
+    log("demo skipped on mobile");
+    return;
+  }
 
-    log("demo: hasSeenDemo?", hasSeenDemo);
+  const hasSeenDemo = window.localStorage.getItem(NAV_DEMO_KEY) === "1";
+  log("demo: hasSeenDemo?", hasSeenDemo);
 
-    if (hasSeenDemo) {
-      log("demo already seen");
-      return;
-    }
+  if (hasSeenDemo) {
+    log("demo already seen");
+    return;
+  }
 
-    // first-time visitor: nav is already open from initial state
-    log("demo: opening nav");
-    triggerRailAnim(true);
-    log("demo open nav");
+  log("demo: opening nav");
+  triggerRailAnim(true);
 
-    log("demo: scheduling auto-close 6000ms");
-    autoCloseTimerRef.current = window.setTimeout(() => {
-      log("demo: auto-close firing");
-      setIsNavOpen(false);
-      triggerRailAnim(false);
-      persistDemoSeen();
-      autoCloseTimerRef.current = null;
-      log("demo auto-close");
-    }, 6000);
+  log("demo: scheduling auto-close 6000ms");
+  autoCloseTimerRef.current = window.setTimeout(() => {
+    log("demo: auto-close firing");
+    setIsNavOpen(false);
+    triggerRailAnim(false);
+    persistDemoSeen();
+    autoCloseTimerRef.current = null;
+    log("demo auto-close");
+  }, 6000);
 
-    return () => {
-      clearAutoCloseTimer();
-      clearRailAnimTimer();
-      log("demo cleanup");
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  return () => {
+    clearAutoCloseTimer();
+    clearRailAnimTimer();
+    log("demo cleanup");
+  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
 
   const closeNav = () => {
     log("closeNav()");
@@ -154,11 +162,11 @@ useEffect(() => {
     <div className={shellClass}>
       <MainNav isOpen={isNavOpen} onClose={closeNav} />
 
-      <NavRail
-        isNavOpen={isNavOpen}
-        onToggle={toggleNav}
-        classNameExtra={railAnimClass}
-      />
+    <NavRail
+      isNavOpen={isNavOpen}
+      onToggle={toggleNav}
+      classNameExtra={isMobile() ? "" : railAnimClass}
+    />
 
       <main className="section">
         <div className="section__inner">

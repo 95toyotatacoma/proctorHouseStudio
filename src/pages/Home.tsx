@@ -8,12 +8,16 @@ import StudioSectionCTA from "../components/studio/StudioSectionCTA";
 import StudioCardChain from "../components/studio/StudioCardChain";
 import HomeProjectsNav from "../components/navigation/HomeProjectsNav";
 import type { LayoutOutletContext } from "../components/layout/Layout";
+import MobileSwipeCarousel from "../components/media/MobileSwipeCarousel";
 
 export default function Home() {
   const { log, isNavOpen, railAnimClass } = useOutletContext<LayoutOutletContext>();
   const { pathname } = useLocation();
   const [isCompact, setIsCompact] = useState<boolean>(false);
   const [showCarouselRail, setShowCarouselRail] = useState<boolean>(true);
+  const isMobile =
+  typeof window !== "undefined" &&
+  window.matchMedia("(max-width: 719px)").matches;
 
   useEffect(() => {
     log("mount: pathname", pathname);
@@ -23,28 +27,47 @@ export default function Home() {
     log("isNavOpen changed", { isNavOpen, railAnimClass });
   }, [isNavOpen, railAnimClass]);
 
-  useEffect(() => {
-    const updateRailVisibility = () => {
-      const isMobile = window.matchMedia("(max-width: 375px)").matches;
-      setShowCarouselRail(!isMobile);
-    };
+//   useEffect(() => {
+//     const updateRailVisibility = () => {
+//       const isNarrow = window.matchMedia("(max-width: 900px)").matches;
+// setShowCarouselRail(!isNarrow);
+//     };
 
-    updateRailVisibility();
-    window.addEventListener("resize", updateRailVisibility);
-    return () => window.removeEventListener("resize", updateRailVisibility);
-  }, []);
+//     updateRailVisibility();
+//     window.addEventListener("resize", updateRailVisibility);
+//     return () => window.removeEventListener("resize", updateRailVisibility);
+//   }, []);
 
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const threshold = 80;
-      setIsCompact(window.scrollY > threshold);
-    };
+useEffect(() => {
+  if (typeof window === "undefined") return;
 
-    handleScroll();
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const mq = window.matchMedia("(max-width: 719px)");
+
+  const apply = () => {
+    if (mq.matches) {
+      setIsCompact(false);
+      return;
+    }
+    const threshold = 80;
+    setIsCompact(window.scrollY > threshold);
+  };
+
+  const onScroll = () => apply();
+
+  apply();
+
+  if (!mq.matches) {
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
+  mq.addEventListener?.("change", apply);
+
+  return () => {
+    window.removeEventListener("scroll", onScroll);
+    mq.removeEventListener?.("change", apply);
+  };
+}, []);
 
   const shellClass = [
     "home-shell",
@@ -55,10 +78,11 @@ export default function Home() {
     .join(" ");
 
   return (
-    <main className={shellClass}>
-      {/* HERO (Intro logo only when not compact) */}
-      <section className="home-hero-section">
-        <div className="home-inner">
+    <main className={`${shellClass} with-rails`}>
+      {/* HERO (desktop/tablet only) */}
+      {!isMobile && (
+      <section className="home-hero-section home-hero-section--desktop">
+        <div className="home-inner with-rails">
           <section className="home-shell__frame">
             <section className="home-hero">
               <div className="home-hero__inner">
@@ -74,6 +98,7 @@ export default function Home() {
           </section>
         </div>
       </section>
+      )}
 
       {/* MAIN CONTENT */}
       <section className="home-divider-group">
@@ -99,7 +124,8 @@ export default function Home() {
           <div className="home-projects-nav-wrapper">
             <HomeProjectsNav />
           </div>
-
+          {/* ✅ Mobile swipe carousel goes here */}
+          {isMobile && <MobileSwipeCarousel />}
           <section className="home-content-section">
             <div className="home-content-inner stack-jumbo">
               <StudioTextCard title="Crafting experiential worlds through story, design, and technology.">

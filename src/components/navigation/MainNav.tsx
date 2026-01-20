@@ -12,23 +12,27 @@ type MainNavProps = {
 export default function MainNav({ isOpen = true, onClose }: MainNavProps) {
   const navClassName = isOpen ? "nav-main" : "nav-main nav-main--closed";
 
-  // Close the nav automatically once the user scrolls down a bit
-  useEffect(() => {
-    if (!onClose) return; // nothing to do if parent didn't pass a closer
-    if (typeof window === "undefined") return;
+// Close the nav automatically once the user scrolls down a bit
+useEffect(() => {
+  if (!onClose) return;
+  if (typeof window === "undefined") return;
 
-    const SCROLL_THRESHOLD = 80; // px – tweak if you want
+  // ✅ Mobile: do NOT auto-close on scroll
+  const isMobile = window.matchMedia("(max-width: 719px)").matches;
+  if (isMobile) return;
 
-    const handleScroll = () => {
-      if (!isOpen) return;
-      if (window.scrollY > SCROLL_THRESHOLD) {
-        onClose();
-      }
-    };
+  const SCROLL_THRESHOLD = 80;
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isOpen, onClose]);
+  const handleScroll = () => {
+    if (!isOpen) return;
+    if (window.scrollY > SCROLL_THRESHOLD) {
+      onClose();
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  return () => window.removeEventListener("scroll", handleScroll);
+}, [isOpen, onClose]);
 
   return (
     <div className={navClassName}>
@@ -46,16 +50,17 @@ export default function MainNav({ isOpen = true, onClose }: MainNavProps) {
       <ul className="nav-main__list">
         {navItems.map((item: NavItem) => (
           <li key={item.to}>
-            <NavLink
-              to={item.to}
-              className={({ isActive }) =>
-                isActive
-                  ? "nav-main__link nav-main__link--active"
-                  : "nav-main__link"
-              }
-            >
-              {item.label}
-            </NavLink>
+      <NavLink
+        to={item.to}
+        onClick={() => onClose?.()}  // ✅ close after navigation (mobile needs this)
+        className={({ isActive }) =>
+          isActive
+            ? "nav-main__link nav-main__link--active"
+            : "nav-main__link"
+        }
+      >
+        {item.label}
+      </NavLink>
           </li>
         ))}
       </ul>

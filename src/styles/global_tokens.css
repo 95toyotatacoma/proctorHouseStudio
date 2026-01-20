@@ -154,6 +154,8 @@
 
   --content-max: 1512px;
   --page-gutter: clamp(24px, 6vw, 96px);
+  --content-bias-x: 24px; /* tune 20–40px */
+
 
   /* Home Page Layout Tokens */
   --home-frame-max-width: 1280px;
@@ -181,7 +183,7 @@
   --nav-transition-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 
   /* Carousel rail */
-  --carousel-rail-width: clamp(260px, 18vw, 420px);
+  --carousel-rail-width: clamp(220px, 24vw, 360px);
   --carousel-scroll-duration: 160s;
 
   --carousel-card-padding-inline: var(--xxl);
@@ -189,6 +191,12 @@
   --carousel-card-radius: var(--big);
   --carousel-card-placeholder: #d3d3d3;
 
+@media (max-width: 1100px) {
+  :root { --carousel-rail-width: 240px; }
+}
+@media (max-width: 900px) {
+  :root { --carousel-rail-width: 0px; }
+}
     /* breathing room around fixed rails */
   --rail-gutter: 24px;
 
@@ -732,7 +740,7 @@ p {
 
   width: clamp(300px, 40vw, 600px);
   min-height: calc(100vh - (var(--big) * 2));
-
+  border: var(--border-cards) 1px solid;
   border-radius: var(--jumbo);
   background-color: var(--it-s-white);
   color: var(--it-s-black);
@@ -891,6 +899,7 @@ p {
 
   width: var(--nav-rail-width);
   background-color: var(--it-s-white);
+  border: var(--border-cards) 1px solid;
   border-radius: var(--jumbo);
   box-shadow: var(--effect-outer-shadow);
 
@@ -900,7 +909,7 @@ p {
   justify-content: space-between;
 
   /* keep final computed padding exactly as before */
-  padding: var(--giant) var(--big);
+  padding: var(--xxxl) var(--big);
 
   transition:
     transform var(--nav-transition-duration) var(--nav-transition-ease),
@@ -1003,6 +1012,9 @@ p {
   opacity: 0;
   pointer-events: none;
 }
+
+/* default: brand hidden everywhere */
+.nav-rail__brand { display: none; }
 /* -------------------------------------------------------------------------
    Nav panel animations
    ------------------------------------------------------------------------ */
@@ -1317,7 +1329,7 @@ p {
 /* SECTION 1: hero + inline logo on beige */
 .home-hero-section {
   position: relative;
-  max-width: 100%;
+  width: 100vw;
   min-height: 92vh;   /* keep your stage */
   display: flex;
   flex-direction: column;
@@ -1403,7 +1415,13 @@ p {
   align-self: center; /* was flex-start */
 }
 
-
+@media (max-width: 900px) {
+  .home-rail-wrapper { display: none !important; }
+  .home-shell { --carousel-rail-width: 0px; }
+  .home-inner {
+    padding-right: 24px;
+  }
+}
 
 /* ==========================================================================
    Intro logo (stacked) – Phase 2 hero
@@ -1520,15 +1538,22 @@ p {
   max-width: none;
   margin-inline: 0;
 
-  --nav-safe: calc(var(--nav-rail-width, 80px) + 24px);
-  --carousel-safe: calc(var(--carousel-rail-width, 360px) + 24px);
-
-  padding-left: var(--nav-safe);
-  padding-right: var(--carousel-safe);
-
   background-color: var(--section);
-  overflow-x: clip;
+  
   overflow-y: visible;
+}
+
+/* put in a global layout/util file */
+.with-rails {
+  --nav-safe: calc(var(--nav-rail-width, 80px) + 24px);
+  --carousel-safe: calc(var(--carousel-rail-width, 0px) + 24px);
+
+  /* ⬅️➡️ center + intentional rightward bias */
+  padding-left: calc(var(--nav-safe) + var(--content-bias-x));
+  padding-right: calc(var(--carousel-safe) - var(--content-bias-x));
+
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .intro-wrapper .home-hero__a,
@@ -1724,7 +1749,6 @@ p {
 }
 
 .home-content-inner {
-  width: 100%;
   max-width: 1512px;
   margin-inline: auto;
   box-sizing: border-box;
@@ -1738,7 +1762,119 @@ p {
 /* ==========================================================================
    Home projects nav (Tomy 2000, The Book, etc.)
    ========================================================================== */
+/* ========================================================================== 
+   Projects nav — alias underscored classnames to dashed classnames
+   (Your markup uses: home-projects-nav__*
+    Your older CSS uses: home-projects-nav__* )
+   ========================================================================== */
 
+/* Base container */
+.home-projects-nav,
+.home-projects-nav {
+  background-color: var(--section);
+}
+
+/* Inner wrapper */
+.home-projects-nav__inner,
+.home-projects-nav__inner {
+  width: 100%;
+  max-width: none;
+  padding-inline: 0;
+  padding-block: var(--jumbo);
+
+  display: flex;
+  justify-content: center;
+}
+
+/* List */
+.home-projects-nav__list,
+.home-projects-nav__list {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--jumbo);
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  flex-wrap: wrap;
+}
+
+/* Items */
+.home-projects-nav__item,
+.home-projects-nav__item {
+  flex: 0 1 180px;
+  display: flex;
+}
+
+/* Link */
+.home-projects-nav__link,
+.home-projects-nav__link {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  gap: calc(var(--xxl) + 12px);
+  text-decoration: none;
+  color: inherit;
+
+  border-radius: 16px;
+  outline: none;
+}
+
+/* Circle */
+.home-projects-nav__image-wrap,
+.home-projects-nav__image-wrap {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 10px solid transparent;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition:
+    border-color 160ms ease-out,
+    transform 160ms ease-out,
+    box-shadow 160ms ease-out;
+}
+
+/* Image */
+.home-projects-nav__image,
+.home-projects-nav__image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+
+  background-color: var(--cards);
+  box-shadow: var(--effect-cards);
+  overflow: hidden;
+}
+
+/* Label */
+.home-projects-nav__label,
+.home-projects-nav__label {
+  font-family: var(--font-family-heading-xl-bold);
+  font-size: clamp(20px, 1.35vw, 40px);
+  letter-spacing: 0.01em;
+  font-weight: var(--font-weight-heading-xl-bold);
+  color: var(--it-s-black);
+}
+
+/* Hover/focus ring */
+.home-projects-nav__link:hover .home-projects-nav__image-wrap,
+.home-projects-nav__link:focus-visible .home-projects-nav__image-wrap,
+.home-projects-nav__link:hover .home-projects-nav__image-wrap,
+.home-projects-nav__link:focus-visible .home-projects-nav__image-wrap {
+  border-color: var(--highlight);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
 .home-projects-nav {
   background-color: var(--section);
   margin-top: var(--xxxxl);
@@ -1976,12 +2112,27 @@ p {
 .studio-card-chain {
   max-width: 1040px;
   margin-inline: auto;
-  margin-top: -80px;
+  margin-top: -24px;
   padding-inline: clamp(24px, 4vw, 56px);
 
   display: flex;
   flex-direction: column;
   row-gap: var(--jumbo);
+}
+
+/* 1681–1920: a bit more overlap */
+@media (min-width: 1681px) and (max-width: 1920px) {
+  .studio-card-chain { margin-top: -44px; }
+}
+
+/* 1921+: full art-directed overlap */
+@media (min-width: 1921px) {
+  .studio-card-chain { margin-top: -80px; }
+}
+
+/* Tablet and down: no overlap */
+@media (max-width: 1100px) {
+  .studio-card-chain { margin-top: -24px; }
 }
 
 .studio-card-row {
@@ -2134,8 +2285,7 @@ p {
 @media (max-width: 900px) {
   .studio-card {
     max-width: 100%;
-    padding: var(--md);
-    gap: var(--md);
+    gap: var(--xxl);
   }
 
   .studio-card__name {
@@ -2450,7 +2600,7 @@ MEDIA QUERIES FOR HOME PAGE
    1920 → 1621 (your “1080p” band, width-ranged, no overlap)
    ========================================================================== */
 
-@media (max-width: 1920px) {
+@media (max-width: 1920px) and (min-width: 1621px)  {
   /* Raise intro logo (width band) — if you only want this at 1080 height,
      move this into the height-only block further below */
   .intro-logo {
@@ -2470,16 +2620,6 @@ MEDIA QUERIES FOR HOME PAGE
   .nav-rail__toggle-icon span:nth-child(1) { top: 0; }
   .nav-rail__toggle-icon span:nth-child(2) { top: 9px; }
   .nav-rail__toggle-icon span:nth-child(3) { bottom: 0; }
-
-  .home-inner {
-    --content-bias-x: -75px;
-  }
-
-  /* ✅ apply the shift to BOTH: projects nav + studio text card */
-  .home-projects-nav-wrapper,
-  .home-content-section {
-    transform: translateX(var(--content-bias-x));
-  }
 
   .home-projects-nav__inner {
     width: 100%;
@@ -2683,7 +2823,7 @@ MEDIA QUERIES FOR HOME PAGE
 
   .nav-main__link {
     padding: var(--xs) var(--md);
-    font-size: clamp(20px, 2vw, 30px);
+    font-size: clamp(20px, 3vw, 35px);
   }
 
   .nav-main__image-strip { height: 64px; }
@@ -2730,161 +2870,447 @@ MEDIA QUERIES FOR HOME PAGE
   }
 }
 
-/* ==========================================================================
-   375px and down (mobile adjustments)
-   ========================================================================== */
+@media (min-width: 720px) {
+  
+  .nav-shell--open .nav-rail { display: none; }
+}
 
+/* ==========================================================================
+   ≤ 719px (mobile)
+   ========================================================================== */
 @media (max-width: 719px) {
+  /* ------------------------------------------------------------------------
+     GLOBAL: rails off + viewport safety
+     ------------------------------------------------------------------------ */
 
   :root {
-    --inline-logo-scale: var(--mobile-inline-logo-scale);
-    --projects-nav-scale: var(--mobile-projects-nav-scale);
-    --projects-nav-gap: var(--mobile-projects-nav-gap);
-    --projects-nav-font-size: var(--mobile-projects-nav-font);
     --carousel-rail-width: 0px;
     --carousel-rail-gap: 0px;
-    --page-offset-x: 0px;
+    --mobile-topbar-h: 96px; /* must match .nav-rail height */
+
+    /* ✅ padding issue fix: prevent rail math from biasing the page */
+    --nav-safe: 0px;
+    --carousel-safe: 0px;
+    --content-bias-x: 0px;
   }
 
-  .home-shell--no-hero .home-divider-group {
-  margin-top: 0;
-  padding-top: 0;
-}
+  /* ✅ padding issue fix: kill all rail-based gutters on mobile */
+  .with-rails,
+  .home-shell,
+  .home-shell--with-rail,
+  .home-inner,
+  .home-divider-group,
+  .home-content-frame,
+  .section,
+  .section__inner {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
 
-.carousel-rail {
+  .section__inner {
+    max-width: none !important;
+    width: 100% !important;
+    margin-inline: 0 !important;
+  }
+
+  .carousel-rail {
     display: none !important;
-    position: fixed;
   }
 
-  /* Pause/Play overlay button */
-.carousel-rail__toggle {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 60;
-  padding: 0;
-  width: 104px;
-  height: 104px;
-  border-radius: 999px;
-
-  display: grid;
-  place-items: center;
-
-  border: 1px solid rgba(0, 0, 0, 0.18);
-  background: rgba(0, 0, 0, 0.55);
-  color: var(--it-s-white); /* classic It's White */
-  box-shadow: var(--effect-outer-shadow);
-
-  cursor: pointer;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  z-index: 10;
-}
-
-.carousel-rail__toggle:hover {
-  background: rgba(0, 0, 0, 0.68);
-}
-
-.carousel-rail__toggle:focus-visible {
-  outline: 2px solid rgba(0, 0, 0, 0.35);
-  outline-offset: 3px;
-}
-
-
-.carousel-rail:hover .carousel-rail__toggle,
-.carousel-rail__toggle:focus-visible {
-  opacity: 1;
-}
-
-
-.carousel-rail.is-paused .carousel-rail__track { animation-play-state: paused; }
-    .page,
-  .page-inner,
-  .home-layout {
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: var(--space_m);
-    padding-right: var(--space_m);
+  /* Inline logo is now "in the nav" on mobile */
+  .home-inline-logo {
+    display: none !important;
   }
 
-.carousel-rail__track {
-  position: relative;
-  z-index: 1;
-}
-
-.carousel-rail__toggle svg {
-  transform: scale(1.15);
-}
-
-   .projects-nav {
-    align-self: center;
+  /* Ensure the main content starts right under the top nav */
+  .home-divider-group {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
   }
 
-    .inline-logo {
-    position: sticky;
-    top: 0;
-    z-index: 900; /* below nav-rail, above page */
-    transform: scale(var(--inline-logo-scale, 0.75));
-    transform-origin: left center;
-
-    /* important for sticky header look */
-    background: var(--color_surface_default);
+  /* Kill the hero stage on mobile (it’s a 92vh empty spacer otherwise) */
+  .home-hero-section--desktop {
+    display: none !important;
   }
+
+  /* ------------------------------------------------------------------------
+     MOBILE SWIPE CAROUSEL
+     ------------------------------------------------------------------------ */
+
+  .mobile-swipe {
+    padding: 18px 0 10px;
+    background: var(--cards);
+  }
+
+  .mobile-swipe__track {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    padding: 0 18px 10px;
+
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-swipe__slide {
+    flex: 0 0 70%;
+    scroll-snap-align: center;
+    border-radius: var(--big);
+    overflow: hidden;
+    box-shadow: var(--effect-cards);
+    background: var(--cards);
+  }
+
+  .mobile-swipe__img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    background: var(--section);
+  }
+
+  .mobile-swipe__dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding-top: 8px;
+  }
+
+  .mobile-swipe__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.25);
+  }
+
+  /* ------------------------------------------------------------------------
+     PROJECTS NAV
+     ------------------------------------------------------------------------ */
+
+  .home-projects-nav {
+    margin-top: 0 !important;
+  }
+
+  .home-projects-nav__inner {
+    padding: 18px !important;
+    width: 100% !important;
+  }
+
+  .home-projects-nav__list {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 18px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+
+    justify-items: center !important;
+    align-items: start !important;
+  }
+
+  .home-projects-nav__item {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .home-projects-nav__link {
+    width: 100% !important;
+    max-width: 112px !important; /* was 96px (~+16%) */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 10px !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: none !important;
+  }
+
+  .home-projects-nav__image-wrap {
+    width: 84px !important;  /* was 72px (~+17%) */
+    height: 84px !important;
+    border-radius: 999px !important;
+    border: 0 !important;
+    overflow: hidden !important;
+    background: rgba(255, 255, 255, 0.25) !important;
+    box-shadow: var(--effect-outer-shadow) !important;
+    display: block !important;
+  }
+
+  .home-projects-nav__image {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: inherit !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+  }
+
+  .home-projects-nav__label {
+    font-size: 14px !important; /* was 12px */
+    line-height: 1.15 !important;
+    text-align: center !important;
+    color: var(--it-s-black) !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .home-projects-nav__image::after {
+    display: none !important;
+  }
+
+  .home-projects-nav-wrapper {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+
+  /* ------------------------------------------------------------------------
+     NAV: sticky top bar
+     ------------------------------------------------------------------------ */
 
   .nav-rail {
     position: sticky;
     top: 0;
-    z-index: 999; /* highest */
+    left: 0;
+    right: 0;
+
+    width: 100%;
+    height: 96px;
+    border-radius: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start !important;
+    gap: 14px;
+
+    padding: 16px 18px;
+    box-sizing: border-box;
+
+    background: var(--section);
+    box-shadow: var(--effect-outer-shadow);
+
+    z-index: 9999;
+    isolation: isolate;
   }
 
-  /* “circle only” collapsed state */
-  .nav-rail.nav-rail--closed {
-    width: 56px;            /* pick the size you want */
-    height: 56px;
-    border-radius: 999px;
-    overflow: hidden;
+  aside.nav-rail.is-open,
+  aside.nav-rail.is-closed {
+    position: sticky !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+
+    width: 100% !important;
+    height: 96px !important;
+
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+
+    gap: var(--big) !important;
+    padding: 16px 18px !important;
+
+    border-radius: 0 !important;
+    background: var(--section) !important;
+    box-shadow: var(--effect-outer-shadow) !important;
+
+    z-index: 9999 !important;
+  }
+
+  .nav-rail__avatar {
+    display: none !important;
   }
 
   .nav-rail__toggle {
-    width: 56px;
-    height: 56px;
+    width: 64px;
+    height: 64px;
     border-radius: 999px;
+
+    background: var(--it-s-white);
+    box-shadow: var(--effect-outer-shadow);
+    border: 1px solid var(--border-cards);
+
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    margin: 0 !important;
   }
 
-  .divider-strip {
-    position: sticky;
-    top: 56px;     /* below the nav-rail circle */
-    z-index: 850;  /* below inline-logo if you want logo always visible */
-    background: var(--color_divider);
+  /* ✅ brand shown on mobile */
+  .nav-rail__brand {
+    display: flex !important;
+    align-items: baseline !important;
+    gap: 10px !important;
+
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
   }
 
-    .section-cta {
-    white-space: normal;
-    text-wrap: balance; /* optional if you like the look */
+  .nav-rail__brand-proctor {
+    font-family: "Tilt Warp", system-ui, sans-serif;
+    font-size: 40px;
+    letter-spacing: -0.04em;
+    color: var(--it-s-black);
+    line-height: 1;
   }
 
-    .studio-chain {
+  .nav-rail__brand-house {
+    font-family: "Montserrat", system-ui, sans-serif;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+    color: var(--it-s-black);
+    opacity: 0.9;
+    line-height: 1;
+  }
+
+  /* icon sizing */
+  img.nav-rail__icon {
+    display: block !important;
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .nav-rail.is-open img.nav-rail__icon {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .nav-rail.is-open .nav-rail__icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  /* Hide the close button inside the panel */
+  .icon-close {
+    display: none !important;
+  }
+
+  /* kill any bounce animation */
+  .nav-main,
+  .nav-rail,
+  .nav-shell {
+    animation: none !important;
+  }
+
+  /* ------------------------------------------------------------------------
+     MainNav panel (mobile drawer)
+     ------------------------------------------------------------------------ */
+
+  .nav-main {
+    position: fixed;
+    top: var(--mobile-topbar-h);
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: auto;
+    width: 100%;
+    border: none;
+
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+
+    z-index: 10000;
+
+    transition: transform 220ms ease, opacity 220ms ease !important;
+    will-change: transform, opacity;
+  }
+
+  .nav-shell--closed .nav-main {
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .nav-shell--open .nav-main {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav-main-overlay,
+  .nav-main__overlay,
+  .nav-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+  }
+
+  .nav-main__close,
+  .nav-main__close-btn,
+  .nav-main__x,
+  .nav-main button[aria-label*="Close"] {
+    display: none !important;
+  }
+
+  .nav-main__link {
+    font-size: clamp(34px, 7vw, 46px) !important;
+    line-height: 1.15;
+    padding-block: 18px !important;
+  }
+
+  .nav-main__list {
+    margin-top: 32px;
+    padding-inline: 26px;
+  }
+
+  .nav-main__header {
+    height: 0 !important;
+  }
+
+  /* ------------------------------------------------------------------------
+     CONTENT WIDTH: full channel + gutters
+     ------------------------------------------------------------------------ */
+
+  .home-projects-nav__inner,
+  .home-content-inner {
+    width: 100%;
+    max-width: none !important;
+    margin-inline: 0 !important;
+    box-sizing: border-box;
+    padding-inline: 18px !important;
+  }
+
+  .home-content-inner {
+    padding-block: 56px 72px;
+  }
+
+  /* stop the full-bleed translateX trick on mobile */
+  .home-content-section::before {
+    left: 0 !important;
+    right: 0 !important;
+    width: auto !important;
+    transform: none !important;
+  }
+
+  /* ------------------------------------------------------------------------
+     STUDIO CARD CHAIN
+     ------------------------------------------------------------------------ */
+
+  .studio-chain {
     background: var(--color_divider);
     gap: var(--studio-chain-gap-y);
   }
 
-  .studio-card {
-    box-shadow: none;
-    border: none;
-    background: transparent; /* if you want the divider background to be the “card” */
-  }
+  /* ------------------------------------------------------------------------
+     FOOTER
+     ------------------------------------------------------------------------ */
 
-  .studio-card__divider {
-    height: 4px;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--color_border_default) calc(var(--divider-line-opacity) * 100%), transparent);
-    /* If you’re not using color-mix, just set rgba equivalent manually */
-  }
-
-    .footer-strip {
+  .footer-strip {
     width: 100vw;
-    margin-left: calc(50% - 50vw); /* full-bleed trick inside centered layouts */
+    margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
   }
 
@@ -2893,21 +3319,23 @@ MEDIA QUERIES FOR HOME PAGE
     transform-origin: left center;
   }
 
-  .footer-logo__proctor { font-size: 86px; }
-  .footer-logo__houseStudio { font-size: 36px; }
-  .footer-logo__location { font-size: 14px; }
+  .footer-logo__proctor {
+    font-size: 86px;
+  }
+
+  .footer-logo__houseStudio {
+    font-size: 36px;
+  }
+
+  .footer-logo__location {
+    font-size: 14px;
+  }
 
   .footer-nav a {
     font-size: var(--font_body_l);
-    padding-block: var(--space_s); /* “padding gap closed” */
+    padding-block: var(--space_s);
   }
 }
-/* ===== FORCE "a" LEFT (global, all screen sizes) ===== 
-.intro-wrapper .home-hero__a,
-.intro-logo .home-hero__a {
-  margin-left: 0 !important;
-  transform: translate(-60px, -14px) !important; 
-} */
 
 /* ==========================================================================
    Tomy 2000 page shell adjustments
