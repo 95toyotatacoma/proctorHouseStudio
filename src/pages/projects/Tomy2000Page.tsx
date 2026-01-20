@@ -81,7 +81,7 @@ export default function Tomy2000Page() {
           </div>
 
           {/* brown content area */}
-          <section className="home-content-section">
+          <section className="home-content-section home-content-section--very-back">
             <div className="home-content-inner stack-jumbo">
 
 

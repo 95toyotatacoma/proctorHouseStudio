@@ -126,6 +126,7 @@
 
   --section: #b5a99a;
   --cards: #d8c9b5;
+  --clear_cards: rgba(216, 201, 181, 0.05);
   --border-cards: #3d5a73;
 
   --primary-button: #e0452c;
@@ -142,6 +143,11 @@
      Page / Layout Tokens
      ------------------------------------------------------------------------ */
 
+  --color_bg_standard: var(--dividers);
+  --color_bg_very_back: var(--very_back);
+
+  --color_bg_card_standard: var(--cards);
+  --color_bg_card_very_back: var(--clear_cards)
   /* Shared page gutter for hero + footer
      ≈ 210px on large screens, smaller on narrow */
   --page-gutter-inline: clamp(24px, 14vw, 210px);
@@ -1687,8 +1693,10 @@ p {
   position: relative;
   width: 100%;
   margin-left: 0;
-  background: transparent;
   z-index: 30;
+
+  /* default */
+  --home-content-bg: var(--color_bg_standard);
 }
 
 .home-content-section::before {
@@ -1696,13 +1704,23 @@ p {
   position: absolute;
   inset: 0;
 
+  /* ✅ pull from the variable */
+  background: var(--home-content-bg);
+
   /* ✅ true full-bleed */
   left: 50%;
   transform: translateX(-50%);
   width: 100vw;
 
-  background: var(--dividers);
   z-index: -1;
+}
+
+.home-content-section--very-back {
+  --home-content-bg: var(--color_bg_very_back);
+}
+
+.home-content-section--standard {
+  --home-content-bg: var(--color_bg_standard);
 }
 
 .home-content-inner {
@@ -1715,6 +1733,7 @@ p {
   /* optional: keep a consistent inset without weird % */
   padding-inline: clamp(24px, 4vw, 60px);
 }
+
 
 /* ==========================================================================
    Home projects nav (Tomy 2000, The Book, etc.)
@@ -1860,11 +1879,12 @@ p {
   padding: var(--jumbo);
   border-radius: var(--big, 42px);
   border: 1px solid var(--border-cards, #3d5a73);
-  background: var(--cards, #d8c9b5);
+  background: var(--color_bg_card_standard, #d8c9b5);
   border-bottom: var(--it-s-black, #000) 4px solid;
 
   box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.08);
 }
+
 
 .studio-text-card__title {
   margin: 0;
@@ -1885,6 +1905,10 @@ p {
   line-height: 30px;
 }
 
+.studio-text-card__clear {
+  background: var(--color_bg_card_very_back);
+  color: var(--it-s-white, #ffffff);
+}
 /* ==========================================================================
    Studio Section CTA (full-bleed bg, content aligned like footer CTA)
    ========================================================================== */
