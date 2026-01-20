@@ -34,7 +34,7 @@ export default function NavRail({
         }}
       >
         <img
-          src="/icons/icon-btn-hamburger.svg"
+          src="/icons/nav-rail-icon-btn.svg"
           alt=""
           aria-hidden="true"
           className="nav-rail__icon"
