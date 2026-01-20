@@ -1,7 +1,7 @@
 // main display component
 import React from "react";
 import BatteryRing from "../widgets/BatteryRing";
-import VoiceWaveform from "../widgets/VoiceWaveform.tsx";
+import VoiceWaveform from "../widgets/VoiceWaveform";
 
 type Props = {
   ariaLabel?: string;

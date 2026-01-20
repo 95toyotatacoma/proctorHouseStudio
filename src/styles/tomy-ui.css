@@ -732,9 +732,8 @@
 
   /* reflection_edge */
   box-shadow: 0 3px 2.5px -3px rgba(255, 255, 255, 0.25) inset;
-
+  position: absolute;
   flex: none;
-  pointer-events: none; /* prevents “first click does nothing” */
 }
 
 /* OFF: knob left */
@@ -981,9 +980,24 @@
 
 /* empty future containers (no styling yet, just reserved hooks) */
 .tomy-main-display__content {
-  width: 100%;
-  flex: 1 1 auto;
+  display: flex;
+  width: 294px;
+  justify-content: space-between;
+  align-items: flex-end;
 }
+
+.tomy-main-display__voice {
+  height: 84px;
+  width: 520px;
+  display: flex;
+  align-items: center;
+}
+
+.tomy-waveform {
+  height: 56px;      /* original artboard height */
+  width: auto;
+}
+
 
 /* ================================
    MAIN DISPLAY DIALOGUE (340w)
@@ -1238,9 +1252,7 @@
   font-family: "Lexend Giga", system-ui, sans-serif;
   font-weight: 400;
   line-height: normal;
-
-  /* scale relative to component width/height (TSX sets width/height) */
-  font-size: calc(var(--tomy-battery_pct-size) * (100% / 100px));
+  font-size: clamp(14px, 1.1rem, 20px);
 }
 
 /* Icon wrapper */
