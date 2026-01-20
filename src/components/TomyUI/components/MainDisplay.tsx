@@ -1,6 +1,7 @@
 // main display component
 import React from "react";
 import BatteryRing from "../widgets/BatteryRing";
+import VoiceWaveform from "../widgets/VoiceWaveform.tsx";
 
 type Props = {
   ariaLabel?: string;
@@ -50,7 +51,6 @@ export function MainDisplay({
       className={["tomy-main-display", className].filter(Boolean).join(" ")}
       aria-label={ariaLabel}
     >
-      {/* Header */}
       <header className="tomy-main-display__header" aria-label="Status header">
         <div className="tomy-main-display__headerLeft" aria-label="Network status">
           <WifiIcon />
@@ -63,14 +63,15 @@ export function MainDisplay({
         />
       </header>
 
-      {/* Future slots */}
       <div className="tomy-main-display__content" aria-hidden="true">
-        <div className="tomy-main-display__voice" />
-        
-        {/* StandardLayoutSkeleton power display progress */}
+        <div className="tomy-main-display__voice">
+          <VoiceWaveform />
+        </div>
+
         <div className="tomy-main-display__power">
           <BatteryRing value={62} size={100} />
         </div>
+
         <div className="tomy-main-display__chips" />
       </div>
     </section>
