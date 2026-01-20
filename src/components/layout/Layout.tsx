@@ -37,7 +37,12 @@ useEffect(() => {
   log("route change", { pathname });
 }, [pathname]);
 
-  const [isNavOpen, setIsNavOpen] = useState(false);
+  // ✅ Decide initial state BEFORE first paint to avoid flicker
+  const [isNavOpen, setIsNavOpen] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false; // SSR safety
+    const hasSeenDemo = window.localStorage.getItem(NAV_DEMO_KEY) === "1";
+    return !hasSeenDemo; // first-time: open; returning: closed
+  });
   const [railAnimClass, setRailAnimClass] = useState<RailAnim>("");
 
   const autoCloseTimerRef = useRef<number | null>(null);
@@ -88,7 +93,7 @@ useEffect(() => {
     }, 560); // slightly longer than your 520ms rail animation
   };
 
-  // ✅ DEMO: on first-ever visit, open nav and auto-collapse after 6s (only once)
+  // ✅ Run demo timer ONLY for first-time visitors (no “open then close” for returning)
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -97,14 +102,12 @@ useEffect(() => {
     log("demo: hasSeenDemo?", hasSeenDemo);
 
     if (hasSeenDemo) {
-      setIsNavOpen(false);
       log("demo already seen");
       return;
     }
 
-    // First-time visitor: open nav (demo)
+    // first-time visitor: nav is already open from initial state
     log("demo: opening nav");
-    setIsNavOpen(true);
     triggerRailAnim(true);
     log("demo open nav");
 

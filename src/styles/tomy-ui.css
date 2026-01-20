@@ -882,7 +882,7 @@
   /* main display sizing from your spec */
   --tomy-main-display-h: 154px;
   --tomy-main-display-pad-y: 16px;
-  --tomy-main-display-pad-x: var(--space_xl, 24px);
+  --tomy-main-display-pad-x: var(--space_lg, 16px);
   --tomy-main-display-gap: var(--grid_gap_xs, 4px);
   --tomy-main-display-radius: var(--radius_md, 8px);
   --tomy-main-display-border: 1px solid var(--color_border_default);
@@ -1097,4 +1097,172 @@
 .tomy-dialogue__dot.is-off {
   background: color-mix(in srgb, var(--very_back) 55%, transparent);
   opacity: 0.7;
+}
+
+/* ================================
+   BatteryRing (tomy-battery)
+   Matches: src/components/TomyUI/widgets/BatteryRing.tsx
+   ================================ */
+
+:root {
+  /* Figma-derived constants you provided */
+  --tomy-battery_outer-ring-stroke: 0.252px;
+  --tomy-battery_outer-ring-blur: 0.5033072233px;
+
+  --tomy-battery_disc-stroke: 0.578px;
+  --tomy-battery_disc-shadow-y: 1.156px;
+  --tomy-battery_disc-shadow-blur: 3.468px;
+
+  --tomy-battery_tick-shadow-y: 2.048px;
+  --tomy-battery_tick-shadow-blur: 6.144px;
+
+  --tomy-battery_sweep-blur: 0.5970522761px;
+
+  --tomy-battery_pct-size: 24.89px;
+  --tomy-battery_glyph-size: 12px;
+
+  /* Fallbacks */
+  --tomy-battery_state-color: var(--color_white_shapes, #dadada);
+  --tomy-battery_glow-opacity: 0.22;
+  --tomy-battery_empty-opacity: 0.3;
+}
+
+/* Wrapper */
+.tomy-battery {
+  position: relative;
+  display: grid;
+  place-items: center;
+
+  /* size comes from inline style width/height in TSX */
+  width: 100%;
+  height: 100%;
+
+  /* TSX sets these; keep fallbacks above */
+  --tomy-battery_state-color: var(--tomy-battery-state-color, var(--tomy-battery_state-color));
+  --tomy-battery_glow-opacity: var(--tomy-battery-glow-opacity, var(--tomy-battery_glow-opacity));
+}
+
+/* Halo (subtle glow) */
+.tomy-battery__halo {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  pointer-events: none;
+
+  /* Use the state color; keep subtle like your mock */
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--tomy-battery_state-color) 55%, transparent) 0%,
+    transparent 70%
+  );
+
+  opacity: var(--tomy-battery_glow-opacity);
+  filter: blur(var(--tomy-battery_tick-shadow-blur));
+}
+
+/* SVG fills the box */
+.tomy-battery__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Outer ring (faint + slightly blurred) */
+.tomy-battery__outerRing {
+  fill: none;
+  stroke: var(--color_border_default, #394048);
+  stroke-width: var(--tomy-battery_outer-ring-stroke);
+  filter: blur(var(--tomy-battery_outer-ring-blur));
+  opacity: 0.85;
+}
+
+/* Inner disc (dark glassy center) */
+.tomy-battery__innerDisc {
+  fill: var(--color_surface_75p, rgba(26, 29, 35, 0.75));
+  stroke: var(--color_border_default, #394048);
+  stroke-width: var(--tomy-battery_disc-stroke);
+
+  /* Your spec: drop shadow with hover token */
+  filter: drop-shadow(
+    0 var(--tomy-battery_disc-shadow-y) var(--tomy-battery_disc-shadow-blur)
+    var(--color_hover, rgba(255, 255, 255, 0.22))
+  );
+}
+
+/* Tick group */
+.tomy-battery__ticks {
+  /* nothing required; ticks are styled below */
+}
+
+/* Base tick styling */
+.tomy-battery__tick {
+  /* IMPORTANT: lines have no stroke in TSX; CSS must provide it */
+  stroke: var(--color_border_default, #394048);
+  opacity: var(--tomy-battery_empty-opacity);
+}
+
+/* Filled ticks */
+.tomy-battery__tick.is-filled {
+  stroke: var(--tomy-battery_state-color);
+  opacity: 1;
+
+  /* Your spec: drop shadow glow */
+  filter: drop-shadow(
+    0 var(--tomy-battery_tick-shadow-y) var(--tomy-battery_tick-shadow-blur)
+    var(--color_hover, rgba(255, 255, 255, 0.22))
+  );
+}
+
+/* Empty ticks */
+.tomy-battery__tick.is-empty {
+  stroke: var(--color_border_default, #394048);
+  opacity: var(--tomy-battery_empty-opacity);
+}
+
+/* Center content overlays SVG */
+.tomy-battery__center {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  gap: 6px; /* small visual separation; not a layout driver */
+  text-align: center;
+  pointer-events: none;
+}
+
+/* % typography (scales with component size using width) */
+.tomy-battery__pct {
+  color: var(--color_text_primary, #f5f6f9);
+  font-family: "Lexend Giga", system-ui, sans-serif;
+  font-weight: 400;
+  line-height: normal;
+
+  /* scale relative to component width/height (TSX sets width/height) */
+  font-size: calc(var(--tomy-battery_pct-size) * (100% / 100px));
+}
+
+/* Icon wrapper */
+.tomy-battery__icon {
+  width: var(--tomy-battery_glyph-size);
+  height: var(--tomy-battery_glyph-size);
+  display: grid;
+  place-items: center;
+  color: var(--tomy-battery_state-color);
+}
+
+/* Lucide icons */
+.tomy-battery__glyph {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* If you use Zap filled later, this keeps it inheriting */
+.tomy-battery__glyph.is-bolt path,
+.tomy-battery__glyph.is-bolt polygon,
+.tomy-battery__glyph.is-bolt polyline,
+.tomy-battery__glyph.is-bolt circle {
+  stroke: currentColor;
 }

@@ -1,5 +1,6 @@
 // main display component
 import React from "react";
+import BatteryRing from "../widgets/BatteryRing";
 
 type Props = {
   ariaLabel?: string;
@@ -65,7 +66,11 @@ export function MainDisplay({
       {/* Future slots */}
       <div className="tomy-main-display__content" aria-hidden="true">
         <div className="tomy-main-display__voice" />
-        <div className="tomy-main-display__power" />
+        
+        {/* StandardLayoutSkeleton power display progress */}
+        <div className="tomy-main-display__power">
+          <BatteryRing value={62} size={100} />
+        </div>
         <div className="tomy-main-display__chips" />
       </div>
     </section>
