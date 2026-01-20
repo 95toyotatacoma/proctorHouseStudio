@@ -930,6 +930,14 @@ p {
   cursor: pointer;
 }
 
+.nav-rail__toggle {
+  border-radius: 999px;
+}
+
+.nav-rail__toggle:hover {
+  background-color: var(--hover);
+}
+
 .nav-rail__toggle-icon {
   display: block;
   object-fit: contain;
