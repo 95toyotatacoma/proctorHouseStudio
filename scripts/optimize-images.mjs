@@ -6,10 +6,17 @@ import sharp from "sharp";
 const INPUT_DIR = "public/images";
 const OUT_DIR = "public/images-optimized";
 const widths = [480, 768, 1024, 1440, 1920];
+const allowUpscale = process.env.ALLOW_UPSCALE === "1";
+
+const inputGlob =
+  process.env.IMAGE_GLOB ??
+  (process.env.IMAGE_SUBDIR
+    ? `${INPUT_DIR}/${process.env.IMAGE_SUBDIR}/**/*.{jpg,jpeg,png,JPG,JPEG,PNG}`
+    : `${INPUT_DIR}/**/*.{jpg,jpeg,png,JPG,JPEG,PNG}`);
 
 await fs.mkdir(OUT_DIR, { recursive: true });
 
-const files = await fg([`${INPUT_DIR}/**/*.{jpg,jpeg,png,JPG,JPEG,PNG}`]);
+const files = await fg([inputGlob]);
 
 for (const file of files) {
   const rel = path.relative(INPUT_DIR, file);
@@ -24,7 +31,7 @@ for (const file of files) {
     const meta = await baseImg.metadata();
 
     for (const w of widths) {
-      if (meta.width && w > meta.width) continue;
+    if (!allowUpscale && meta.width && w > meta.width) continue;
 
       const outBase = path.join(OUT_DIR, `${relNoExt}-${w}`);
 

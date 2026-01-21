@@ -12,7 +12,7 @@ export const CAROUSEL_MANIFEST = {
   "IMG_6260.jpeg",
   "IMG_6321.jpeg",
   "IMG_6371.jpeg",
-  "IMG_6373.JPG",
+  "IMG_6373.jpg",
   "IMG_6461.jpeg",
   "IMG_6464.jpeg",
   "IMG_7237.jpeg",
