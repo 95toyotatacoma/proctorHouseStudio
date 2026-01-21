@@ -1769,7 +1769,7 @@ p {
 .home-projects-nav__list,
 .home-projects-nav__list {
   display: flex;
-  align-items: flex-start;)
+  align-items: flex-start;
   justify-content: center;
   gap: var(--jumbo);
 
@@ -3210,11 +3210,13 @@ p {
 
     z-index: 9999;
     isolation: isolate;
+
+    transform: translateZ(0); /* iOS compositor nudge */
   }
 
   aside.nav-rail.is-open,
   aside.nav-rail.is-closed {
-    position: sticky !important;
+    position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
@@ -3385,6 +3387,10 @@ p {
   /* ------------------------------------------------------------------------
      CONTENT WIDTH: full channel + gutters
      ------------------------------------------------------------------------ */
+  /* Push the page content below the fixed bar */
+  .home-divider-group {
+    padding-top: var(--mobile-topbar-h) !important;
+  }
 
   .home-projects-nav__inner,
   .home-content-inner {
@@ -3408,14 +3414,23 @@ p {
   }
 
   /* ------------------------------------------------------------------------
-     STUDIO CARD CHAIN & TEXT CARD
+     STUDIO CARD CHAIN & TEXT CARD & Section CTA tweaks
      ------------------------------------------------------------------------ */
   .studio-text-card {
    padding: var(--big)
   }
+
+  .studio-text-card__title {
+    font-size: 28px
+  }
+
   .studio-chain {
     background: var(--color_divider);
     gap: var(--studio-chain-gap-y);
+  }
+
+  .studio-section-cta__title {
+    font-size: 32px;
   }
 
   /* ------------------------------------------------------------------------
