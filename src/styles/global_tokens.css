@@ -191,12 +191,7 @@
   --carousel-card-radius: var(--big);
   --carousel-card-placeholder: #d3d3d3;
 
-@media (max-width: 1100px) {
-  :root { --carousel-rail-width: 240px; }
-}
-@media (max-width: 900px) {
-  :root { --carousel-rail-width: 0px; }
-}
+
     /* breathing room around fixed rails */
   --rail-gutter: 24px;
 
@@ -317,16 +312,7 @@ textarea {
   gap: var(--xxxxl);
 }
 
-/*@media (max-width: 768px) {
-  .container,
-  .section__inner {
-    padding-inline: var(--xl);
-  }
 
-  .grid-2 {
-    grid-template-columns: 1fr;
-  }
-}*/
 /* ==========================================================================
    Typography
    ========================================================================== */
@@ -1415,13 +1401,7 @@ p {
   align-self: center; /* was flex-start */
 }
 
-@media (max-width: 900px) {
-  .home-rail-wrapper { display: none !important; }
-  .home-shell { --carousel-rail-width: 0px; }
-  .home-inner {
-    padding-right: 24px;
-  }
-}
+
 
 /* ==========================================================================
    Intro logo (stacked) – Phase 2 hero
@@ -1611,7 +1591,7 @@ p {
   transform: translateY(16px);
   transition:
     opacity 220ms ease,
-    transform 220ms ease,
+    transform 280ms ease,
     box-shadow 200ms ease;
   box-shadow: none;
 }
@@ -1620,7 +1600,7 @@ p {
 .home-shell--compact .home-inline-logo {
   opacity: 1;
   transform: translateY(0);
-  transition-delay: 260ms;
+  transition-delay: 360ms;
 }
 
 /* Circular photo placeholder */
@@ -1789,7 +1769,7 @@ p {
 .home-projects-nav__list,
 .home-projects-nav__list {
   display: flex;
-  align-items: flex-start;
+  align-items: flex-start;)
   justify-content: center;
   gap: var(--jumbo);
 
@@ -1797,7 +1777,7 @@ p {
   margin: 0;
   padding: 0;
 
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 /* Items */
@@ -1897,7 +1877,7 @@ p {
   list-style: none;
   margin: 0;
   padding: 0;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .home-projects-nav__item {
@@ -2133,20 +2113,7 @@ p {
   row-gap: var(--jumbo);
 }
 
-/* 1681–1920: a bit more overlap */
-@media (min-width: 1681px) and (max-width: 1920px) {
-  .studio-card-chain { margin-top: -44px; }
-}
 
-/* 1921+: full art-directed overlap */
-@media (min-width: 1921px) {
-  .studio-card-chain { margin-top: -80px; }
-}
-
-/* Tablet and down: no overlap */
-@media (max-width: 1100px) {
-  .studio-card-chain { margin-top: -24px; }
-}
 
 .studio-card-row {
   display: flex;
@@ -2308,29 +2275,7 @@ p {
   margin-right: calc(var(--big) * -0.5);
 }
 
-/* Responsive – tighten spacing on smaller widths */
-@media (max-width: 900px) {
-  .studio-card {
-    max-width: 100%;
-    gap: var(--xxl);
-  }
 
-  .studio-card__name {
-    font-size: 48px;
-    line-height: 54px;
-    letter-spacing: -2px;
-  }
-
-  .studio-card__avatar {
-    width: 120px;
-    height: 120px;
-  }
-
-  .studio-card--left .studio-card__avatar-wrap,
-  .studio-card--right .studio-card__avatar-wrap {
-    margin-inline: 0;
-  }
-}
 
 /* ==========================================================================
    CardTriImage
@@ -2601,21 +2546,88 @@ p {
 }
 
 /* ==========================================================================
-MEDIA QUERIES FOR HOME PAGE   
-2550 → 1921 (premium downscale band)
-   - Establish a stable “premium” label size that smoothly scales down
+   HOME — MEDIA QUERIES (CLEANED + CONSOLIDATED)
+   Notes:
+   - Combined all <=900px rules into one block
+   - Added fix: 1441–1620 band now centers .home-projects-nav__inner
    ========================================================================== */
-@media (min-width: 2551px) {
-  .intro-logo {
-    margin-left: 10%;
+
+/* ──────────────────────────────────────────────────────────────────────────
+   <= 900px — hide right rail + tighten studio cards
+   (combined from your multiple @media (max-width: 900px) blocks)
+   ────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  /* Rails */
+  .home-rail-wrapper { display: none !important; }
+  .home-shell { --carousel-rail-width: 0px; }
+
+  /* Inner padding */
+  .home-inner { padding-right: 24px; }
+
+  /* Studio card responsiveness */
+  .studio-card {
+    max-width: 100%;
+    gap: var(--xxl);
+  }
+
+  .studio-card__name {
+    font-size: 48px;
+    line-height: 54px;
+    letter-spacing: -2px;
+  }
+
+  .studio-card__avatar {
+    width: 120px;
+    height: 120px;
+  }
+
+  .studio-card--left .studio-card__avatar-wrap,
+  .studio-card--right .studio-card__avatar-wrap {
+    margin-inline: 0;
   }
 }
 
+/* ──────────────────────────────────────────────────────────────────────────
+   1681–1920 — overlap tuning
+   ────────────────────────────────────────────────────────────────────────── */
+@media (min-width: 1681px) and (max-width: 1920px) {
+  .studio-card-chain { margin-top: -44px; }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   1921+ — overlap tuning
+   ────────────────────────────────────────────────────────────────────────── */
+@media (min-width: 1921px) {
+  .studio-card-chain { margin-top: -80px; }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   <= 1100px — tablet and down: reduce overlap
+   ────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .studio-card-chain { margin-top: -24px; }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Carousel rail width variables
+   (kept as two explicit breakpoints)
+   ────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  :root { --carousel-rail-width: 240px; }
+}
+@media (max-width: 900px) {
+  :root { --carousel-rail-width: 0px; }
+}
+
+/* ==========================================================================
+   2550 → 1921 (premium downscale band)
+   ========================================================================== */
+@media (min-width: 2551px) {
+  .intro-logo { margin-left: 10%; }
+}
+
 @media (max-width: 2550px) and (min-width: 1921px) {
-  /* ✅ wide-screen: production ~20px left */
-  .intro-logo {
-    margin-left: 10%;
-  }
+  .intro-logo { margin-left: 10%; }
 
   .home-shell__frame {
     padding-left: calc(var(--nav-safe) + var(--content-bias-x) + 24px);
@@ -2631,23 +2643,19 @@ MEDIA QUERIES FOR HOME PAGE
   }
 }
 
-
 /* ==========================================================================
-   1920 → 1621 (your “1080p” band, width-ranged, no overlap)
+   1920 → 1621 (1080p band)
    ========================================================================== */
-
-@media (max-width: 1920px) and (min-width: 1621px)  {
-  /* Raise intro logo (width band) — if you only want this at 1080 height,
-     move this into the height-only block further below */
+@media (max-width: 1920px) and (min-width: 1621px) {
   .intro-logo {
     --intro-x: 0px;
-    --intro-y: 0px;        /* ✅ was -20px (that moved it UP) */
+    --intro-y: 0px;
     --intro-scale: 0.92;
 
-    --a-shift-x: -44px;    /* ✅ 1512-ish fix: move “a” left */
+    --a-shift-x: -44px;
     --production-shift-x: 0px;
   }
- 
+
   .home-shell--compact .home-inline-logo { transition-delay: 260ms; }
 
   .nav-rail { padding: 24px 12px; }
@@ -2659,27 +2667,24 @@ MEDIA QUERIES FOR HOME PAGE
 
   .home-projects-nav__inner {
     width: 100%;
-    max-width: 1512px;          /* match .home-inner / .home-content-inner frame */
+    max-width: 1512px;
     margin-inline: auto;
-
     padding-block: var(--jumbo);
-    padding-inline: 0;          /* remove the clamp that’s pushing it off */
-    
+    padding-inline: 0;
     display: flex;
     justify-content: center;
   }
 
-  /* Projects-nav label: slightly smaller than 2550 band, never “backwards” */
-.home-projects-nav__label {
+  .home-projects-nav__label {
     font-size: clamp(24px, 1.55vw, 34px);
     letter-spacing: 0.01em;
   }
 
-.home-projects-nav__list { gap: calc(var(--jumbo) * 0.26); }
+  .home-projects-nav__list { gap: calc(var(--jumbo) * 0.26); }
 
-.studio-text-card { max-width: calc(100% - 220px); margin-inline: auto; }
+  .studio-text-card { max-width: calc(100% - 220px); margin-inline: auto; }
 
-    .studio-section-cta__inner {
+  .studio-section-cta__inner {
     max-width: calc(100% - 120px);
     margin-inline: auto;
     display: flex;
@@ -2712,14 +2717,13 @@ MEDIA QUERIES FOR HOME PAGE
   .nav-main__image-strip { height: 72px; }
 }
 
-
 /* ==========================================================================
-   1620 → 1441 (tighten + keep premium, no overlap)
+   1620 → 1441 (tighten + keep premium)
+   ✅ UPDATED: center .home-projects-nav__inner at 1512-ish widths
    ========================================================================== */
-
 @media (max-width: 1620px) and (min-width: 1441px) {
   .intro-logo {
-    --intro-x: 20px;
+    --intro-x: -80px;
     --intro-y: 32px;
     --intro-scale: 0.87;
 
@@ -2737,7 +2741,16 @@ MEDIA QUERIES FOR HOME PAGE
   }
 
   .home-shell--compact .home-inline-logo {
+    transform: translate3d(-10px, 0, 0) scale(0.90);
+    /*           ↑↑↑ THIS IS THE FIX */
+    transform-origin: left center;
     transition-delay: 600ms;
+  }
+
+    .home-inline-logo {
+    width: 100vw;
+    padding-inline: 0;
+    background: var(--section);
   }
 
   .home-inner {
@@ -2745,41 +2758,29 @@ MEDIA QUERIES FOR HOME PAGE
     padding-right: clamp(24px, 4vw, 64px);
   }
 
-  .nav-rail {
-    padding: 24px 12px;
-  }
+  .nav-rail { padding: 24px 12px; }
 
-  .nav-rail__toggle-icon {
-    width: 32px;
-    height: 20px;
-  }
-
+  .nav-rail__toggle-icon { width: 32px; height: 20px; }
   .nav-rail__toggle-icon span:nth-child(1) { top: 0; }
   .nav-rail__toggle-icon span:nth-child(2) { top: 9px; }
   .nav-rail__toggle-icon span:nth-child(3) { bottom: 0; }
 
   .home-projects-nav__inner {
     max-width: 1200px;
-    margin-inline: 0;
+    margin-inline: auto; /* ✅ FIX (was 0) */
     padding-inline: clamp(24px, 6vw, 96px);
     padding-block: var(--jumbo);
   }
 
-  /* Projects-nav label: smaller than 1920 band */
   .home-projects-nav__label {
     font-size: clamp(22px, 1.35vw, 28px);
     letter-spacing: 0.01em;
   }
 
-
-
-  /* If the LI or anchor has its own gap/padding causing “spread”, tighten it */
-  .home-projects-nav__item {
-    gap: 0;
-  }
+  .home-projects-nav__item { gap: 0; }
 
   .studio-text-card {
-    max-width: calc(74% - 60px);
+    max-width: 100%;
     margin-inline: auto;
   }
 
@@ -2813,32 +2814,23 @@ MEDIA QUERIES FOR HOME PAGE
     font-size: clamp(26px, 2.6vw, 36px);
   }
 
-  .nav-main__image-strip {
-    height: 72px;
-  }
+  .nav-main__image-strip { height: 72px; }
 }
 
-
 /* ==========================================================================
-   1440 and down (your existing 1440 x 900 tuning)
+   1440 and down
    ========================================================================== */
-
 @media (max-width: 1440px) {
-  /* --- Pic 01: intro logo up (don’t change X centering logic) --- */
   .intro-logo {
-    /* POSITION */
     --intro-x: -32px;
     --intro-y: 80px;
     --intro-y-global: 20px;
 
-    /* SCALE */
-    --intro-scale: 0.72; /* 👈 this is the key change */
+    --intro-scale: 0.72;
 
-    /* INTERNAL TEXT SHIFTS */
     --a-shift-x: -44px;
     --production-shift-x: 0px;
 
-    /* 🔥 REMOVE margin-based layout */
     margin-left: 0;
     margin-top: 0;
 
@@ -2851,21 +2843,15 @@ MEDIA QUERIES FOR HOME PAGE
     transform-origin: center top;
   }
 
-  /* If compact state also needs lift, keep it consistent 
-  .home-shell--compact .intro-logo {
-    transform: translateX(var(--intro-x)) translateY(-36px) scale(0.9);
-  }*/
-
-    /* Stabilize the odd horizontal scroll until we find culprit */
   .home-shell,
   .home-hero-section {
     overflow-x: clip;
   }
-   .home-shell--compact .home-inline-logo__row {
+
+  .home-shell--compact .home-inline-logo__row {
     transform: translateX(-60px) !important;
   }
- 
-  /* nav-main == nav-rail height */
+
   .nav-main {
     height: calc(100vh - (var(--big) * 2));
     overflow: hidden;
@@ -2889,57 +2875,43 @@ MEDIA QUERIES FOR HOME PAGE
    1100 → 841 (tablet / iPad landscape)
    ========================================================================== */
 @media (max-width: 1100px) and (min-width: 841px) {
-
-    /* 1) Make the center channel truly symmetrical */
   .home-shell__frame {
     padding-left:  calc(var(--nav-safe) + 18px) !important;
     padding-right: calc(var(--carousel-safe) + 18px) !important;
   }
 
-  /* 2) Scale down + re-center the intro logo for the narrower channel */
   .intro-logo {
-    --intro-scale: 0.62;  /* smaller than 1440 band */
-    --intro-x: -280px;       /* stop biasing sideways on tablet */
-    --intro-y: 100px;      /* tune if needed */
-    /* keep your global */
-    /* --intro-y-global stays as-is */
+    --intro-scale: 0.62;
+    --intro-x: -280px;
+    --intro-y: 100px;
   }
 
-    /* 1️⃣ Full-bleed background */
   .home-inline-logo {
     width: 100vw;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
-
     padding-inline: 0;
     background: var(--section);
   }
 
-  /* ✅ Make the *content lane* start after the rail */
   .home-inline-logo__row {
     width: calc(100vw - var(--nav-rail-width, 80px));
     margin-left: var(--nav-rail-width, 80px);
-
     display: flex;
     justify-content: center;
     align-items: center;
-
-    /* remove earlier nudges that can fight this */
     transform: none !important;
   }
 
-   /* IMPORTANT: must target the same selector that already defines transform */
-   .home-shell--compact .home-inline-logo {
+  .home-shell--compact .home-inline-logo {
     transform: translate3d(-40px, 0, 0) scale(0.90) !important;
     transform-origin: left center;
   }
 
-  /* optional: if you still want the nudge */
   .home-shell--compact .home-inline-logo__row {
-    transform: translateX(58px) !important; /* was -60px */
+    transform: translateX(58px) !important;
   }
 
-  /* Force a single row of 3 items */
   .home-projects-nav__list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -2948,28 +2920,23 @@ MEDIA QUERIES FOR HOME PAGE
     align-items: start;
   }
 
-  .home-projects-nav__link {
-    gap: var(--md);
-  }
-  /* Prevent flex sizing from interfering */
+  .home-projects-nav__link { gap: var(--md); }
+
   .home-projects-nav__item {
     flex: none;
     width: 100%;
-    max-width: 220px; /* controls column width */
+    max-width: 220px;
   }
 
-  /* Image slightly smaller for 1024 */
   .home-projects-nav__image-wrap {
     width: 140px;
     height: 140px;
   }
 
-  /* Keep the text size you like */
   .home-projects-nav__label {
     font-size: clamp(22px, 1.6vw, 22px);
   }
 
-  /* Widen the purple zone */
   .home-projects-nav__inner {
     max-width: none;
     width: 100%;
@@ -2978,41 +2945,29 @@ MEDIA QUERIES FOR HOME PAGE
 }
 
 /* ==========================================================================
-   ≤ 840px — footer stack + home projects nav wrap/center
+   ≤ 840px — footer stack + projects nav wrap/center
    ========================================================================== */
 @media (max-width: 840px) {
-  /* Footer */
-  .site-footer__cta-inner {
-    flex-direction: column;
-  }
+  .site-footer__cta-inner { flex-direction: column; }
+  .site-footer__inner { flex-direction: column; }
+  .site-footer__brand { flex-basis: auto; }
 
-  .site-footer__inner {
-    flex-direction: column;
-  }
-
-  .site-footer__brand {
-    flex-basis: auto;
-  }
-
-  .site-footer__nav {
-    gap: var(--xl, 24px);
-  }
+  .site-footer__nav { gap: var(--xl, 24px); }
 
   .site-footer__nav-column {
     min-height: auto;
     padding-block: 16px;
   }
 
-  /* Home Projects Nav */
-    .home-projects-nav__image-wrap {
+  .home-projects-nav__image-wrap {
     width: 170px;
     height: 170px;
   }
 
-  /* Optional: tighten vertical rhythm just a touch */
   .home-projects-nav__link {
     gap: calc(var(--xxl) * 0.8);
   }
+
   .home-projects-nav__inner {
     padding-inline: var(--xl);
   }
@@ -3026,8 +2981,8 @@ MEDIA QUERIES FOR HOME PAGE
   }
 }
 
+/* Hide rail when nav is open (non-mobile) */
 @media (min-width: 720px) {
-  
   .nav-shell--open .nav-rail { display: none; }
 }
 
@@ -3530,4 +3485,80 @@ MEDIA QUERIES FOR HOME PAGE
 .tomy2000-page__shell .home-content-section,
 .tomy2000-page__shell .home-content-inner {
   overflow: visible;
+}
+
+/* ==========================================================================
+   Project Page Template helpers
+   ========================================================================== */
+
+/* --- CardTriImage wrapper on project hero --- */
+.project-tri {
+  width: 100%;
+  max-width: 980px;
+  margin-inline: auto;
+}
+
+/* --- Mobile swipe block spacing on project pages --- */
+.project-mobile-swipe {
+  margin-top: 0;
+}
+
+/* ==========================================================================
+   Project inline logo styling (template)
+   ========================================================================== */
+
+
+/* 1100 → 841 (tablet / iPad landscape): make strip full-bleed + avoid nav rail overlap */
+@media (max-width: 1100px) and (min-width: 841px) {
+  .project-inline-logo {
+    /* full-bleed background */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+
+    /* IMPORTANT: shove content to the right of the rail */
+    padding-left: calc(var(--nav-rail-width) + var(--big) + 20px);
+    padding-right: var(--big);
+    box-sizing: border-box;
+  }
+
+  /* Ensure the inner row doesn’t constrain weirdly */
+  .project-inline-logo .home-inline-logo__row {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* Mobile: you currently hide inline logo; if you later decide to show it, style it here */
+@media (max-width: 719px) {
+  .project-mobile-swipe {
+    margin-top: 0;
+  }
+}
+
+/* ==========================================================================
+   CardTriImage – project-friendly layout
+   ========================================================================== */
+
+.project-tri .card-tri-image__row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--jumbo);
+  width: 100%;
+}
+
+.project-tri .card-tri-image__item {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1; /* keeps a consistent tile shape */
+}
+
+@media (max-width: 840px) {
+  .project-tri .card-tri-image__row {
+    grid-template-columns: 1fr;
+  }
+
+  .project-tri .card-tri-image__item {
+    aspect-ratio: 16 / 10;
+  }
 }
