@@ -1439,8 +1439,9 @@ p {
 
 .intro-logo {
   --intro-x: 24px;
-  --intro-y: 60px;          /* keep your normal base tuning */
-  --intro-y-global: 20px;   /* ✅ always move DOWN 20px at all sizes */
+  --intro-x-nudge: 0px;      /* ✅ add this */
+  --intro-y: 60px;
+  --intro-y-global: 20px;
   --intro-scale: 1;
 
   --a-shift-x: -220px;
@@ -1448,15 +1449,13 @@ p {
   --production-shift-x: 0px;
 
   transform: translate3d(
-    var(--intro-x),
+    calc(var(--intro-x) + var(--intro-x-nudge)),  /* ✅ changed */
     calc(var(--intro-y) + var(--intro-y-global)),
     0
   ) scale(var(--intro-scale));
   transform-origin: center top;
 
-
   color: var(--it-s-black);
-
   width: fit-content;
   margin: 0 auto;
 
@@ -1985,7 +1984,7 @@ p {
 
 .home-projects-nav__label {
   font-family: var(--font-family-heading-xl-bold);
-  font-size: clamp(20px, 1.35vw, 40px);
+  font-size: clamp(26px, 1.35vw, 40px);
   letter-spacing: 0.01em;
   font-weight: var(--font-weight-heading-xl-bold);
   color: var(--it-s-black);
@@ -2578,12 +2577,21 @@ MEDIA QUERIES FOR HOME PAGE
 2550 → 1921 (premium downscale band)
    - Establish a stable “premium” label size that smoothly scales down
    ========================================================================== */
+@media (min-width: 2551px) {
+  .intro-logo {
+    margin-left: 10%;
+  }
+}
 
 @media (max-width: 2550px) and (min-width: 1921px) {
   /* ✅ wide-screen: production ~20px left */
-  .intro-logo { --production-shift-x: -100px; }
+  .intro-logo {
+    margin-left: 10%;
+  }
 
-
+  .home-shell__frame {
+    padding-left: calc(var(--nav-safe) + var(--content-bias-x) + 24px);
+  }
 
   .home-projects-nav__label {
     font-size: clamp(26px, 1.35vw, 40px);
@@ -2790,12 +2798,29 @@ MEDIA QUERIES FOR HOME PAGE
 @media (max-width: 1440px) {
   /* --- Pic 01: intro logo up (don’t change X centering logic) --- */
   .intro-logo {
-    --intro-x: -24px;
-    --intro-y: -36px;
-    --intro-scale: 0.82;
+    /* POSITION */
+    --intro-x: -32px;
+    --intro-y: 80px;
+    --intro-y-global: 20px;
 
+    /* SCALE */
+    --intro-scale: 0.72; /* 👈 this is the key change */
+
+    /* INTERNAL TEXT SHIFTS */
     --a-shift-x: -44px;
     --production-shift-x: 0px;
+
+    /* 🔥 REMOVE margin-based layout */
+    margin-left: 0;
+    margin-top: 0;
+
+    transform: translate3d(
+      var(--intro-x),
+      calc(var(--intro-y) + var(--intro-y-global)),
+      0
+    ) scale(var(--intro-scale));
+
+    transform-origin: center top;
   }
 
   /* If compact state also needs lift, keep it consistent 
@@ -2808,7 +2833,10 @@ MEDIA QUERIES FOR HOME PAGE
   .home-hero-section {
     overflow-x: clip;
   }
-
+   .home-shell--compact .home-inline-logo__row {
+    transform: translateX(-60px) !important;
+  }
+ 
   /* nav-main == nav-rail height */
   .nav-main {
     height: calc(100vh - (var(--big) * 2));
@@ -2829,6 +2857,97 @@ MEDIA QUERIES FOR HOME PAGE
   .nav-main__image-strip { height: 64px; }
 }
 
+/* ==========================================================================
+   1100 → 841 (tablet / iPad landscape)
+   ========================================================================== */
+@media (max-width: 1100px) and (min-width: 841px) {
+
+    /* 1) Make the center channel truly symmetrical */
+  .home-shell__frame {
+    padding-left:  calc(var(--nav-safe) + 18px) !important;
+    padding-right: calc(var(--carousel-safe) + 18px) !important;
+  }
+
+  /* 2) Scale down + re-center the intro logo for the narrower channel */
+  .intro-logo {
+    --intro-scale: 0.62;  /* smaller than 1440 band */
+    --intro-x: -280px;       /* stop biasing sideways on tablet */
+    --intro-y: 100px;      /* tune if needed */
+    /* keep your global */
+    /* --intro-y-global stays as-is */
+  }
+
+    /* 1️⃣ Full-bleed background */
+  .home-inline-logo {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+
+    padding-inline: 0;
+    background: var(--section);
+  }
+
+  /* ✅ Make the *content lane* start after the rail */
+  .home-inline-logo__row {
+    width: calc(100vw - var(--nav-rail-width, 80px));
+    margin-left: var(--nav-rail-width, 80px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* remove earlier nudges that can fight this */
+    transform: none !important;
+  }
+
+   /* IMPORTANT: must target the same selector that already defines transform */
+   .home-shell--compact .home-inline-logo {
+    transform: translate3d(-40px, 0, 0) scale(0.90) !important;
+    transform-origin: left center;
+  }
+
+  /* optional: if you still want the nudge */
+  .home-shell--compact .home-inline-logo__row {
+    transform: translateX(58px) !important; /* was -60px */
+  }
+
+  /* Force a single row of 3 items */
+  .home-projects-nav__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--xxxxl);
+    justify-items: center;
+    align-items: start;
+  }
+
+  .home-projects-nav__link {
+    gap: var(--md);
+  }
+  /* Prevent flex sizing from interfering */
+  .home-projects-nav__item {
+    flex: none;
+    width: 100%;
+    max-width: 220px; /* controls column width */
+  }
+
+  /* Image slightly smaller for 1024 */
+  .home-projects-nav__image-wrap {
+    width: 140px;
+    height: 140px;
+  }
+
+  /* Keep the text size you like */
+  .home-projects-nav__label {
+    font-size: clamp(22px, 1.6vw, 22px);
+  }
+
+  /* Widen the purple zone */
+  .home-projects-nav__inner {
+    max-width: none;
+    width: 100%;
+    padding-inline: 48px;
+  }
+}
 
 /* ==========================================================================
    ≤ 840px — footer stack + home projects nav wrap/center
@@ -2857,6 +2976,15 @@ MEDIA QUERIES FOR HOME PAGE
   }
 
   /* Home Projects Nav */
+    .home-projects-nav__image-wrap {
+    width: 170px;
+    height: 170px;
+  }
+
+  /* Optional: tighten vertical rhythm just a touch */
+  .home-projects-nav__link {
+    gap: calc(var(--xxl) * 0.8);
+  }
   .home-projects-nav__inner {
     padding-inline: var(--xl);
   }
@@ -3115,7 +3243,7 @@ MEDIA QUERIES FOR HOME PAGE
     align-items: center !important;
     justify-content: flex-start !important;
 
-    gap: var(--big) !important;
+    gap: var(--xxxl) !important;
     padding: 16px 18px !important;
 
     border-radius: 0 !important;
@@ -3181,8 +3309,8 @@ MEDIA QUERIES FOR HOME PAGE
   }
 
   .nav-rail.is-open img.nav-rail__icon {
-    width: 44px !important;
-    height: 44px !important;
+    width: 60px !important;
+    height: 60px !important;
   }
 
   .nav-rail.is-open .nav-rail__icon {
@@ -3296,9 +3424,11 @@ MEDIA QUERIES FOR HOME PAGE
   }
 
   /* ------------------------------------------------------------------------
-     STUDIO CARD CHAIN
+     STUDIO CARD CHAIN & TEXT CARD
      ------------------------------------------------------------------------ */
-
+  .studio-text-card {
+   padding: var(--big)
+  }
   .studio-chain {
     background: var(--color_divider);
     gap: var(--studio-chain-gap-y);
@@ -3314,6 +3444,9 @@ MEDIA QUERIES FOR HOME PAGE
     margin-right: calc(50% - 50vw);
   }
 
+  .site-footer__brand {
+    display: none; 
+  }
   .footer-logo {
     transform: scale(0.75);
     transform-origin: left center;
