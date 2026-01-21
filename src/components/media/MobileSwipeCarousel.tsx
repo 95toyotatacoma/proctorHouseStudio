@@ -1,11 +1,9 @@
 import React from "react";
 import SmartImage from "./SmartImage";
 
-type CarouselItem = {
-  id: string;
-  src: string;
-  alt?: string;
-};
+export type CarouselItem =
+  | { id: string; alt?: string; src: string }
+  | { id: string; alt?: string; imageBase: string };
 
 const DEFAULT_ITEMS: CarouselItem[] = [
   { id: "c1", src: "/images/home/jpg/IMG_0020.jpeg", alt: "" },
@@ -20,7 +18,7 @@ const DEFAULT_ITEMS: CarouselItem[] = [
   { id: "c10", src: "/images/home/jpg/IMG_6260.jpeg", alt: "" },
   { id: "c11", src: "/images/home/jpg/IMG_6321.jpeg", alt: "" },
   { id: "c12", src: "/images/home/jpg/IMG_6371.jpeg", alt: "" },
-  { id: "c13", src: "/images/home/jpg/IMG_6373.JPG", alt: "" },
+  { id: "c13", src: "/images/home/jpg/IMG_6373.jpg", alt: "" },
   { id: "c14", src: "/images/home/jpg/IMG_6461.jpeg", alt: "" },
   { id: "c15", src: "/images/home/jpg/IMG_6464.jpeg", alt: "" },
   { id: "c16", src: "/images/home/jpg/IMG_7237.jpeg", alt: "" },
@@ -43,17 +41,23 @@ export default function MobileSwipeCarousel({
   return (
     <section className="mobile-swipe" aria-label="Featured work">
       <div className="mobile-swipe__track">
-        {items.map((item, index) => (
-          <div key={item.id} className="mobile-swipe__slide">
-            <SmartImage
-              className="mobile-swipe__img"
-              src={item.src}
-              alt={item.alt ?? ""}
-              loading={index === 0 ? "eager" : "lazy"}
-              fetchPriority={index === 0 ? "high" : "auto"}
-            />
-          </div>
-        ))}
+        {items.map((item, index) => {
+          const resolvedSrc = "src" in item ? item.src : item.imageBase;
+
+          return (
+            <div key={item.id} className="mobile-swipe__slide">
+              <SmartImage
+                className="mobile-swipe__img"
+                src={resolvedSrc}
+                alt={item.alt ?? ""}
+                loading={index === 0 ? "eager" : "lazy"}
+                fetchPriority={index === 0 ? "high" : "auto"}
+                widths={[480, 768, 1024]}
+                sizes="(max-width: 719px) 70vw, 600px"
+              />
+            </div>
+          );
+        })}
       </div>
 
       {/* Always show 3 dots — middle is active */}
