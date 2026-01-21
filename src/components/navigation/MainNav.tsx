@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import type { NavItem } from "./navConfig";
 import { navItems } from "./navConfig";
+import SmartImage from "../media/SmartImage";
 
 type MainNavProps = {
   isOpen?: boolean;
@@ -67,7 +68,7 @@ useEffect(() => {
 
       <div className="nav-main__footer">
         <div className="nav-main__image-strip">
-          <img
+          <SmartImage
             src="/images/nav/jpg/rock.jpeg"
             alt=""
             aria-hidden="true"

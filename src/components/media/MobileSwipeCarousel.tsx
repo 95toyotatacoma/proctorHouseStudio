@@ -1,4 +1,5 @@
 import React from "react";
+import SmartImage from "./SmartImage";
 
 type CarouselItem = {
   id: string;
@@ -42,14 +43,14 @@ export default function MobileSwipeCarousel({
   return (
     <section className="mobile-swipe" aria-label="Featured work">
       <div className="mobile-swipe__track">
-        {items.map((item) => (
+        {items.map((item, index) => (
           <div key={item.id} className="mobile-swipe__slide">
-            <img
+            <SmartImage
               className="mobile-swipe__img"
               src={item.src}
               alt={item.alt ?? ""}
-              loading="lazy"
-              decoding="async"
+              loading={index === 0 ? "eager" : "lazy"}
+              fetchPriority={index === 0 ? "high" : "auto"}
             />
           </div>
         ))}

@@ -1,4 +1,6 @@
 // src/components/media/PhotoBlock.tsx
+import SmartImage from "./SmartImage";
+
 type Photo = { src: string; alt?: string };
 
 type PhotoBlockProps = {
@@ -20,12 +22,11 @@ export default function PhotoBlock({ photos, columns = 2 }: PhotoBlockProps) {
         <figure key={i} className="photo-block__item">
           {/* ✅ wrapper is what fixes SVG corner clipping */}
           <div className="photo-block__frame">
-            <img
+            <SmartImage
               className="photo-block__img"
               src={p.src}
               alt={p.alt ?? ""}
-              loading="lazy"
-              draggable="false"
+              draggable={false}
             />
           </div>
         </figure>

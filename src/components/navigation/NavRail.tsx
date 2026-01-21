@@ -1,4 +1,6 @@
 // src/components/navigation/NavRail.tsx
+import SmartImage from "../media/SmartImage";
+
 type NavRailProps = {
   isNavOpen?: boolean;
   onToggle?: () => void;
@@ -24,12 +26,14 @@ export default function NavRail({
           onToggle?.();
         }}
       >
-      <img
-        src={isNavOpen ? "/icons/icon-btn-closeOut.svg" : "/icons/nav-rail-icon-btn.svg"}
-        alt=""
-        aria-hidden="true"
-        className="nav-rail__icon"
-      />
+        <SmartImage
+          src={isNavOpen ? "/icons/icon-btn-closeOut.svg" : "/icons/nav-rail-icon-btn.svg"}
+          alt=""
+          aria-hidden="true"
+          className="nav-rail__icon"
+          loading="eager"
+          disableOptimize
+        />
       </button>
 
       {/* ✅ Mobile/desktop brand row (CSS will decide how it looks) */}
@@ -40,7 +44,11 @@ export default function NavRail({
 
       {/* Keep avatar for desktop only (mobile CSS hides it) */}
       <div className="nav-rail__avatar" aria-hidden="true">
-        <img src="/images/nav/jpg/rock.jpeg" alt="" aria-hidden="true" />
+        <SmartImage
+          src="/images/nav/jpg/rock.jpeg"
+          alt=""
+          aria-hidden="true"
+        />
       </div>
     </aside>
   );

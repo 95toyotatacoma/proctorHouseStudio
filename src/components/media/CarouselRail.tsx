@@ -138,6 +138,8 @@ export default function CarouselRail({
             key={`${image.src}-${index}`}
             imageSrc={image.src}
             alt={image.alt}
+            loading={index === 0 ? "eager" : "lazy"}
+            fetchPriority={index === 0 ? "high" : "auto"}
           />
         ))}
       </div>

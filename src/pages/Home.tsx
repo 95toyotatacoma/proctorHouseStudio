@@ -9,6 +9,7 @@ import StudioCardChain from "../components/studio/StudioCardChain";
 import HomeProjectsNav from "../components/navigation/HomeProjectsNav";
 import type { LayoutOutletContext } from "../components/layout/Layout";
 import MobileSwipeCarousel from "../components/media/MobileSwipeCarousel";
+import SmartImage from "../components/media/SmartImage";
 
 export default function Home() {
   const { log, isNavOpen, railAnimClass } = useOutletContext<LayoutOutletContext>();
@@ -106,10 +107,12 @@ useEffect(() => {
           <div className={`home-inline-logo ${isCompact ? "shadow-active" : ""}`}>
             <div className="home-inline-logo__row">
               <div className="home-inline-logo__avatar">
-                <img
+                <SmartImage
                   src="/images/home/logo/2023-arizona.jpg"
                   alt=""
                   aria-hidden="true"
+                  loading="eager"
+                  fetchPriority="high"
                 />
               </div>
               <div className="home-inline-logo__text">
@@ -141,7 +144,7 @@ useEffect(() => {
                 <p>
                   Each project is conceived, art-directed, and built end-to-end, combining creative vision with systems thinking and production-level rigor. We imagine worlds, design their artifacts, and deliver
                   experiences that feel both personal and timeless. <strong> Our mission is to create artful, soulful products and experiences that{" "}
-                  expand consciousness</strong>—on the page, in the home, and in the imagination.
+                  expand consciousness</strong>—in what we write, in what we surround ourselves by, and in the mind.
                 </p>
               </StudioTextCard>
 

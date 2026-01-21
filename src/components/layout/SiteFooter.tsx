@@ -1,5 +1,6 @@
 // src/components/layout/SiteFooter.tsx
 import { NavLink } from "react-router-dom";
+import SmartImage from "../media/SmartImage";
 import type { FooterCta } from "../../content/footerCtas";
 
 type SiteFooterProps = {
@@ -69,11 +70,12 @@ export default function SiteFooter({ cta, ctas }: SiteFooterProps) {
                   className="site-footer__icon-button"
                   aria-label="Instagram"
                 >
-                  <img
+                  <SmartImage
                     className="site-footer__icon"
                     src="/icons/instagram.svg"
                     alt=""
                     aria-hidden="true"
+                    disableOptimize
                   />
                 </button>
 
@@ -81,11 +83,12 @@ export default function SiteFooter({ cta, ctas }: SiteFooterProps) {
                   className="site-footer__icon-button"
                   aria-label="YouTube"
                 >
-                  <img
+                  <SmartImage
                     className="site-footer__icon"
                     src="/icons/youtube.svg"
                     alt=""
                     aria-hidden="true"
+                    disableOptimize
                   />
                 </button>
               </div>

@@ -1,4 +1,6 @@
 // src/components/media/CardTriImage.tsx
+import SmartImage from "./SmartImage";
+
 type CardTriImageProps = {
   images: {
     src: string;
@@ -15,11 +17,10 @@ export default function CardTriImage({ images }: CardTriImageProps) {
             key={index}
             className="card-tri-image__item"
           >
-            <img
+            <SmartImage
               src={img.src}
               alt={img.alt ?? ""}
-              loading="lazy"
-              draggable="false"
+              draggable={false}
             />
           </figure>
         ))}

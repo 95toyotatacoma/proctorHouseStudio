@@ -1,5 +1,6 @@
 // src/components/studio/StudioCardChain.tsx
 import React from "react";
+import SmartImage from "../media/SmartImage";
 
 type StudioCardSide = "left" | "right";
 
@@ -33,18 +34,18 @@ const StudioProfileCard: React.FC<StudioCardProps> = ({
 
         {/* Avatar placeholder */}
         <div className="studio-card__avatar-wrap" aria-hidden="true">
-          <div
-            className="studio-card__avatar"
-            style={
-              imageSrc
-                ? {
-                    backgroundImage: `url(${imageSrc})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }
-                : undefined
-            }
-          />
+          <div className="studio-card__avatar">
+            {imageSrc ? (
+              <SmartImage
+                className="studio-card__avatar-image"
+                src={imageSrc}
+                alt=""
+                aria-hidden="true"
+                widths={[480, 768, 1024]}
+                sizes="(max-width: 900px) 120px, 156px"
+              />
+            ) : null}
+          </div>
         </div>
       </article>
     </div>

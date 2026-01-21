@@ -1201,7 +1201,7 @@ p {
 
   aspect-ratio: 4 / 3;
   padding: 24px 35px;
-
+  border: 1px solid var(--border-cards);
   border-radius: var(--carousel-card-radius);
   background-color: var(--cards);
   box-shadow: var(--effect-cards);
@@ -1950,6 +1950,20 @@ p {
   overflow: hidden;
 }
 
+.home-projects-nav__image picture {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.home-projects-nav__image-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  display: block;
+}
+
 /* LIGHT SWEEP EFFECT */
 .home-projects-nav__image::after {
   content: "";
@@ -2239,6 +2253,20 @@ p {
   background: #c4c4c4;
   box-shadow: var(--effect-outer-shadow);
   overflow: hidden;
+}
+
+.studio-card__avatar picture {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.studio-card__avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  display: block;
 }
 
 /* LIGHT SWEEP EFFECT (same behavior as project nav) */
@@ -3068,6 +3096,7 @@ MEDIA QUERIES FOR HOME PAGE
   .mobile-swipe {
     padding: 18px 0 10px;
     background: var(--cards);
+    z-index: 999;
   }
 
   .mobile-swipe__track {

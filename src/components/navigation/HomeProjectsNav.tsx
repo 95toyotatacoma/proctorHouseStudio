@@ -1,6 +1,7 @@
 // src/components/navigation/HomeProjectsNav.tsx
 import React from "react";
 import { Link } from "react-router-dom";
+import SmartImage from "../media/SmartImage";
 
 type ProjectLink = {
   id: string;
@@ -24,14 +25,16 @@ const HomeProjectsNav: React.FC = () => {
             <li key={project.id} className="home-projects-nav__item">
               <Link to={project.to} className="home-projects-nav__link">
                 <span className="home-projects-nav__image-wrap" aria-hidden="true">
-                  <span
-                    className="home-projects-nav__image"
-                    style={{
-                      backgroundImage: `url(/images/projects-nav/jpg/${project.imageFile})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                  />
+                  <span className="home-projects-nav__image">
+                    <SmartImage
+                      className="home-projects-nav__image-media"
+                      src={`/images/projects-nav/jpg/${project.imageFile}`}
+                      alt=""
+                      aria-hidden="true"
+                      widths={[240, 360, 480]}
+                      sizes="(max-width: 719px) 84px, (max-width: 840px) 170px, 200px"
+                    />
+                  </span>
                 </span>
 
                 <span className="home-projects-nav__label">{project.label}</span>
