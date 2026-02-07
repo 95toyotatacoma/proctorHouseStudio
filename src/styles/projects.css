@@ -1,0 +1,294 @@
+/* src/styles/projects.css */
+
+/* ==========================================================================
+   Project Page Template (shared)
+   ========================================================================== */
+
+/* 1) Only show MobileSwipeCarousel on mobile */
+@media (min-width: 720px) {
+  .project-mobile-swipe { display: none !important; }
+}
+
+/* 2) Project hero tri card sizing (tame the giant sizes) */
+.project-tri {
+  width: 100%;
+  max-width: 760px;
+  margin-inline: auto;
+}
+@media (min-width: 1620px) { .project-tri { max-width: 860px; } }
+@media (min-width: 2500px) { .project-tri { max-width: 980px; } }
+
+/* ==========================================================================
+   3) Full-bleed project section backgrounds
+   Fixes the “background edge near navRail” problem by forcing the section
+   background to span the viewport (not the padded inner).
+   ========================================================================== */
+
+/* Each page sets one of these on <main>:
+   project-shell--very-back OR project-shell--dividers */
+.project-shell--very-back { --project-section-bg: var(--very-back); }
+.project-shell--dividers  { --project-section-bg: var(--color_divider); }
+
+/* Make sure the content section can paint a full-bleed background */
+.project-shell .home-content-section {
+  position: relative;
+  overflow: visible;
+}
+
+/* Full-bleed layer */
+.project-shell .home-content-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+
+  /* full viewport width, centered */
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+
+  background: var(--project-section-bg, transparent);
+
+  /* sit behind content */
+  z-index: 0;
+}
+
+/* Keep actual content above the bleed layer */
+.project-shell .home-content-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   4) Center project content in the rail “channel” (no hardcoded offsets)
+   Uses your existing rail math variables:
+   --nav-safe and --carousel-safe (they can differ per breakpoint)
+   ========================================================================== */
+
+.project-shell .project-content-inner {
+  /* fill the channel, but cap for readability */
+  width: min(
+    980px,
+    calc(100vw - var(--nav-safe, 0px) - var(--carousel-safe, 0px) - 48px)
+  );
+
+  max-width: 100%;
+  margin-inline: auto;
+
+  /* Center within the nav+carousel "channel" (not the full viewport) */
+  --project-nudge-x: -80px; /* tweak if needed */
+
+  transform: translateX(
+    clamp(
+      -120px,
+      calc(
+        (var(--nav-safe, 0px) - var(--carousel-safe, 0px)) / 2
+        + var(--project-nudge-x)
+      ),
+      120px
+    )
+  );
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  /* Vertical spacing between card → media block → card */
+  gap: var(--jumbo);
+
+  /* Never let long content cause overflow into rails */
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Fine-tune channel-centering by common desktop widths */
+@media (max-width: 1600px) {
+  .project-shell .project-content-inner { --project-nudge-x: -124px; }
+}
+@media (max-width: 1450px) {
+  .project-shell .project-content-inner { --project-nudge-x: -116px; }
+}
+@media (max-width: 1100px) {
+  .project-shell .project-content-inner { --project-nudge-x: -56px; }
+}
+
+/* When the rail is hidden (<=900), just center normally */
+@media (max-width: 900px) {
+  .project-shell .project-content-inner { transform: none; }
+}
+
+/* Mobile: full width + standard gutters */
+@media (max-width: 719px) {
+  .project-shell .project-content-inner {
+    transform: none;
+    max-width: none;
+
+    /* Match homepage gutters */
+    padding-top: 56px;
+    padding-bottom: 72px;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+
+    box-sizing: border-box;
+  }
+}
+
+/* ==========================================================================
+   5) Constrain StudioTextCards so they don't bleed into rails
+   ========================================================================== */
+
+.project-shell .project-content-inner .studio-text-card {
+  width: 100%;
+  max-width: min(700px, 100%);
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+/* Tighten reading width on smaller desktops / tablets */
+@media (max-width: 1100px) {
+  .project-shell .project-content-inner .studio-text-card {
+    max-width: min(620px, 100%);
+  }
+}
+
+/* Mobile: centered but optically nudged right a bit (your preference) */
+@media (max-width: 719px) {
+  .project-shell .project-content-inner .studio-text-card {
+    width: 100%;
+    max-width: 520px;         /* tweak 480–560 */
+    margin-inline: auto;
+    transform: translateX(22px); /* tweak 12–28 */
+  }
+}
+
+@media (min-width: 1620px) {
+  .project-shell .project-content-inner .studio-text-card {
+    max-width: min(860px, 100%);
+  }
+}
+@media (min-width: 2500px) {
+  .project-shell .project-content-inner .studio-text-card {
+    max-width: min(980px, 100%);
+  }
+}
+
+/* ==========================================================================
+   6) Responsive embeds (TOMY UI screens)
+   ========================================================================== */
+
+.project-shell .project-content-inner .project-media-block {
+  width: 100%;
+  max-width: min(980px, 100%);
+  margin-inline: auto;
+
+  display: flex;
+  flex-direction: column;
+
+  /* Space between the two TOMY screens */
+  gap: 84px; /* tweak 56–140 */
+}
+
+/* tablet-ish */
+@media (max-width: 1100px) {
+  .project-shell .project-content-inner .project-media-block {
+    max-width: min(620px, 100%);
+  }
+}
+
+/* mobile */
+@media (max-width: 719px) {
+  .project-shell .project-content-inner .project-media-block {
+    max-width: 520px;      /* aligned with mobile card width */
+    align-items: center;
+
+    /* Mobile needs less vertical space */
+    gap: var(--md);        /* tweak 40–72 */
+  }
+}
+
+/* Each TOMY embed: centered container, no clipping, no negative margin */
+.project-media-block .tomy-embed {
+  width: 100%;
+  max-width: 100%;
+
+  display: flex;
+  justify-content: center;
+
+  overflow: visible;
+  margin-inline: 0 !important;
+
+  /* Reserve vertical space for scaled TOMY screens (transform doesn't affect flow) */
+  --tomy-space-mult: 240px; /* default for laptop/iPad */
+  margin-bottom: calc((var(--tomy-scale, 1) - 1) * var(--tomy-space-mult));
+}
+.project-media-block .tomy-embed:last-child { margin-bottom: 0; }
+
+/* Make whatever the TOMY UI renders behave responsively */
+.project-media-block .tomy-embed > *,
+.project-media-block .tomy-embed img,
+.project-media-block .tomy-embed svg,
+.project-media-block .tomy-embed canvas {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* TOMY screen scaling + optical nudge */
+.project-media-block .tomy-screen {
+  --tomy-scale: 1;
+  transform: translateX(-10px) scale(var(--tomy-scale)); /* tweak translateX -4 to -12 */
+  transform-origin: top center;
+}
+
+/* Mobile: slightly smaller so it doesn't go edge-to-edge */
+@media (max-width: 719px) {
+  .project-media-block .tomy-screen { --tomy-scale: 0.92; } /* tweak 0.88–0.96 */
+
+  /* Mobile also needs less reserved transform space */
+  .project-media-block .tomy-embed { --tomy-space-mult: 120px; } /* tweak 80–160 */
+}
+
+/* 1024-ish: ~20% bigger */
+@media (min-width: 1000px) and (max-width: 1199px) {
+  .project-media-block .tomy-screen { --tomy-scale: 1.2; }
+}
+
+/* 1440-ish: ~36% bigger */
+@media (min-width: 1360px) and (max-width: 1499px) {
+  .project-media-block .tomy-screen { --tomy-scale: 1.36; }
+}
+
+/* 1512-ish: ~42% bigger */
+@media (min-width: 1500px) and (max-width: 1619px) {
+  .project-media-block .tomy-screen { --tomy-scale: 1.42; }
+}
+
+/* 2500+: ~100% bigger + more real vertical space so nothing overlaps */
+@media (min-width: 2500px) {
+  .project-media-block .tomy-screen { --tomy-scale: 2; }
+
+  .project-shell .project-content-inner .project-media-block {
+    gap: 140px; /* tweak 110–180 */
+  }
+
+  .project-media-block .tomy-embed {
+    --tomy-space-mult: 360px; /* tweak 320–440 */
+  }
+}
+
+/* ==========================================================================
+   7) Theme rules when very-back is active
+   ========================================================================== */
+
+.project-shell--very-back .studio-text-card {
+  background: rgba(216, 201, 181, 0.05);
+  border-color: rgba(216, 201, 181, 0.14);
+}
+
+/* Force the text color, but target the card structure (safer than * for future icons/buttons) */
+.project-shell--very-back .studio-text-card,
+.project-shell--very-back .studio-text-card__title,
+.project-shell--very-back .studio-text-card__body,
+.project-shell--very-back .studio-text-card__body p,
+.project-shell--very-back .studio-text-card__body li {
+  color: var(--it-s-white) !important;
+}

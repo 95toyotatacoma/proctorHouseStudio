@@ -978,11 +978,18 @@ p {
   overflow: hidden;
 }
 
+/* SmartImage renders <picture><img/> — make BOTH fill the circle */
+.nav-rail__avatar picture,
 .nav-rail__avatar img {
   width: 100%;
   height: 100%;
   display: block;
+}
+
+.nav-rail__avatar img {
   object-fit: cover;
+  object-position: center;
+  border-radius: 999px; /* optional because container is clipped, but harmless */
 }
 
 /* Nav panel animation states */
@@ -3466,114 +3473,5 @@ p {
   .footer-nav a {
     font-size: var(--font_body_l);
     padding-block: var(--space_s);
-  }
-}
-
-/* ==========================================================================
-   Tomy 2000 page shell adjustments
-   ========================================================================== */
-.project-header--enter {
-  opacity: 0;
-  transform: translateY(10px);
-  animation: projectHeaderIn 520ms cubic-bezier(.22,.61,.36,1) 120ms forwards;
-  will-change: opacity, transform;
-}
-
-@keyframes projectHeaderIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.tomy2000-page__main {
-  flex: 1 1 auto;
-  min-width: 0;
-}
-.tomy-shell .home-content-inner {
-  padding-top: 96px; /* gives that 40–60px breathing room under sticky strip */
-}
-
-.tomy2000-page__shell,
-.tomy2000-page__shell .home-inner,
-.tomy2000-page__shell .home-shell__frame,
-.tomy2000-page__shell .home-content-section,
-.tomy2000-page__shell .home-content-inner {
-  overflow: visible;
-}
-
-/* ==========================================================================
-   Project Page Template helpers
-   ========================================================================== */
-
-/* --- CardTriImage wrapper on project hero --- */
-.project-tri {
-  width: 100%;
-  max-width: 980px;
-  margin-inline: auto;
-}
-
-/* --- Mobile swipe block spacing on project pages --- */
-.project-mobile-swipe {
-  margin-top: 0;
-}
-
-/* ==========================================================================
-   Project inline logo styling (template)
-   ========================================================================== */
-
-
-/* 1100 → 841 (tablet / iPad landscape): make strip full-bleed + avoid nav rail overlap */
-@media (max-width: 1100px) and (min-width: 841px) {
-  .project-inline-logo {
-    /* full-bleed background */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100vw;
-
-    /* IMPORTANT: shove content to the right of the rail */
-    padding-left: calc(var(--nav-rail-width) + var(--big) + 20px);
-    padding-right: var(--big);
-    box-sizing: border-box;
-  }
-
-  /* Ensure the inner row doesn’t constrain weirdly */
-  .project-inline-logo .home-inline-logo__row {
-    width: 100%;
-    max-width: 100%;
-  }
-}
-
-/* Mobile: you currently hide inline logo; if you later decide to show it, style it here */
-@media (max-width: 719px) {
-  .project-mobile-swipe {
-    margin-top: 0;
-  }
-}
-
-/* ==========================================================================
-   CardTriImage – project-friendly layout
-   ========================================================================== */
-
-.project-tri .card-tri-image__row {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--jumbo);
-  width: 100%;
-}
-
-.project-tri .card-tri-image__item {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1 / 1; /* keeps a consistent tile shape */
-}
-
-@media (max-width: 840px) {
-  .project-tri .card-tri-image__row {
-    grid-template-columns: 1fr;
-  }
-
-  .project-tri .card-tri-image__item {
-    aspect-ratio: 16 / 10;
   }
 }
