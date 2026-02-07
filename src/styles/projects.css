@@ -1,15 +1,18 @@
 /* src/styles/projects.css */
 
 /* ==========================================================================
-   Project Page Template (shared)
+   0) Visibility helpers
    ========================================================================== */
 
-/* 1) Only show MobileSwipeCarousel on mobile */
+/* Only show MobileSwipeCarousel on mobile */
 @media (min-width: 720px) {
   .project-mobile-swipe { display: none !important; }
 }
 
-/* 2) Project hero tri card sizing (tame the giant sizes) */
+/* ==========================================================================
+   1) Hero sizing (Tri card)
+   ========================================================================== */
+
 .project-tri {
   width: 100%;
   max-width: 760px;
@@ -19,64 +22,48 @@
 @media (min-width: 2500px) { .project-tri { max-width: 980px; } }
 
 /* ==========================================================================
-   3) Full-bleed project section backgrounds
-   Fixes the “background edge near navRail” problem by forcing the section
-   background to span the viewport (not the padded inner).
+   2) Full-bleed section background
    ========================================================================== */
 
-/* Each page sets one of these on <main>:
-   project-shell--very-back OR project-shell--dividers */
 .project-shell--very-back { --project-section-bg: var(--very-back); }
 .project-shell--dividers  { --project-section-bg: var(--color_divider); }
 
-/* Make sure the content section can paint a full-bleed background */
 .project-shell .home-content-section {
   position: relative;
   overflow: visible;
 }
 
-/* Full-bleed layer */
 .project-shell .home-content-section::before {
   content: "";
   position: absolute;
   top: 0;
   bottom: 0;
-
-  /* full viewport width, centered */
   left: 50%;
   width: 100vw;
   transform: translateX(-50%);
-
   background: var(--project-section-bg, transparent);
-
-  /* sit behind content */
   z-index: 0;
 }
 
-/* Keep actual content above the bleed layer */
 .project-shell .home-content-section > * {
   position: relative;
   z-index: 1;
 }
 
 /* ==========================================================================
-   4) Center project content in the rail “channel” (no hardcoded offsets)
-   Uses your existing rail math variables:
-   --nav-safe and --carousel-safe (they can differ per breakpoint)
+   3) Content channel centering (between nav rail + carousel rail)
    ========================================================================== */
 
 .project-shell .project-content-inner {
-  /* fill the channel, but cap for readability */
   width: min(
     980px,
     calc(100vw - var(--nav-safe, 0px) - var(--carousel-safe, 0px) - 48px)
   );
-
   max-width: 100%;
   margin-inline: auto;
 
   /* Center within the nav+carousel "channel" (not the full viewport) */
-  --project-nudge-x: -80px; /* tweak if needed */
+  --project-nudge-x: -80px;
 
   transform: translateX(
     clamp(
@@ -93,48 +80,36 @@
   flex-direction: column;
   align-items: stretch;
 
-  /* Vertical spacing between card → media block → card */
   gap: var(--jumbo);
-
-  /* Never let long content cause overflow into rails */
   min-width: 0;
   box-sizing: border-box;
 }
 
 /* Fine-tune channel-centering by common desktop widths */
-@media (max-width: 1600px) {
-  .project-shell .project-content-inner { --project-nudge-x: -124px; }
-}
-@media (max-width: 1450px) {
-  .project-shell .project-content-inner { --project-nudge-x: -116px; }
-}
-@media (max-width: 1100px) {
-  .project-shell .project-content-inner { --project-nudge-x: -56px; }
-}
+@media (max-width: 1600px) { .project-shell .project-content-inner { --project-nudge-x: -124px; } }
+@media (max-width: 1450px) { .project-shell .project-content-inner { --project-nudge-x: -116px; } }
+@media (max-width: 1100px) { .project-shell .project-content-inner { --project-nudge-x: -56px; } }
 
-/* When the rail is hidden (<=900), just center normally */
+/* When the rail is hidden, center normally */
 @media (max-width: 900px) {
   .project-shell .project-content-inner { transform: none; }
 }
 
-/* Mobile: full width + standard gutters */
+/* Mobile gutters */
 @media (max-width: 719px) {
   .project-shell .project-content-inner {
     transform: none;
     max-width: none;
-
-    /* Match homepage gutters */
     padding-top: 56px;
     padding-bottom: 72px;
     padding-left: 18px !important;
     padding-right: 18px !important;
-
     box-sizing: border-box;
   }
 }
 
 /* ==========================================================================
-   5) Constrain StudioTextCards so they don't bleed into rails
+   4) StudioTextCard constraints
    ========================================================================== */
 
 .project-shell .project-content-inner .studio-text-card {
@@ -144,20 +119,18 @@
   box-sizing: border-box;
 }
 
-/* Tighten reading width on smaller desktops / tablets */
 @media (max-width: 1100px) {
   .project-shell .project-content-inner .studio-text-card {
     max-width: min(620px, 100%);
   }
 }
 
-/* Mobile: centered but optically nudged right a bit (your preference) */
 @media (max-width: 719px) {
   .project-shell .project-content-inner .studio-text-card {
     width: 100%;
-    max-width: 520px;         /* tweak 480–560 */
+    max-width: 520px;
     margin-inline: auto;
-    transform: translateX(22px); /* tweak 12–28 */
+    transform: translateX(22px);
   }
 }
 
@@ -173,7 +146,9 @@
 }
 
 /* ==========================================================================
-   6) Responsive embeds (TOMY UI screens)
+   5) TOMY embeds (NO OVERLAP FIX)
+   Key rule: transforms don't affect layout, so we reserve real space.
+   IMPORTANT: set --tomy-scale on .tomy-embed (parent), not .tomy-screen (child).
    ========================================================================== */
 
 .project-shell .project-content-inner .project-media-block {
@@ -184,8 +159,8 @@
   display: flex;
   flex-direction: column;
 
-  /* Space between the two TOMY screens */
-  gap: 84px; /* tweak 56–140 */
+  /* spacing between the two TOMY screens */
+  gap: 84px;
 }
 
 /* tablet-ish */
@@ -198,30 +173,32 @@
 /* mobile */
 @media (max-width: 719px) {
   .project-shell .project-content-inner .project-media-block {
-    max-width: 520px;      /* aligned with mobile card width */
+    max-width: 520px;
     align-items: center;
-
-    /* Mobile needs less vertical space */
-    gap: var(--md);        /* tweak 40–72 */
+    gap: var(--md);
   }
 }
 
-/* Each TOMY embed: centered container, no clipping, no negative margin */
+/* Each TOMY embed: owns the scale variable + reserves real space */
 .project-media-block .tomy-embed {
   width: 100%;
   max-width: 100%;
-
   display: flex;
   justify-content: center;
 
   overflow: visible;
   margin-inline: 0 !important;
 
+  /* ✅ THIS is the fix: scale lives here so margin-bottom can use it */
+  --tomy-scale: 1;
+
   /* Reserve vertical space for scaled TOMY screens (transform doesn't affect flow) */
-  --tomy-space-mult: 240px; /* default for laptop/iPad */
-  margin-bottom: calc((var(--tomy-scale, 1) - 1) * var(--tomy-space-mult));
+  --tomy-space-mult: 320px; /* tweak 280–380 based on your visuals */
+  margin-bottom: calc((var(--tomy-scale) - 1) * var(--tomy-space-mult));
+
+  /* also add a little real padding so edges never kiss */
+  padding-block: 28px;
 }
-.project-media-block .tomy-embed:last-child { margin-bottom: 0; }
 
 /* Make whatever the TOMY UI renders behave responsively */
 .project-media-block .tomy-embed > *,
@@ -234,49 +211,60 @@
 
 /* TOMY screen scaling + optical nudge */
 .project-media-block .tomy-screen {
-  --tomy-scale: 1;
-  transform: translateX(-10px) scale(var(--tomy-scale)); /* tweak translateX -4 to -12 */
+  transform: translateX(-10px) scale(var(--tomy-scale));
   transform-origin: top center;
 }
 
-/* Mobile: slightly smaller so it doesn't go edge-to-edge */
-@media (max-width: 719px) {
-  .project-media-block .tomy-screen { --tomy-scale: 0.92; } /* tweak 0.88–0.96 */
+/* Scale rules (set on .tomy-embed so layout spacing updates too) */
 
-  /* Mobile also needs less reserved transform space */
-  .project-media-block .tomy-embed { --tomy-space-mult: 120px; } /* tweak 80–160 */
+/* Mobile: slightly smaller */
+@media (max-width: 719px) {
+  .project-media-block .tomy-embed {
+    --tomy-scale: 0.92;
+    --tomy-space-mult: 160px;
+    padding-block: 16px;
+  }
 }
 
 /* 1024-ish: ~20% bigger */
 @media (min-width: 1000px) and (max-width: 1199px) {
-  .project-media-block .tomy-screen { --tomy-scale: 1.2; }
+  .project-media-block .tomy-embed { --tomy-scale: 1.2; }
 }
 
 /* 1440-ish: ~36% bigger */
 @media (min-width: 1360px) and (max-width: 1499px) {
-  .project-media-block .tomy-screen { --tomy-scale: 1.36; }
+  .project-media-block .tomy-embed { --tomy-scale: 1.36; }
 }
 
 /* 1512-ish: ~42% bigger */
 @media (min-width: 1500px) and (max-width: 1619px) {
-  .project-media-block .tomy-screen { --tomy-scale: 1.42; }
+  .project-media-block .tomy-embed { --tomy-scale: 1.42; }
 }
 
-/* 2500+: ~100% bigger + more real vertical space so nothing overlaps */
+/* Wide desktop: give card/media/card more breathing room */
+@media (min-width: 1620px) {
+  .project-shell .project-content-inner { gap: 180px; } /* was 260; keep it sane */
+  .project-shell .project-content-inner .project-media-block { gap: 120px; }
+  .project-media-block .tomy-embed { --tomy-space-mult: 60px; padding-block: 40px; }
+}
+
+/* Ultra-wide */
+@media (min-width: 2000px) {
+
+  .project-shell .project-content-inner { gap: 60px; }
+  .project-shell .project-content-inner .project-media-block { gap: 30px; }
+  .project-media-block .tomy-embed { --tomy-space-mult: 60px; padding-block: 56px; }
+}
+
+/* 2500+: big scale + big real spacing */
 @media (min-width: 2500px) {
-  .project-media-block .tomy-screen { --tomy-scale: 2; }
-
-  .project-shell .project-content-inner .project-media-block {
-    gap: 140px; /* tweak 110–180 */
-  }
-
-  .project-media-block .tomy-embed {
-    --tomy-space-mult: 360px; /* tweak 320–440 */
-  }
+  .project-media-block .tomy-embed { --tomy-scale: 2; --tomy-space-mult: 200px; }
+  .project-shell .project-content-inner .project-media-block { gap: 60px; }
+  .project-shell .project-content-inner { gap: 60px; }
 }
 
 /* ==========================================================================
-   7) Theme rules when very-back is active
+   6) Theme rules when very-back is active
    ========================================================================== */
 
 .project-shell--very-back .studio-text-card {
@@ -284,7 +272,6 @@
   border-color: rgba(216, 201, 181, 0.14);
 }
 
-/* Force the text color, but target the card structure (safer than * for future icons/buttons) */
 .project-shell--very-back .studio-text-card,
 .project-shell--very-back .studio-text-card__title,
 .project-shell--very-back .studio-text-card__body,

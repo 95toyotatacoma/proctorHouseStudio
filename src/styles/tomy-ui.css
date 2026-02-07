@@ -702,13 +702,13 @@
 /* ---- Icon slot (left) ---- */
 .tomy-toggle__iconSlot {
   position: absolute;
-  left: 10px;
+  left: 8px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 3;
 
   width: var(--tomy-toggle-icon-size, 16px);
-  height: var(--tomy-toggle-icon-size, 16px);
+  height: var(--tomy-toggle-icon-size, 14px);
   display: grid;
   place-items: center;
 
@@ -771,11 +771,14 @@
 .tomy-toggle.is-on.tomy-toggle--bluetooth .tomy-toggle__iconSlot {
   color: var(--color_bluetooth);
   opacity: 1;
+  
 }
 
 .tomy-toggle.is-on.tomy-toggle--wifi .tomy-toggle__iconSlot {
   color: var(--it-s-white);
   opacity: 1;
+  left: 7px;
+  top: 55%;
 }
 
 /* State coloring */
@@ -784,8 +787,12 @@
   opacity: 0.75;
   left: 28px;            /* adjust until it matches your spacing */
   right: auto;
+ 
 }
 
+.tomy-toggle.is-off.tomy-toggle--wifi .tomy-toggle__iconSlot {
+top:47%
+}
 .tomy-toggle.is-connected.tomy-toggle--bluetooth .tomy-toggle__iconSlot {
   color: var(--color_bluetooth);
   opacity: 1;
@@ -825,7 +832,7 @@
 /* ON/CONNECTED: knob right */
 .tomy-toggle.is-on .tomy-toggle__knob,
 .tomy-toggle.is-connected .tomy-toggle__knob {
-  right: var(--tomy-toggle-pad, 5px);
+  right: var(--tomy-toggle-pad, 2px);
   left: auto;
 }
 
