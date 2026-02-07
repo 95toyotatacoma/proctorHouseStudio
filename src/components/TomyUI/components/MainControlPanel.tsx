@@ -1,12 +1,18 @@
-import { useState } from "react";
+// src/components/TomyUI/components/MainControlPanel.tsx
+import { useMemo, useState } from "react";
 import { SkeuButton } from "./SkeuButton";
 import { SmallToggle, ToggleState } from "./SmallToggle";
+import { VolumeControl } from "./VolumeControl";
+
+// ✅ Weather icon MVP (time + placeholder condition)
+import { resolveWeatherIcon, type WeatherCondition } from "../icons/Weather/resolveWeatherIcon";
 
 type Props = {
   className?: string;
 };
 
 export function MainControlPanel({ className = "" }: Props) {
+  // keep volume state here so the panel can influence other UI later
   const [volume, setVolume] = useState(5);
 
   // boolean behavior only (you requested on/off only)
@@ -16,59 +22,39 @@ export function MainControlPanel({ className = "" }: Props) {
   const [settingsOn, setSettingsOn] = useState(false);
   const [powerOn, setPowerOn] = useState(true);
 
+  // ✅ MVP: drive icon off local time + placeholder condition
+  const now = new Date();
+  const hour = now.getHours();
+
+  // Later: replace with real weather/tomy state
+  const condition: WeatherCondition = "sunny";
+
+  const TimeIcon = useMemo(() => resolveWeatherIcon(hour, condition), [hour, condition]);
+
   return (
     <div className={`tomy-main-control ${className}`} aria-label="Main control panel">
       {/* Time Panel */}
       <div className="tomy-time-panel" aria-label="Time panel">
         <div className="tomy-time-panel__time">5:59</div>
-        <div className="tomy-time-panel__icon" role="img" aria-label="Time of day icon" />
+
+        <div className="tomy-time-panel__icon" role="img" aria-label="Time and weather icon">
+          <TimeIcon aria-hidden="true" />
+        </div>
       </div>
 
       {/* Volume Panel */}
-      <div className="tomy-vol-panel" aria-label="Volume control panel">
-        <div className="tomy-vol-display" aria-label="Volume display">
-          <div className={`tomy-vol-display__icon ${volume === 0 ? "is-muted" : ""}`} aria-hidden="true" />
-
-          <div className="tomy-vol-bars" aria-label={`Volume ${volume} of 10`}>
-            {Array.from({ length: 10 }).map((_, i) => (
-              <span key={i} className={`tomy-vol-bars__bar ${i < volume ? "is-on" : "is-off"}`} />
-            ))}
-          </div>
-        </div>
-
-        <div className="tomy-vol-buttons" aria-label="Volume buttons">
-          <SkeuButton
-            ariaLabel="Volume down"
-            glyph="minus"
-            onClick={() => setVolume((v) => Math.max(0, v - 1))}
-            disabled={volume === 0}
-          />
-          <SkeuButton
-            ariaLabel="Volume up"
-            glyph="plus"
-            onClick={() => setVolume((v) => Math.min(10, v + 1))}
-            disabled={volume === 10}
-          />
-        </div>
-      </div>
+      <VolumeControl
+        initialVolume={volume}
+        onChange={setVolume}
+      />
 
       {/* Toggle row */}
       <div className="tomy-toggle-row" aria-label="Connectivity toggles">
-        <SmallToggle
-          ariaLabel="Bluetooth toggle"
-          kind="bluetooth"
-          state={bt}
-          onToggle={(next) => setBt(next === "off" ? "on" : "off")}
-        />
+        <SmallToggle ariaLabel="Bluetooth toggle" kind="bluetooth" state={bt} onToggle={setBt} />
 
         <div className="tomy-toggle-row__divider" aria-hidden="true" />
 
-        <SmallToggle
-          ariaLabel="Wi-Fi toggle"
-          kind="wifi"
-          state={wifi}
-          onToggle={(next) => setWifi(next === "off" ? "on" : "off")}
-        />
+        <SmallToggle ariaLabel="Wi-Fi toggle" kind="wifi" state={wifi} onToggle={setWifi} />
       </div>
 
       {/* Bottom control buttons */}
@@ -76,7 +62,7 @@ export function MainControlPanel({ className = "" }: Props) {
         <SkeuButton
           ariaLabel="Settings"
           glyph="settings"
-          className={settingsOn ? "is-accent" : ""}
+          className={settingsOn ? "is-pressed" : ""}
           onClick={() => setSettingsOn((s) => !s)}
         />
 
@@ -85,7 +71,7 @@ export function MainControlPanel({ className = "" }: Props) {
         <SkeuButton
           ariaLabel="Power"
           glyph="power"
-          className={powerOn ? "is-accent" : ""}
+          className={powerOn ? "is-pressed" : ""}
           onClick={() => setPowerOn((p) => !p)}
         />
       </div>

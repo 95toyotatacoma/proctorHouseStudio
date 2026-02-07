@@ -1,5 +1,10 @@
 import React from "react";
 
+import BluetoothSvg from "../icons/ControlPanel/bluetooth.svg?react";
+import BluetoothConnectedSvg from "../icons/ControlPanel/bluetooth_connected.svg?react";
+import WifiSvg from "../icons/ControlPanel/wifi.svg?react";
+import WifiOnSvg from "../icons/ControlPanel/wifiOn.svg?react";
+
 export type ToggleState = "off" | "on" | "connected";
 
 type Props = {
@@ -26,49 +31,25 @@ const nextState = (current: ToggleState): ToggleState => {
   return current === "off" ? "on" : "off";
 };
 
-function BluetoothIcon({ active }: { active: boolean }) {
-  return (
-    <svg className="tomy-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
-      <path
-        d="M12 3v18l6-6-6-6 6-6-6-6zm0 9 6 6"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      {/* (active styling is via currentColor in CSS) */}
-    </svg>
-  );
-}
+function ToggleIcon({
+  kind,
+  state,
+}: {
+  kind: "bluetooth" | "wifi";
+  state: ToggleState;
+}) {
+  // If the system ever sets "connected", show the connected icon.
+  // Otherwise: off uses base icon, on uses "On" icon where available.
+  if (kind === "bluetooth") {
+    if (state === "connected") return <BluetoothConnectedSvg aria-hidden="true" focusable="false" />;
+    return <BluetoothSvg aria-hidden="true" focusable="false" />;
+  }
 
-function WifiIcon({ active }: { active: boolean }) {
-  return (
-    <svg className="tomy-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
-      <path
-        d="M5 9c4.5-4 9.5-4 14 0"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M8 12c3-2.5 5-2.5 8 0"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M11 15c1-.8 1-.8 2 0"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <circle cx="12" cy="18" r="1.2" fill="currentColor" />
-    </svg>
-  );
+  // wifi
+  if (state === "connected" || state === "on") {
+    return <WifiOnSvg aria-hidden="true" focusable="false" />;
+  }
+  return <WifiSvg aria-hidden="true" focusable="false" />;
 }
 
 export function SmallToggle({
@@ -80,7 +61,12 @@ export function SmallToggle({
   disabled = false,
   className = "",
 }: Props) {
-  const isOn = state === "on"; // strict boolean visuals
+  const isOn = state === "on" || state === "connected"; // visuals
+
+  const handleToggle = () => {
+    if (disabled) return;
+    onToggle?.(nextState(state));
+  };
 
   return (
     <button
@@ -89,6 +75,7 @@ export function SmallToggle({
         "tomy-toggle",
         `tomy-toggle--${kind}`,
         isOn ? "is-on" : "is-off",
+        state === "connected" ? "is-connected" : "",
         disabled ? "is-disabled" : "",
         className,
       ]
@@ -97,10 +84,13 @@ export function SmallToggle({
       aria-label={ariaLabel}
       aria-pressed={isOn}
       disabled={disabled}
-      onPointerDown={(e) => {
-        e.preventDefault(); // prevents "first click focuses"
+      onClick={handleToggle}
+      onKeyDown={(e) => {
         if (disabled) return;
-        onToggle?.(nextState(state));
+        if (e.key === " " || e.key === "Enter") {
+          e.preventDefault();
+          handleToggle();
+        }
       }}
     >
       {/* Track (styling hook) */}
@@ -109,11 +99,9 @@ export function SmallToggle({
       {/* Left icon */}
       {kind !== "basic" && (
         <span className="tomy-toggle__iconSlot" aria-hidden="true">
-          {kind === "bluetooth" ? (
-            <BluetoothIcon active={isOn} />
-          ) : (
-            <WifiIcon active={isOn} />
-          )}
+          <span className="tomy-toggle__icon" aria-hidden="true">
+            <ToggleIcon kind={kind} state={state} />
+          </span>
         </span>
       )}
 

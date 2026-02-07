@@ -99,6 +99,9 @@
   --tomy-toggle-icon-size: 16px;
 
   --tomy-toggle-border: 1px solid var(--color_border_default);
+
+  --tomy-icon-stroke: .2; /* try 1.0 if you want slimmer */
+
 }
 
 /* ================================
@@ -376,17 +379,29 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Placeholder icon (swap later) */
 .tomy-time-panel__icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-
-  /* placeholder styling */
-  background: color-mix(in srgb, var(--color_accent_tertiary) 80%, transparent);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color_border_default) 40%, transparent) inset;
-  opacity: 0.95;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
 }
+
+.tomy-time-panel__icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* if these icons use stroke/fill that should follow theme */
+.tomy-time-panel__icon {
+  color: var(--it-s-white);
+}
+.tomy-time-panel__icon svg * {
+  stroke: currentColor;
+  fill: currentColor; /* remove if outline-only */
+  stroke-width: .2;
+}
+
 
 /* ================================
    SKEU BUTTON (component)
@@ -470,8 +485,8 @@
   position: relative;
   z-index: 2;
 
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
 
   display: grid;
   place-items: center;
@@ -521,7 +536,6 @@
   border-radius: var(--tomy-vol-radius);
   border: 1px solid var(--color_border_default);
 
-  /* subtle surface lift like mock */
   background: linear-gradient(
     180deg,
     color-mix(in srgb, var(--color_surface_primary) 92%, var(--color_surface_elevated)) 0%,
@@ -536,7 +550,6 @@
   justify-content: flex-start;
   gap: 1px;
 
-  /* inner stroke + gentle inset */
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--color_border_default) 35%, transparent) inset,
     0 10px 18px color-mix(in srgb, var(--very_back) 35%, transparent);
@@ -550,16 +563,50 @@
   gap: 10px;
 }
 
-/* Placeholder “speaker” icon */
+/* Icon tile (the wrapper span/div) */
 .tomy-vol-display__icon {
   width: 22px;
   height: 22px;
   border-radius: 6px;
 
-  opacity: 0.65;
-  background: color-mix(in srgb, var(--color_text_secondary) 35%, transparent);
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
 
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color_border_default) 35%, transparent) inset;
+  /* ✅ icon color driver */
+  color: color-mix(in srgb, var(--color_text_secondary) 92%, transparent);
+  opacity: 0.9;
+}
+
+/* The SVGR icon component itself is the <svg> */
+.tomy-vol-display__svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* ✅ stroke thinning (only affects elements that actually use stroke) */
+:root { --tomy-vol-stroke: 1.0; } /* try 0.9–1.15 */
+
+.tomy-vol-display__svg [stroke]:not([stroke="none"]) {
+  stroke: currentColor;
+  stroke-width: var(--tomy-vol-stroke);
+}
+
+.tomy-vol-display__svg [fill]:not([fill="none"]) {
+  fill: currentColor;
+}
+
+/* Loud state */
+.tomy-vol-display__icon.is-loud {
+  color: color-mix(in srgb, var(--color_text_secondary) 95%, transparent);
+  opacity: 0.95;
+}
+
+/* Muted state */
+.tomy-vol-display__icon.is-muted {
+  color: color-mix(in srgb, var(--color_text_secondary) 75%, transparent);
+  opacity: 0.8;
 }
 
 /* Bars container */
@@ -599,14 +646,6 @@
   align-items: center;
   gap: 10px;
   padding-top: 2px;
-}
-
-.tomy-vol-display__icon.is-muted {
-  opacity: 0.55;
-  background: color-mix(in srgb, var(--color_text_secondary) 20%, transparent);
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--color_border_default) 35%, transparent) inset,
-    0 0 10px color-mix(in srgb, var(--color_accent_secondary) 35%, transparent);
 }
 
 /* ================================
@@ -679,30 +718,72 @@
   pointer-events: none; /* keeps the whole button reliably clickable */
 }
 
-/* Force svg to 16x16 and inherit color */
-.tomy-toggle__icon {
-  width: var(--tomy-toggle-icon-size, 16px);
-  height: var(--tomy-toggle-icon-size, 16px);
-  aspect-ratio: 1 / 1;
+
+
+/* Ensure imported SVGR SVGs fill the slot */
+.tomy-toggle__icon,
+.tomy-toggle__icon svg {
+  width: 100%;
+  height: 100%;
   display: block;
   color: inherit;
 }
 
-.tomy-toggle__icon path,
-.tomy-toggle__icon circle {
+/* Outline by default */
+.tomy-toggle__icon line,
+.tomy-toggle__icon polyline,
+.tomy-toggle__icon polygon,
+.tomy-toggle__icon rect,
+.tomy-toggle__icon ellipse {
   stroke: currentColor;
+  fill: none;
+}
+
+/* Stroke-first icon styling (matches design system icons) */
+.tomy-toggle__icon path,
+.tomy-toggle__icon line,
+.tomy-toggle__icon polyline,
+.tomy-toggle__icon circle {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tomy-toggle__icon path,
+.tomy-toggle__icon line,
+.tomy-toggle__icon polyline,
+.tomy-toggle__icon circle {
+  stroke-width: var(--tomy-icon-stroke);
+}
+
+/* If the SVG declares a real fill (not none), respect it but tint it */
+.tomy-toggle__icon [fill]:not([fill="none"]) {
   fill: currentColor;
+}
+
+.tomy-toggle__icon svg * {
+  vector-effect: non-scaling-stroke;
+  stroke-width: var(--tomy-icon-stroke) !important;
+}
+
+/* ON colors (boolean on) */
+.tomy-toggle.is-on.tomy-toggle--bluetooth .tomy-toggle__iconSlot {
+  color: var(--color_bluetooth);
+  opacity: 1;
+}
+
+.tomy-toggle.is-on.tomy-toggle--wifi .tomy-toggle__iconSlot {
+  color: var(--it-s-white);
+  opacity: 1;
 }
 
 /* State coloring */
 .tomy-toggle.is-off .tomy-toggle__iconSlot {
   color: var(--color_text_secondary);
   opacity: 0.75;
-}
-
-.tomy-toggle.is-on .tomy-toggle__iconSlot {
-  color: var(--color_text_secondary);
-  opacity: 0.9;
+  left: 28px;            /* adjust until it matches your spacing */
+  right: auto;
 }
 
 .tomy-toggle.is-connected.tomy-toggle--bluetooth .tomy-toggle__iconSlot {
@@ -714,7 +795,6 @@
   color: var(--color_text_primary);
   opacity: 0.95;
 }
-
 /* ---- Knob (right or left) ---- */
 .tomy-toggle__knob {
   position: absolute;
@@ -873,6 +953,7 @@
 .tomy-control-buttons > .tomy-skeu-btn {
   justify-self: center;
 }
+
 
 /* ================================
    MAIN DISPLAY (left card)
@@ -1203,11 +1284,6 @@
     0 var(--tomy-battery_disc-shadow-y) var(--tomy-battery_disc-shadow-blur)
     var(--color_hover, rgba(255, 255, 255, 0.22))
   );
-}
-
-/* Tick group */
-.tomy-battery__ticks {
-  /* nothing required; ticks are styled below */
 }
 
 /* Base tick styling */

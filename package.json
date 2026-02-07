@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "svgo:icons": "svgo -f public/icons -r"
   },
   "dependencies": {
     "framer-motion": "^12.23.25",
@@ -23,9 +24,11 @@
     "fast-glob": "^3.3.3",
     "postcss": "^8.4.35",
     "sharp": "^0.34.5",
+    "svgo": "^4.0.0",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.3.3",
-    "vite": "^7.2.7"
+    "vite": "^7.2.7",
+    "vite-plugin-svgr": "^4.5.0"
   },
   "engines": {
     "node": "20.x"
